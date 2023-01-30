@@ -1,0 +1,7 @@
+# ignore the input and output from the parser, they are to large
+/parser/captures
+/parser/dataset
+/parser/parsedFiles
+*.log
+*.csv
+*.png

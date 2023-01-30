@@ -2,9 +2,7 @@
 
 ## Description
 
-Bachelor thesis in Computer Science at Karlstad University.
-Data sets of captured VPN traffic over streaming websites.
-Includes scripts, configs and container files used.
+Masther thesis in Computer Science at Karlstad University, that is an continuation of an previous work (C-Sand/rds-collect). It contains tools to collect data sets of captured VPN traffic over streaming websites. Includes scripts, configs and container files used.
 
 ## Installation
 
@@ -39,8 +37,7 @@ Get in touch.
 
 ## Authors and acknowledgment
 
-Christoffer Sandquist
-Jon-Erik Ersson
+The author of this fork is Gustav Rehnholm, But it is only an adaptation of the original code that this is forked from, developed by Christoffer Sandquist and Jon-Erik Ersson.
 
 ## License
 
