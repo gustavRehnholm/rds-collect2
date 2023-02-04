@@ -131,7 +131,6 @@ while(len(webTrafficTrainFiles) > 0):
 
                 # get each attribute for the current line
                 splitParseLine = parseLine.split("\t")
-                logging.info("splitParseLine" + splitParseLine)
                 # get the time for the data
                 parseLineTime       = splitParseLine[0].split('.')
                 logging.info("parseLineTime = " + parseLineTime)
