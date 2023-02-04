@@ -28,10 +28,16 @@ WEB_TRAFFIC_FILES_DIR = "dataset"
 FOLD0_CSV = "dataset/fold-0.csv"
 # How much of the header to remove (to fit the noise with the web traffic)
 HEADER = 40
-# Change depeding if testing or running
-logging.basicConfig(level=logging.INFO)
+
+# index of the different attributes
+IP_INDEX_SENDER = 0
+IP_INDEX_RECIEVER = 1
+PACKET_ATTR_INDEX_TIME = 0
+
 
 #----------Variables----------#
+# Change depeding if testing or running
+logging.basicConfig(level=logging.INFO)
 # To store the total time of the parsed line that one is working on at the moment
 currTotalTimeParseLine = time.time()
 # To standardize the time of each packet
@@ -134,13 +140,12 @@ while(len(webTrafficTrainFiles) > 0):
                 # get the time for the data
                 parseLineTime       = splitParseLine[0].split('.')
                 totalTimeParseLine  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
-                logging.info("totalTimeParseLine = " + totalTimeParseLine)
+                logging.info("totalTimeParseLine = " + str(totalTimeParseLine))
                 totalTimeParseLine += int(parseLineTime[1])
-                logging.info("totalTimeParseLine = " + totalTimeParseLine)
+                logging.info("totalTimeParseLine = " + str(totalTimeParseLine))
 
-                # Get the IP, that the direction will be extracted from
+                # Get the IP of the source and destination
                 directionSplit = splitParseLine[1].split(',')
-                logging.info("directionSplit" + directionSplit)
                 
 
                 #-------------------limited files open test, valid then training-----------------------
@@ -192,21 +197,24 @@ while(len(webTrafficTrainFiles) > 0):
 
                 # Set time, direction and packet size, if direction or size is missing, skip the packet  
                
+                # Time
                 finalTime = totalTimeParseLine - deviationTime
 
-                if(directionSplit[0] == ''):
+                # Direction
+                if(directionSplit[IP_INDEX_SENDER] == ''):
                     continue
-                if (directionSplit[0] == IP_HOST):
+                if (directionSplit[IP_INDEX_SENDER] == IP_HOST):
                     direction = 's'
-                elif(directionSplit[1] == IP_HOST):
+                elif(directionSplit[IP_INDEX_RECIEVER] == IP_HOST):
                     direction = 'r'
+                # If the IP_HOST is wrong, choose the one that start with an 10 as the host
                 else:
-                    checkIfLocal = directionSplit[0].split('.')
+                    checkIfLocal = directionSplit[IP_INDEX_SENDER].split('.')
                     if checkIfLocal[0] == '10':
                         IP_HOST = directionSplit[0]
                     else: IP_HOST = directionSplit[1]
 
-                splitCrossLine = webTrafficLines[0].split(",")
+                # Size
                 try:
                     packetSize = str(int(splitParseLine[2])-HEADER)
                 except:
@@ -214,12 +222,15 @@ while(len(webTrafficTrainFiles) > 0):
                     print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
 
 
+                currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
+
                 # Sort the noise and the web traffic after time
+
                 # write all noise that are shorter than the current webb traffic packet
-                if(finalTime < int(splitCrossLine[0])):
+                if(finalTime < int(currWebTrafficPacketAttrList[PACKET_ATTR_INDEX_TIME])):
                     currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
                     currTotalTimeParseLine = totalTimeParseLine
-                # if the webb traffic packet is the next one, write it to the parsed list
+                # if the web traffic packet is the next one, write it to the parsed list
                 else:
                     currParsedFile.writelines(webTrafficLines[0])
                     webTrafficLines.pop(0)
@@ -229,7 +240,7 @@ while(len(webTrafficTrainFiles) > 0):
             deviationTime = 0
             fileToParse.close()
 
-        # If more to parse, continiue, else end the parsing
+        # If more web traffic, go to the next file to be parsed (next noise file)
         if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
             print("Popping ", os.path.basename(files2Parse[0]))
             files2Parse.pop(0)
