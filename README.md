@@ -1,10 +1,11 @@
-# RDS collect
+# RDS collect 2
 
 ## Description
 
 Masther thesis in Computer Science at Karlstad University, that is an continuation of an previous work (C-Sand/rds-collect). It contains tools to collect data sets of captured VPN traffic over streaming websites. Includes scripts, configs and container files used.
 
 ## Installation
+SAME AS RDS COLLECT 1
 
 ```
 sudo apt update
@@ -32,16 +33,21 @@ setup cronjobs for planned capture
 ```
 
 ## Support
+In the following email can one get in touch with me if one has questions about the software
 
-Get in touch.
+rds-collect.wonderingly@8alias.com
+
 
 ## Authors and acknowledgment
 
 The author of this fork is Gustav Rehnholm, But it is only an adaptation of the original code that this is forked from, developed by Christoffer Sandquist and Jon-Erik Ersson.
 
+
 ## License
+TODO
 
 # Docs
+TODO?
 
 ## Some commands to remember
 
