@@ -153,7 +153,7 @@ while(len(trainFiles) > 0):
                 try:
                     packetSize = str(int(splitParseLine[2])-header)
                 except:
-                    packetSize = 0
+                    packetSize = str(0)
                     print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, is set to 0")
 
 

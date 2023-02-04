@@ -44,7 +44,7 @@ parsedFilesDir = "parsedFiles"
 # Directory with the web traffic
 webbTrafficFilesDir = "dataset"
 # the result file name
-fold0csv = "fold-0.csv"
+fold0csv = "dataset/fold-0.csv"
 # How much of the header to remove (to fit the noise with the web traffic)
 header = 40
 
@@ -104,16 +104,16 @@ dfFiles  = df[dfFormat]
 for x in range(0, len(dfFiles['log'])):
     if(dfFiles['is_train'][x] == True): 
         parsedTrainFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-        crossTrainFiles.append(os.path.join(webbTrafficDirPath, dfFiles['log'][x]))
+        crossTrainFiles.append(os.path.join(webbTrafficDirPath,"client", dfFiles['log'][x]))
         # GR: trainIndexes.append(x)
     elif(dfFiles['is_valid'][x] == True): 
         parsedValidFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-        crossValidFiles.append(os.path.join(webbTrafficDirPath, dfFiles['log'][x]))
+        crossValidFiles.append(os.path.join(webbTrafficDirPath,"client", dfFiles['log'][x]))
         # GR: numValidationPackets +=1
     # is_test
     else: 
         parsedTestFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-        crossTestFiles.append(os.path.join(webbTrafficDirPath, dfFiles['log'][x]))
+        crossTestFiles.append(os.path.join(webbTrafficDirPath,"client", dfFiles['log'][x]))
         # GR: numTestPackets +=1
 
 # TODO: GR: 
