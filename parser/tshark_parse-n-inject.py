@@ -57,13 +57,13 @@ dfFiles = df[dfFormat]
 for x in range(0, len(dfFiles['log'])):
     if(dfFiles['is_train'][x] == True): 
         parsedTrainFiles.append(os.path.join(parsedDirectory, dfFiles['log'][x]))
-        trainFiles.append(os.path.join(directory, dfFiles['log'][x]))
+        trainFiles.append(os.path.join(directory, "client", dfFiles['log'][x]))
     elif(dfFiles['is_valid'][x] == True): 
         parsedValidFiles.append(os.path.join(parsedDirectory, dfFiles['log'][x]))
-        validFiles.append(os.path.join(directory, dfFiles['log'][x]))
+        validFiles.append(os.path.join(directory, "client", dfFiles['log'][x]))
     else: 
         parsedTestFiles.append(os.path.join(parsedDirectory, dfFiles['log'][x]))
-        testFiles.append(os.path.join(directory, dfFiles['log'][x]))
+        testFiles.append(os.path.join(directory,"client", dfFiles['log'][x]))
 
 #-----------------------------------------------------------------------
 
