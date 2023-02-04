@@ -135,7 +135,7 @@ while(len(trainFiles) > 0):
 
                 finalTime = totalTime - deviationTime
 
-                # TODO: add continue for when packet size is missing but IP exists. 
+                # set direction, if IP address is missing, skip the packet
                 if(directionSplit[0] == ''):
                     continue
                 if (directionSplit[0] == IP_host):
@@ -153,8 +153,8 @@ while(len(trainFiles) > 0):
                 try:
                     packetSize = str(int(splitParseLine[2])-header)
                 except:
-                    packetSize = str(0)
-                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, is set to 0")
+                    continue
+                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
 
 
                 if(finalTime < int(splitCrossLine[0])):
