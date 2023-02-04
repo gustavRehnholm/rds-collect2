@@ -133,7 +133,6 @@ while(len(webTrafficTrainFiles) > 0):
                 splitParseLine = parseLine.split("\t")
                 # get the time for the data
                 parseLineTime       = splitParseLine[0].split('.')
-                logging.info("parseLineTime = " + parseLineTime)
                 totalTimeParseLine  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
                 logging.info("totalTimeParseLine = " + totalTimeParseLine)
                 totalTimeParseLine += int(parseLineTime[1])
