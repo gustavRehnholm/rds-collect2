@@ -15,7 +15,7 @@ IP_host = '10.88.0.9'
 filesToParseDir = "captures"
 parsedFilesDir = "parsedFiles"
 crossFilesDir = "dataset"
-excelFile = "fold-0.csv"
+excelFile = "dataset/fold-0.csv"
 header = 40
 
 deviationTime = 0
@@ -150,7 +150,12 @@ while(len(trainFiles) > 0):
 
                 #if(int(splitParseLine[2]) > 1420): splitParseLine[2] = '1420\n'
                 splitCrossLine = crossLine[0].split(",")
-                packetSize = str(int(splitParseLine[2])-header)
+                try:
+                    packetSize = str(int(splitParseLine[2])-header)
+                except:
+                    packetSize = 0
+                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, is set to 0")
+
 
                 if(finalTime < int(splitCrossLine[0])):
                     newFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
