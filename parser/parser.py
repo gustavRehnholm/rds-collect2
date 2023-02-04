@@ -1,88 +1,74 @@
 #!/usr/bin/env python
 
-"""
-There needs to be 2 directories in the cwd
-* webbtrafficFiles: the web traffic
-* files2Parse: the noise
-
-At webbtrafficFiles:
-
-
-At files2Parse:
-The noise has one log file per twitch stream (Different streams, date and time)
-They are structured after: time, IP, IP, size
-
-
-To get a result, noise and web traffic needs to be in their corresponding directory
-
-In the end, the result will be in the directory cwd/parsedFiles
-"""
-
-
 import os
 from os import walk
 from os import path
 from re import search
 import time
 import pandas as pd
+# For testing
+import logging
 
 #-----------Constants------------#
 # Sec in an hour
-hours = 60*60
+SEC_PER_HOUR = 60*60
 # Sec in a min
-minutes = 60
+SEC_PER_MIN = 60
 # nanoseconds in an second
-nanoseconds = 1000000000
-# To store the total time of the parsed line that one is working on at the moment
-currTotalTimeParseLine = time.time()
+NANO_SEC_PER_SEC = 1000000000
 # is used to get the direction of each packet
-IP_host = '10.88.0.9'
+IP_HOST = '10.88.0.9'
 # Directory with the noise
-files2ParseDir = "captures"
+FILES_2_PARSE_DIR = "captures_test"
 # Directory with the result
-parsedFilesDir = "parsedFiles"
+PARSED_FILES_DIR = "parsedFiles_test"
 # Directory with the web traffic
-webbTrafficFilesDir = "dataset"
+WEB_TRAFFIC_FILES_DIR = "dataset"
 # the result file name
-fold0csv = "dataset/fold-0.csv"
+FOLD0_CSV = "dataset/fold-0.csv"
 # How much of the header to remove (to fit the noise with the web traffic)
-header = 40
+HEADER = 40
+# Change depeding if testing or running
+logging.basicConfig(level=logging.INFO)
 
 #----------Variables----------#
+# To store the total time of the parsed line that one is working on at the moment
+currTotalTimeParseLine = time.time()
 # To standardize the time of each packet
 deviationTime = 0
-#crossFilePath = []
-#newFilePath = []
 # Current opened test/valid/train/ parsed file
 currParsedFile = []
-# all line in the crossfile (aka the unrealistic web traffic)
-crossLine = []
+# all line in the web traffic
+webTrafficLines = []
 # List of all files to parse (aka all files in the filesToParseDir)
 files2Parse = []
 
-# files with the webb traffic
-crossTrainFiles = []
-crossValidFiles = []
-crossTestFiles  = []
+# files with the webTraffic
+webTrafficTrainFiles = []
+webTrafficValidFiles = []
+webTrafficTestFiles  = []
 # Files for the parsed noise
 parsedTrainFiles = []
 parsedValidFiles = []
 parsedTestFiles  = []
 
-# Paths to the directories
-files2ParseDirPath = os.path.join(os.getcwd(), files2ParseDir)
-parsedDirPath      = os.path.join(os.getcwd(), parsedFilesDir)
-webbTrafficDirPath  = os.path.join(os.getcwd(), webbTrafficFilesDir)
 
-# Get all files with noise to parse
+#----------------Create the directory structure----------------
+
+# Paths to the directories
+files2ParseDirPath = os.path.join(os.getcwd(), FILES_2_PARSE_DIR)
+parsedDirPath      = os.path.join(os.getcwd(), PARSED_FILES_DIR)
+webTrafficDirPath  = os.path.join(os.getcwd(), WEB_TRAFFIC_FILES_DIR)
+
+# Get list of all noise files (which will be parsed)
 for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
     for files in filenames:
         files2Parse.append(os.path.join(files2ParseDirPath, files))
     print("Files to parse: ", len(files2Parse))
 print("Setting up directories")
 
-# Create the result directory
-for (dirpath, dirnames, filenames) in walk(webbTrafficDirPath, topdown=True):
+# Create the structure for the result directory, so it match the web traffics
+for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
     for dirs in dirnames:
         try: 
             os.mkdir(os.path.join(parsedDirPath, dirs))
@@ -90,48 +76,41 @@ for (dirpath, dirnames, filenames) in walk(webbTrafficDirPath, topdown=True):
             print("File and directory exists!") 
 
 
-#----------------------limited data data set sorting--------------------
+#----------------------Create the file structure for the parsed dataset--------------------
 
-# dfFiles: The webb traffic
-df       = pd.read_csv(fold0csv)
+# dfFiles: The web traffic
+df       = pd.read_csv(FOLD0_CSV)
 dfFormat = ['log', 'is_train', 'is_valid', 'is_test']
 dfFiles  = df[dfFormat]
 
 
-# Separate the train/valid/test packets of the webb traffic, and make sure that their is one correlating noise packet for each one
-# GR: numValidationPackets = 0
-# GR: numTestPackets       = 0
+# For every log file in the web traffic, make sure that there is an correlating log file to store the parsed result
 for x in range(0, len(dfFiles['log'])):
     if(dfFiles['is_train'][x] == True): 
         parsedTrainFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-        crossTrainFiles.append(os.path.join(webbTrafficDirPath,"client", dfFiles['log'][x]))
-        # GR: trainIndexes.append(x)
+        webTrafficTrainFiles.append(os.path.join(webTrafficDirPath,"client", dfFiles['log'][x]))
     elif(dfFiles['is_valid'][x] == True): 
         parsedValidFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-        crossValidFiles.append(os.path.join(webbTrafficDirPath,"client", dfFiles['log'][x]))
-        # GR: numValidationPackets +=1
-    # is_test
-    else: 
+        webTrafficValidFiles.append(os.path.join(webTrafficDirPath,"client", dfFiles['log'][x]))
+    elif(dfFiles['is_test'][x] == True): 
         parsedTestFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-        crossTestFiles.append(os.path.join(webbTrafficDirPath,"client", dfFiles['log'][x]))
-        # GR: numTestPackets +=1
-
-# TODO: GR: 
-# 1: Se hur mycket noise som saknas för att fylla tränings settet
-#       num_duplicate_noise = len(trainIndexes) - (num_noise - (numValidationPackets + numTestPackets))
-# 3: utöka noise (hur?)
-# 4: spara noise datan 
+        webTrafficTestFiles.append(os.path.join(webTrafficDirPath,"client", dfFiles['log'][x]))
+    else:
+        print("ERROR")
 
 #----------------------------Parsing-------------------------------------------
+'''
+Parse and inject all the noise, if their is more web traffic than noise, the noise will be reused
+'''
 
 print("Starting parse")
-print("trainFiles len = ", len(crossTrainFiles))
+print("trainFiles len = ", len(webTrafficTrainFiles))
 files2Parse.sort()
 print("filesToParse len  = ", len(files2Parse), "\n")
 
-# For every web traffic training data
-# It is the longest one, which is why the loop checks that specific one
-while(len(crossTrainFiles) > 0):
+# Loop until all web traffic is used
+# TODO: change condition of the parsing loop?
+while(len(webTrafficTrainFiles) > 0):
 
     # For every file to parse (aka the noise)
     for fileToParsePath in files2Parse:
@@ -140,60 +119,70 @@ while(len(crossTrainFiles) > 0):
         with open(fileToParsePath, 'r') as fileToParse:
             print("Opening ", os.path.basename(fileToParsePath))
 
-            print("testingFiles    left: ", len(crossTestFiles))
-            print("validationFiles left: ", len(crossValidFiles))
-            print("trainingFiles   left: ", len(crossTrainFiles))
-            print("Lines left in crossfile: ", len(crossLine))
+            print("web traffic testing Files    left: " , len(webTrafficTestFiles))
+            print("web traffic  validation Files left: ", len(webTrafficValidFiles))
+            print("web traffic training Files   left: " , len(webTrafficTrainFiles))
+            print("Lines left in web traffic: "         , len(webTrafficLines))
             print("\n")
 
             # For every line in the noise
-            # Do it lien per line, because the file might be to large for readlines()
+            # Go thorugh the current noise file, line for line, because it might be to large for readlines()
             for parseLine in fileToParse:
-                splitParseLine = parseLine.split("\t")
 
+                # get each attribute for the current line
+                splitParseLine = parseLine.split("\t")
+                logging.info("splitParseLine" + splitParseLine)
                 # get the time for the data
                 parseLineTime       = splitParseLine[0].split('.')
-                totalTimeParseLine  = int(parseLineTime[0]) * nanoseconds
+                logging.info("parseLineTime = " + parseLineTime)
+                totalTimeParseLine  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
+                logging.info("totalTimeParseLine = " + totalTimeParseLine)
                 totalTimeParseLine += int(parseLineTime[1])
+                logging.info("totalTimeParseLine = " + totalTimeParseLine)
 
                 # Get the IP, that the direction will be extracted from
                 directionSplit = splitParseLine[1].split(',')
+                logging.info("directionSplit" + directionSplit)
                 
+
                 #-------------------limited files open test, valid then training-----------------------
                 """
                 Extract one web traffic packet and the file it should merge to (in crossLine and currParsedFile)
                 """
-                if (not len(crossLine) and len(crossTestFiles) > 0): #Check if it's time to preload a new file
-                    deviationTime = totalTimeParseLine #make deviation to match start at zero
+                if (not len(webTrafficLines) and len(webTrafficTestFiles) > 0): #Check if it's time to preload a new file
+
+                    # make deviation to match start at zero
+                    deviationTime = totalTimeParseLine 
 
                     # get the current web traffic packet
-                    crossFile = open(crossTestFiles[0], 'r') #File from Tobias set
-                    crossTestFiles.pop(0)
-                    crossLine = crossFile.readlines()
+                    crossFile = open(webTrafficTestFiles[0], 'r') #File from Tobias set
+                    webTrafficTestFiles.pop(0)
+                    webTrafficLines = crossFile.readlines()
                     crossFile.close()
+
                     # get current parsed
                     currParsedFile = open(parsedTestFiles[0], 'a') #What we write to
                     print("Printing to new test set file ", os.path.basename(parsedTestFiles[0]))
                     parsedTestFiles.pop(0)
 
-                elif (not len(crossLine) and len(crossValidFiles) > 0): #Check if it's time to preload a new file
+                elif (not len(webTrafficLines) and len(webTrafficValidFiles) > 0): #Check if it's time to preload a new file
                     deviationTime = totalTimeParseLine #make deviation to match start at zero
 
-                    crossFile = open(crossValidFiles[0], 'r') #File from Tobias set
-                    crossValidFiles.pop(0)
-                    crossLine = crossFile.readlines()
+                    crossFile = open(webTrafficValidFiles[0], 'r') #File from Tobias set
+                    webTrafficValidFiles.pop(0)
+                    webTrafficLines = crossFile.readlines()
                     crossFile.close()
 
                     currParsedFile = open(parsedValidFiles[0], 'a') #What we write to
                     print("Printing to new validation set file", os.path.basename(parsedValidFiles[0])) 
                     parsedValidFiles.pop(0)
 
-                elif (not len(crossLine) and len(crossTrainFiles) > 0):
+                elif (not len(webTrafficLines) and len(webTrafficTrainFiles) > 0):
                     deviationTime = totalTimeParseLine #make deviation to match start at zero
 
-                    crossFile = open(crossTrainFiles[0], 'r') #File from Tobias set
-                    crossTrainFiles.pop(0)
-                    crossLine = crossFile.readlines()
+                    crossFile = open(webTrafficTrainFiles[0], 'r') #File from Tobias set
+                    webTrafficTrainFiles.pop(0)
+                    webTrafficLines = crossFile.readlines()
                     crossFile.close()
 
                     currParsedFile = open(parsedTrainFiles[0], 'a') #What we write to
@@ -203,29 +192,28 @@ while(len(crossTrainFiles) > 0):
 
                 #-------------------------TODO: rewrite this shit code above to take less lines, this looks abyssmal---------------
 
-                # Time for the packets travel
+                # Set time, direction and packet size, if direction or size is missing, skip the packet  
+               
                 finalTime = totalTimeParseLine - deviationTime
 
-                # TODO: add continue for when packet size is missing but IP exists. 
-
-                # Get noise packet direction
                 if(directionSplit[0] == ''):
                     continue
-                if (directionSplit[0] == IP_host):
+                if (directionSplit[0] == IP_HOST):
                     direction = 's'
-                elif(directionSplit[1] == IP_host):
+                elif(directionSplit[1] == IP_HOST):
                     direction = 'r'
                 else:
                     checkIfLocal = directionSplit[0].split('.')
                     if checkIfLocal[0] == '10':
-                        IP_host = directionSplit[0]
-                    else: IP_host = directionSplit[1]
+                        IP_HOST = directionSplit[0]
+                    else: IP_HOST = directionSplit[1]
 
-                #if(int(splitParseLine[2]) > 1420): splitParseLine[2] = '1420\n'
-                splitCrossLine = crossLine[0].split(",")
-
-                # get packet size of the noise
-                packetSize = str(int(splitParseLine[2])-header)
+                splitCrossLine = webTrafficLines[0].split(",")
+                try:
+                    packetSize = str(int(splitParseLine[2])-HEADER)
+                except:
+                    continue
+                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
 
 
                 # Sort the noise and the web traffic after time
@@ -235,8 +223,8 @@ while(len(crossTrainFiles) > 0):
                     currTotalTimeParseLine = totalTimeParseLine
                 # if the webb traffic packet is the next one, write it to the parsed list
                 else:
-                    currParsedFile.writelines(crossLine[0])
-                    crossLine.pop(0)
+                    currParsedFile.writelines(webTrafficLines[0])
+                    webTrafficLines.pop(0)
 
             # Done with the current filesToParse
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
@@ -244,7 +232,7 @@ while(len(crossTrainFiles) > 0):
             fileToParse.close()
 
         # If more to parse, continiue, else end the parsing
-        if(len(crossTestFiles) > 0 and len(crossValidFiles) > 0):
+        if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
             print("Popping ", os.path.basename(files2Parse[0]))
             files2Parse.pop(0)
             print("Now first one is: ", os.path.basename(files2Parse[0]), "\n")
