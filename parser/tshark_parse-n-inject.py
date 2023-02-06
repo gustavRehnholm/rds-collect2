@@ -149,7 +149,14 @@ while(len(trainFiles) > 0):
                     else: IP_host = directionSplit[1]
 
                 #if(int(splitParseLine[2]) > 1420): splitParseLine[2] = '1420\n'
-                splitCrossLine = crossLine[0].split(",")
+                try:
+                    splitCrossLine = crossLine[0].split(",")
+                except:
+                    newFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                    saveTime = totalTime
+                    continue
+                    print("Crossline is empty, added the noise line")
+                
                 try:
                     packetSize = str(int(splitParseLine[2])-header)
                 except:
