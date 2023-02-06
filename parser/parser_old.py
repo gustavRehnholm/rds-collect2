@@ -253,3 +253,8 @@ def main():
                 files2Parse.pop(0)
                 print("Now first one is: ", os.path.basename(files2Parse[0]), "\n")
             else: print("We stopped removing files")
+
+
+# run main 
+if __name__=="__main__":
+    main()
