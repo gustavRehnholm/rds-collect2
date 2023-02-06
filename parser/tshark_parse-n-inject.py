@@ -71,8 +71,14 @@ print("Starting parse")
 print("trainFiles len = ", len(trainFiles))
 filesToParse.sort()
 print("filesToParse len  = ", len(filesToParse), "\n")
+
 while(len(trainFiles) > 0):
+
     for fileToParsePath in filesToParse:
+        # quit without looping through all noise files
+        if(len(trainFiles) > 0):
+            exit
+
         print("New file to parse: ", os.path.basename(fileToParsePath))
         with open(fileToParsePath, 'r') as fileToParse:
             print("Opening ", os.path.basename(fileToParsePath))
