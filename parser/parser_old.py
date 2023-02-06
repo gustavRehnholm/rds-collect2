@@ -223,7 +223,13 @@ def main():
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
 
 
+                    
+                try:
                     currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
+                except:
+                    currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                    print("Crossline is empty, added the noise line")
+                    continue
 
                     # Sort the noise and the web traffic after time
                     # TODO: loop until all web traffic lines are in place?
