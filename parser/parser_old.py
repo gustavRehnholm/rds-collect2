@@ -16,12 +16,10 @@ SEC_PER_HOUR = 60*60
 SEC_PER_MIN = 60
 # nanoseconds in an second
 NANO_SEC_PER_SEC = 1000000000
-# is used to get the direction of each packet
-IP_HOST = '10.88.0.9'
 # Directory with the noise
-FILES_2_PARSE_DIR = "captures_test"
+FILES_2_PARSE_DIR = "captures"
 # Directory with the result
-PARSED_FILES_DIR = "parsedFiles_test"
+PARSED_FILES_DIR = "parsedFiles"
 # Directory with the web traffic
 WEB_TRAFFIC_FILES_DIR = "dataset"
 # the result file name
@@ -40,8 +38,8 @@ PACKET_ATTR_INDEX_SIZE = 2
 #----------Variables----------#
 # Change depeding if testing or running
 logging.basicConfig(level=logging.INFO)
-# To store the total time of the parsed line that one is working on at the moment
-currTotalTimeParseLine = time.time()
+# is used to get the direction of each packet
+ipHost = '10.88.0.9'
 # To standardize the time of each packet
 deviationTime = 0
 # Current opened test/valid/train/ parsed file
@@ -50,6 +48,9 @@ currParsedFile = []
 webTrafficLines = []
 # List of all files to parse (aka all files in the filesToParseDir)
 files2Parse = []
+
+# For logging
+#currTotalTimeParseLine = time.time()
 
 # files with the webTraffic
 webTrafficTrainFiles = []
@@ -150,7 +151,7 @@ while(len(webTrafficTrainFiles) > 0):
                 directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
             
 
-                #-----------------Open a new webtraffic file------------------
+                #-----------------Open a new web traffic file------------------
 
                 # Check if a new web traffic file needs to be loaded
                 if len(webTrafficLines) == 0:
@@ -203,16 +204,16 @@ while(len(webTrafficTrainFiles) > 0):
                 # Direction
                 if(directionSplit[IP_INDEX_SENDER] == ''):
                     continue
-                if (directionSplit[IP_INDEX_SENDER] == IP_HOST):
+                if (directionSplit[IP_INDEX_SENDER] == ipHost):
                     direction = 's'
-                elif(directionSplit[IP_INDEX_RECIEVER] == IP_HOST):
+                elif(directionSplit[IP_INDEX_RECIEVER] == ipHost):
                     direction = 'r'
                 # If the IP_HOST is wrong, choose the one that start with an 10 as the host
                 else:
                     checkIfLocal = directionSplit[IP_INDEX_SENDER].split('.')
                     if checkIfLocal[0] == '10':
-                        IP_HOST = directionSplit[0]
-                    else: IP_HOST = directionSplit[1]
+                        ipHost = directionSplit[0]
+                    else: ipHost = directionSplit[1]
 
                 # Size
                 try:
@@ -225,12 +226,12 @@ while(len(webTrafficTrainFiles) > 0):
                 currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
 
                 # Sort the noise and the web traffic after time
+                # TODO: loop until all web traffic lines are in place?
 
-                # write all noise that are shorter than the current web traffic packet
+                # If noise is earlier than the next web traffic packet
                 if(finalTime < int(currWebTrafficPacketAttrList[PACKET_ATTR_INDEX_TIME])):
                     currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                    currTotalTimeParseLine = totalTimeParseLine
-                # if the web traffic packet is the next one, write it to the parsed list
+                    #currTotalTimeParseLine = totalTimeParseLine
                 else:
                     currParsedFile.writelines(webTrafficLines[0])
                     webTrafficLines.pop(0)

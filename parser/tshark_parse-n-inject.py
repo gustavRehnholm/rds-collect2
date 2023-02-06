@@ -163,6 +163,7 @@ while(len(trainFiles) > 0):
                 else:
                     newFile.writelines(crossLine[0])
                     crossLine.pop(0)
+                    
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
             deviationTime = 0
             fileToParse.close()
