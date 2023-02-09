@@ -77,7 +77,7 @@ def main():
 
         for fileToParsePath in filesToParse:
             # quit without looping through all noise files
-            if(len(trainFiles) > 0):
+            if(len(trainFiles) < 0):
                 return
 
             print("New file to parse: ", os.path.basename(fileToParsePath))
