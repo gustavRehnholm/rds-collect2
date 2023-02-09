@@ -77,10 +77,11 @@ while(len(trainFiles) > 0):
         with open(fileToParsePath, 'r') as fileToParse:
             print("Opening ", os.path.basename(fileToParsePath))
             
-            print("testingFiles    left: ", len(testFiles))
-            print("validationFiles left: ", len(validFiles))
-            print("trainingFiles   left: ", len(trainFiles))
-            print("Lines left in crossfile: ", len(crossLine))
+            print("testingFiles    left: "           , len(testFiles))
+            print("validationFiles left: "           , len(validFiles))
+            print("trainingFiles   left: "           , len(trainFiles))
+            print("Lines left in crossfile: "        , len(crossLine))
+            print("Noise files left in fileToParse: ", len(filesToParse))
             print("\n")
 
             for parseLine in fileToParse: #Reading line by line from the master file since it might be to large to do readlines() on
@@ -178,4 +179,3 @@ while(len(trainFiles) > 0):
             print("Now first one is: ", os.path.basename(filesToParse[0]), "\n")
         else: 
             print("We stopped removing files")
-            print(len(fileToParse)+" Noise files is used for training")
