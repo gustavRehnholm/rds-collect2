@@ -77,7 +77,7 @@ def main():
 
         for fileToParsePath in filesToParse:
             # quit without looping through all noise files
-            if(len(trainFiles) < 0):
+            if(len(trainFiles) <= 0):
                 return
 
             print("New file to parse: ", os.path.basename(fileToParsePath))
@@ -88,7 +88,6 @@ def main():
                 print("validationFiles left: ", len(validFiles))
                 print("trainingFiles   left: ", len(trainFiles))
                 print("Lines left in crossfile: ", len(crossLine))
-                print("Files left to parse this loop: ", len(filesToParse))
                 print("\n")
 
                 for parseLine in fileToParse: #Reading line by line from the master file since it might be to large to do readlines() on
