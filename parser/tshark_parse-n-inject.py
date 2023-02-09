@@ -156,18 +156,22 @@ while(len(trainFiles) > 0):
                         IP_host = directionSplit[0]
                     else: IP_host = directionSplit[1]
 
-                # If the current crossLine is empty, skip it and pop it from the list
-                try: 
-                    splitCrossLine = crossLine[0].split(",")
-                except:
-                    print("Crossline is empty")
-                    continue
+
 
                 # If there is lacking a packet size in the current noise packet, skip it
                 try:
                     packetSize = str(int(splitParseLine[2])-header)
                 except:
                     print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, can not use this noise packet")
+                    continue
+
+                # If the current crossLine is empty, add the current noise packet (which we now is valid)
+                try: 
+                    splitCrossLine = crossLine[0].split(",")
+                except:
+                    print("Crossline is empty")
+                    newFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                    saveTime = totalTime
                     continue
 
                 if(finalTime < int(splitCrossLine[0])):
