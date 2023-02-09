@@ -13,9 +13,9 @@ nanoseconds = 1000000000
 saveTime = time.time()
 IP_host = '10.88.0.9'
 filesToParseDir = "captures"
-parsedFilesDir = "parsedFiles-ittr-1"
-crossFilesDir = "dataset"
-excelFile = "dataset/fold-0.csv"
+parsedFilesDir = "parsedFiles-ittr-1-test"
+crossFilesDir = "dataset-test"
+excelFile = "dataset-test/fold-0-test.csv"
 header = 40
 
 deviationTime = 0
@@ -165,7 +165,7 @@ while(len(trainFiles) > 0):
                     print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, can not use this noise packet")
                     continue
 
-                # If the current crossLine is empty, add the current noise packet (which we now is valid)
+                # If the current crossLine is empty, add the current noise packet
                 try: 
                     splitCrossLine = crossLine[0].split(",")
                 except:

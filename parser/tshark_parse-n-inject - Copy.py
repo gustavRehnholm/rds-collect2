@@ -13,9 +13,9 @@ nanoseconds = 1000000000
 saveTime = time.time()
 IP_host = '10.88.0.9'
 filesToParseDir = "captures"
-parsedFilesDir = "parsedFiles"
-crossFilesDir = "dataset"
-excelFile = "dataset/fold-0.csv"
+parsedFilesDir = "parsedFiles-ittr-1-test"
+crossFilesDir = "dataset-test"
+excelFile = "dataset-test/fold-0-test.csv"
 header = 40
 
 deviationTime = 0
