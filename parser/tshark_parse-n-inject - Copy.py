@@ -78,6 +78,12 @@ def main():
         for fileToParsePath in filesToParse:
             # quit without looping through all noise files
             if(len(trainFiles) <= 0):
+                print("testingFiles    left: ", len(testFiles))
+                print("validationFiles left: ", len(validFiles))
+                print("trainingFiles   left: ", len(trainFiles))
+                print("Lines left in crossfile: ", len(crossLine))
+                print("\n")
+                print("No more files to train, ends the program")
                 return
 
             print("New file to parse: ", os.path.basename(fileToParsePath))
