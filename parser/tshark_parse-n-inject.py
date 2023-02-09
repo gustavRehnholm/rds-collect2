@@ -12,10 +12,10 @@ minutes = 60
 nanoseconds = 1000000000
 saveTime = time.time()
 IP_host = '10.88.0.9'
-filesToParseDir = "filesToParse"
+filesToParseDir = "captures"
 parsedFilesDir = "parsedFiles"
-crossFilesDir = "crossFiles"
-excelFile = "fold-0.csv"
+crossFilesDir = "dataset"
+excelFile = "dataset/fold-0.csv"
 header = 40
 
 deviationTime = 0
