@@ -12,10 +12,10 @@ minutes = 60
 nanoseconds = 1000000000
 saveTime = time.time()
 IP_host = '10.88.0.9'
-filesToParseDir = "filesToParse"
+filesToParseDir = "captures"
 parsedFilesDir = "parsedFiles"
-crossFilesDir = "crossFiles"
-excelFile = "fold-0.csv"
+crossFilesDir = "dataset"
+excelFile = "dataset/fold-0.csv"
 header = 40
 
 deviationTime = 0
@@ -57,13 +57,13 @@ dfFiles = df[dfFormat]
 for x in range(0, len(dfFiles['log'])):
     if(dfFiles['is_train'][x] == True): 
         parsedTrainFiles.append(os.path.join(parsedDirectory, dfFiles['log'][x]))
-        trainFiles.append(os.path.join(directory, dfFiles['log'][x]))
+        trainFiles.append(os.path.join(directory, "client", dfFiles['log'][x]))
     elif(dfFiles['is_valid'][x] == True): 
         parsedValidFiles.append(os.path.join(parsedDirectory, dfFiles['log'][x]))
-        validFiles.append(os.path.join(directory, dfFiles['log'][x]))
+        validFiles.append(os.path.join(directory, "client", dfFiles['log'][x]))
     else: 
         parsedTestFiles.append(os.path.join(parsedDirectory, dfFiles['log'][x]))
-        testFiles.append(os.path.join(directory, dfFiles['log'][x]))
+        testFiles.append(os.path.join(directory,"client", dfFiles['log'][x]))
 
 #-----------------------------------------------------------------------
 
@@ -71,8 +71,14 @@ print("Starting parse")
 print("trainFiles len = ", len(trainFiles))
 filesToParse.sort()
 print("filesToParse len  = ", len(filesToParse), "\n")
+
 while(len(trainFiles) > 0):
+
     for fileToParsePath in filesToParse:
+        # quit without looping through all noise files
+        if(len(trainFiles) > 0):
+            exit
+
         print("New file to parse: ", os.path.basename(fileToParsePath))
         with open(fileToParsePath, 'r') as fileToParse:
             print("Opening ", os.path.basename(fileToParsePath))
@@ -135,7 +141,7 @@ while(len(trainFiles) > 0):
 
                 finalTime = totalTime - deviationTime
 
-                # TODO: add continue for when packet size is missing but IP exists. 
+                # set direction, if IP address is missing, skip the packet
                 if(directionSplit[0] == ''):
                     continue
                 if (directionSplit[0] == IP_host):
@@ -149,8 +155,20 @@ while(len(trainFiles) > 0):
                     else: IP_host = directionSplit[1]
 
                 #if(int(splitParseLine[2]) > 1420): splitParseLine[2] = '1420\n'
-                splitCrossLine = crossLine[0].split(",")
-                packetSize = str(int(splitParseLine[2])-header)
+                try:
+                    splitCrossLine = crossLine[0].split(",")
+                except:
+                    newFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                    saveTime = totalTime
+                    continue
+                    print("Crossline is empty, added the noise line")
+                
+                try:
+                    packetSize = str(int(splitParseLine[2])-header)
+                except:
+                    continue
+                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+
 
                 if(finalTime < int(splitCrossLine[0])):
                     newFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
@@ -158,6 +176,7 @@ while(len(trainFiles) > 0):
                 else:
                     newFile.writelines(crossLine[0])
                     crossLine.pop(0)
+                    
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
             deviationTime = 0
             fileToParse.close()
