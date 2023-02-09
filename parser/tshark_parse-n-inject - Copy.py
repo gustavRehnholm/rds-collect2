@@ -169,8 +169,9 @@ def main():
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                         continue
                 
+
                     # Do not accept an negative packet size
-                    if packetSize < 0:
+                    if int(packetSize) < 0:
                         print("Packet size" + packetSize + " is negative, and therefore invalid")
                         continue
 
