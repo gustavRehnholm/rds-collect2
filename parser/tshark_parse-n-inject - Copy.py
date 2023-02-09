@@ -76,7 +76,8 @@ def main():
     while(len(trainFiles) > 0):
 
         for fileToParsePath in filesToParse:
-            # quit without looping through all noise files
+
+            # When there is no more web traffic data left to inject into, end the program
             if(len(trainFiles) <= 0):
                 print("testingFiles    left: ", len(testFiles))
                 print("validationFiles left: ", len(validFiles))
@@ -161,7 +162,18 @@ def main():
                             IP_host = directionSplit[0]
                         else: IP_host = directionSplit[1]
 
-                    #if(int(splitParseLine[2]) > 1420): splitParseLine[2] = '1420\n'
+                    # Make sure that the noise packet has a size
+                    try:
+                        packetSize = str(int(splitParseLine[2])-header)
+                    except:
+                        print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+                        continue
+                
+                    # Do not accept an negative packet size
+                    if packetSize < 0:
+                        print("Packet size" + packetSize + " is negative, and therefore invalid")
+                        continue
+
                     try:
                         splitCrossLine = crossLine[0].split(",")
                     except:
@@ -170,11 +182,7 @@ def main():
                         continue
                         print("Crossline is empty, added the noise line")
                     
-                    try:
-                        packetSize = str(int(splitParseLine[2])-header)
-                    except:
-                        continue
-                        print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+
 
 
                     if(finalTime < int(splitCrossLine[0])):

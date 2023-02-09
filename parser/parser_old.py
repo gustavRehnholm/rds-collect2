@@ -119,12 +119,23 @@ def main():
     print("filesToParse len  = ", len(files2Parse), "\n")
 
     # Loop until all web traffic is used
-    # TODO: change condition of the parsing loop?
     while(len(webTrafficTrainFiles) > 0):
 
         # For every file to parse (aka the noise)
         for fileToParsePath in files2Parse:
             print("New file to parse: ", os.path.basename(fileToParsePath))
+            
+            # When there is no more web traffic data left to inject into, end the program
+            if(len(trainFiles) <= 0):
+                print("\n")
+                print("testingFiles    left: ", len(testFiles))
+                print("validationFiles left: ", len(validFiles))
+                print("trainingFiles   left: ", len(trainFiles))
+                print("Lines left in crossfile: ", len(crossLine))
+                print("\n")
+                print("No more files to train, ends the program")
+                return
+
 
             with open(fileToParsePath, 'r') as fileToParse:
                 print("Opening ", os.path.basename(fileToParsePath))
