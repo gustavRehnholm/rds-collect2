@@ -156,12 +156,6 @@ while(len(trainFiles) > 0):
                     packetSize = str(int(splitParseLine[2])-header)
                 except:
                     print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, can not use this noise packet")
-                    if finalTime > int(splitCrossLine[0]):
-                        print("Added the web traffic packet")
-                        newFile.writelines(crossLine[0])
-                        crossLine.pop(0)
-                    else:
-                        print("Did not add any packet this itteration")
                     continue
 
                 if(finalTime < int(splitCrossLine[0])):
