@@ -148,9 +148,21 @@ while(len(trainFiles) > 0):
                         IP_host = directionSplit[0]
                     else: IP_host = directionSplit[1]
 
-                #if(int(splitParseLine[2]) > 1420): splitParseLine[2] = '1420\n'
+
                 splitCrossLine = crossLine[0].split(",")
-                packetSize = str(int(splitParseLine[2])-header)
+
+                # If there is lacking a packet size in the current noise packet, skip it
+                try:
+                    packetSize = str(int(splitParseLine[2])-header)
+                except:
+                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, can not use this noise packet")
+                    if finalTime > int(splitCrossLine[0]):
+                        print("Added the web traffic packet")
+                        newFile.writelines(crossLine[0])
+                        crossLine.pop(0)
+                    else:
+                        print("Did not add any packet this itteration")
+                    continue
 
                 if(finalTime < int(splitCrossLine[0])):
                     newFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
@@ -158,9 +170,11 @@ while(len(trainFiles) > 0):
                 else:
                     newFile.writelines(crossLine[0])
                     crossLine.pop(0)
+
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
             deviationTime = 0
             fileToParse.close()
+
         if(len(testFiles) > 0 and len(validFiles) > 0):
             print("Popping ", os.path.basename(filesToParse[0]))
             filesToParse.pop(0)
