@@ -161,7 +161,6 @@ while(len(trainFiles) > 0):
                     splitCrossLine = crossLine[0].split(",")
                 except:
                     print("Crossline is empty")
-                    crossLine.pop(0)
                     continue
 
                 # If there is lacking a packet size in the current noise packet, skip it
