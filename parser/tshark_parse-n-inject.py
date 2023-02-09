@@ -149,10 +149,12 @@ while(len(trainFiles) > 0):
                         IP_host = directionSplit[0]
                     else: IP_host = directionSplit[1]
 
+                # If the current crossLine is empty, skip it and pop it from the list
                 try: 
                     splitCrossLine = crossLine[0].split(",")
                 except:
                     print("Crossline is empty")
+                    crossLine.pop(0)
                     continue
 
                 # If there is lacking a packet size in the current noise packet, skip it
