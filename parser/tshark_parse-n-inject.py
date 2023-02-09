@@ -135,7 +135,7 @@ while(len(trainFiles) > 0):
 
                 finalTime = totalTime - deviationTime
 
-                # TODO: add continue for when packet size is missing but IP exists. 
+                # Get direction, and if their is none, continue
                 if(directionSplit[0] == ''):
                     continue
                 if (directionSplit[0] == IP_host):
@@ -179,4 +179,6 @@ while(len(trainFiles) > 0):
             print("Popping ", os.path.basename(filesToParse[0]))
             filesToParse.pop(0)
             print("Now first one is: ", os.path.basename(filesToParse[0]), "\n")
-        else: print("We stopped removing files")
+        else: 
+            print("We stopped removing files")
+            print(len(fileToParse)+" Noise files is used for training")
