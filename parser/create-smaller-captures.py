@@ -30,15 +30,15 @@ def main():
     CAPTURES_171_DIR = os.path.join(os.getcwd(), CAPTURES_1370)
 
     # Get list of all noise files (which will be parsed)
-    for (dirpath, dirnames, filenames) in walk(files2MvDirPath, topdown=True):
+    for (dirpath, dirnames, filenames) in walk(CAPTURES_1370_DIR, topdown=True):
         for files in filenames:
-            files2Mv.append(os.path.join(files2MvDirPath, files))
+            files2Mv.append(os.path.join(CAPTURES_1370_DIR, files))
 
         print("Files to move: ", len(files2Mv))
 
     currFileNum = 0
     for currfile in files2Mv:
-        print("New file to move: ", os.path.basename(fileToParsePath))
+        print("New file to move: ", currfile)
         currFileNum += 1
 
         if currFileNum >= 171:
