@@ -118,7 +118,7 @@ def main():
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
 
-    # Loop until all web traffic is used
+    # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
     while(len(webTrafficTrainFiles) > 0):
 
         # For every file to parse (aka the noise)
@@ -147,7 +147,7 @@ def main():
                 print("\n")
 
                 # For every line in the noise
-                # Go thorugh the current noise file, line for line, because it might be to large for readlines()
+                # Go through the current noise file, line for line, because it might be to large for readlines()
                 for parseLine in fileToParse:
 
                     # get each attribute for the current line
@@ -230,25 +230,28 @@ def main():
                     try:
                         packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                     except:
-                        continue
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+                        continue
 
-
-                    
-                try:
-                    currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
-                except:
-                    currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                    print("Crossline is empty, added the noise line")
-                    continue
+                    # Do not accept an negative packet size (or empty which it should not be)
+                    if int(packetSize) <= 0:
+                        print("Packet size" + packetSize + " is negative, and therefore invalid")
+                        continue
+                        
+                    # If the current web traffic packet is empty, add the current noise packet
+                    # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
+                    # TODO: make sure that this does not cause any problem
+                    # TODO: might want to rm the print 
+                    try:
+                        currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
+                    except:
+                        currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                        print("Crossline is empty, added the noise line")
+                        continue
 
                     # Sort the noise and the web traffic after time
-                    # TODO: loop until all web traffic lines are in place?
-
-                    # If noise is earlier than the next web traffic packet
                     if(finalTime < int(currWebTrafficPacketAttrList[PACKET_ATTR_INDEX_TIME])):
                         currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                        #currTotalTimeParseLine = totalTimeParseLine
                     else:
                         currParsedFile.writelines(webTrafficLines[0])
                         webTrafficLines.pop(0)

@@ -1,11 +1,17 @@
 # Parser
 This directory is for all scripts and data that are needed to parse the noise, and inject it with the unrealistic webb traffic
 
+## Core function
+It sort all web traffic after if it is for validation, testing or training. It will first make sure that all 
+
 ## Pre requiste
 To run the code, 3 directories needs to be present. Their names is defined in parser.py constants
 * a directory "parsedFiles", where the result will be stored
 * a directory "captures" with log files of all the noise that has been collected
 * a directory "dataset" with the unrealistic webb traffic
+
+The code it self will also need to be modified:
+* make sure that the host ip address is correct for the noise traffic that one will parse and inject
 
 ## Data structure
 Bellow will the structure of the directories data be explained.
@@ -42,13 +48,9 @@ will have 4 attributes:
 ### Parsed data
 The parsed data will have the same structure as the unrealistic web traffic, but with the noise injected in each web traffic log file, and there will not be any fold file. 
 
+
 ## Run the parser
 
-in the code parser.py:
-* make sure that the host ip address is correct
-
-python3 parser.py
+python3 parse-n-inject-rnd.py | tee output.txt
 
 
-## Core function
-It sort all web traffic after if it is for validation, testing or training. It will first make sure that all 
