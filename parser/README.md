@@ -7,7 +7,8 @@ It sort all web traffic after if it is for validation, testing or training. It w
 ## Pre requiste
 To run the code, 3 directories needs to be present. Their names is defined in parser.py constants
 * a directory "parsedFiles", where the result will be stored
-* a directory "captures" with log files of all the noise that has been collected
+* a directory "captures-raw" with log files of all the noise that has been collected
+* a directory "captures" to store the parsed and cleaned captures
 * a directory "dataset" with the unrealistic webb traffic
 
 The code it self will also need to be modified:

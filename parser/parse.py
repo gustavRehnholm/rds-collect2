@@ -21,9 +21,9 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures"
+    FILES_2_PARSE_DIR = "captures-raw"
     # Directory with the noise parsed
-    PARSED_FILES_DIR = "parsed-n-cleaned-captures"
+    PARSED_FILES_DIR = "captures-1370"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
@@ -184,9 +184,9 @@ def main():
             print("\n")
             fileToParse.close()
 
-    print("Total number of packets/lines:         ", NumPackets)
-    print("Total number of parsed packets/lines:  ", NumParsedPackets)
-    print("Total number of skipped packets/lines: ", NumSkippedPackets)
+    print("Total number of packets/lines:         ", numPackets)
+    print("Total number of parsed packets/lines:  ", numParsedPackets)
+    print("Total number of skipped packets/lines: ", numSkippedPackets)
 
 # run main 
 if __name__=="__main__":
