@@ -81,90 +81,90 @@ def main():
     print("filesToParse len  = ", len(files2Parse), "\n")
 
      # For every file to parse (aka the noise)
-        for fileToParsePath in files2Parse:
-            print("New file to parse: ", os.path.basename(fileToParsePath))
+    for fileToParsePath in files2Parse:
+        print("New file to parse: ", os.path.basename(fileToParsePath))
 
-            # total number of packets
-            numPackets += currNumPacket
-            # successfully packets
-            numParsedPackets += currNumParsedPackets
-            # packets that could not be parsed
-            numSkippedPackets += currNumSkippedPackets
-            # reset counter for this packet
-            currNumPacket = 0
-            currNumParsedPackets = 0
-            currNumSkippedPackets = 0
+        # total number of packets
+        numPackets += currNumPacket
+        # successfully packets
+        numParsedPackets += currNumParsedPackets
+        # packets that could not be parsed
+        numSkippedPackets += currNumSkippedPackets
+        # reset counter for this packet
+        currNumPacket = 0
+        currNumParsedPackets = 0
+        currNumSkippedPackets = 0
 
 
-            with open(fileToParsePath, 'r') as fileToParse:
-                print("Opening ", os.path.basename(fileToParsePath))
+        with open(fileToParsePath, 'r') as fileToParse:
+            print("Opening ", os.path.basename(fileToParsePath))
 
-                # For every line in the noise
-                # Go through the current noise file, line for line, because it might be to large for readlines()
-                for parseLine in fileToParse:
+            # For every line in the noise
+            # Go through the current noise file, line for line, because it might be to large for readlines()
+            for parseLine in fileToParse:
 
-                    # keep track how many packets there is in this file
-                    currNumPacket += 1
+                # keep track how many packets there is in this file
+                currNumPacket += 1
 
-                    # get each attribute for the current line
-                    splitParseLine = parseLine.split("\t")
+                # get each attribute for the current line
+                splitParseLine = parseLine.split("\t")
 
-                    # get the time for the data (convert from seconds with 9 float numbers, to nanoseconds as a integer)
-                    parseLineTime           = splitParseLine[PACKET_ATTR_INDEX_TIME].split('.')
-                    timeLeftOfDotInNanoSec  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
-                    timeRightOfDotInNanoSec = int(parseLineTime[1])
-                    totalTimeParseLine      =  timeLeftOfDotInNanoSec + timeRightOfDotInNanoSec
+                # get the time for the data (convert from seconds with 9 float numbers, to nanoseconds as a integer)
+                parseLineTime           = splitParseLine[PACKET_ATTR_INDEX_TIME].split('.')
+                timeLeftOfDotInNanoSec  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
+                timeRightOfDotInNanoSec = int(parseLineTime[1])
+                totalTimeParseLine      =  timeLeftOfDotInNanoSec + timeRightOfDotInNanoSec
 
-                    # Get the IP of the source [0] and destination [1]
-                    directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
+                # Get the IP of the source [0] and destination [1]
+                directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
 
-                    # Set time, direction and packet size, if direction or size is missing, skip the packet  
+                # Set time, direction and packet size, if direction or size is missing, skip the packet  
+            
+                # Time
+                finalTime = totalTimeParseLine - deviationTime
+
+                # Direction
+                if(directionSplit[IP_INDEX_SENDER] == ''):
+                    print("The noise packet has no IP address for the sender, skipping this noise packet")
+                    currNumSkippedPackets += 1
+                    continue
+                if (directionSplit[IP_INDEX_SENDER] == ipHost):
+                    direction = 's'
+                elif(directionSplit[IP_INDEX_RECIEVER] == ipHost):
+                    direction = 'r'
+                # If the IP_HOST is wrong, choose the one that start with an 10 as the host
+                else:
+                    checkIfLocal = directionSplit[IP_INDEX_SENDER].split('.')
+                    if checkIfLocal[0] == '10':
+                        ipHost = directionSplit[0]
+                    else: ipHost = directionSplit[1]
+
+                # Size
+                try:
+                    packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
+                except:
+                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+                    currNumSkippedPackets += 1
+                    continue
+
                 
-                    # Time
-                    finalTime = totalTimeParseLine - deviationTime
-
-                    # Direction
-                    if(directionSplit[IP_INDEX_SENDER] == ''):
-                        print("The noise packet has no IP address for the sender, skipping this noise packet")
-                        currNumSkippedPackets += 1
-                        continue
-                    if (directionSplit[IP_INDEX_SENDER] == ipHost):
-                        direction = 's'
-                    elif(directionSplit[IP_INDEX_RECIEVER] == ipHost):
-                        direction = 'r'
-                    # If the IP_HOST is wrong, choose the one that start with an 10 as the host
-                    else:
-                        checkIfLocal = directionSplit[IP_INDEX_SENDER].split('.')
-                        if checkIfLocal[0] == '10':
-                            ipHost = directionSplit[0]
-                        else: ipHost = directionSplit[1]
-
-                    # Size
-                    try:
-                        packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
-                    except:
-                        print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
-                        currNumSkippedPackets += 1
-                        continue
-
-                    
-                    # Do not accept an empty packet size
-                    if int(packetSize) == 0:
-                        print("Packet size" + packetSize + " is 0, and therefore invalid")
-                        currNumSkippedPackets += 1
-                        continue
-                    elif int(packetSize) < 0:
-                        print("Packet size" + packetSize + " is negative, and therefore invalid")
-                        currNumSkippedPackets += 1
-                        continue
+                # Do not accept an empty packet size
+                if int(packetSize) == 0:
+                    print("Packet size" + packetSize + " is 0, and therefore invalid")
+                    currNumSkippedPackets += 1
+                    continue
+                elif int(packetSize) < 0:
+                    print("Packet size" + packetSize + " is negative, and therefore invalid")
+                    currNumSkippedPackets += 1
+                    continue
 
 
-                    currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                    currNumPackets += 1
+                currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                currNumPackets += 1
 
-                # Done with the current filesToParse
-                print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
-                fileToParse.close()
+            # Done with the current filesToParse
+            print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
+            fileToParse.close()
 
 # run main 
 if __name__=="__main__":
