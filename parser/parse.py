@@ -39,8 +39,7 @@ def main():
     # is used to get the direction of each packet
     ipHost = '10.88.0.9'
     # Current opened test/valid/train/ parsed file
-    currParsedFiles
-     = []
+    currParsedFiles= []
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
 
