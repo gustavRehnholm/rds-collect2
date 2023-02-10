@@ -126,7 +126,7 @@ def main():
                     print("The noise packet has no IP address for the sender, skipping this noise packet")
                     currNumSkippedPackets += 1
                     continue
-                if (directionSplit[IP_INDEX_SENDER] == ipHost):
+                elif (directionSplit[IP_INDEX_SENDER] == ipHost):
                     direction = 's'
                 elif(directionSplit[IP_INDEX_RECIEVER] == ipHost):
                     direction = 'r'
@@ -135,7 +135,9 @@ def main():
                     checkIfLocal = directionSplit[IP_INDEX_SENDER].split('.')
                     if checkIfLocal[0] == '10':
                         ipHost = directionSplit[0]
+                        direction = 's'
                     else: ipHost = directionSplit[1]
+                        direction = 'r'
 
                 # Size
                 try:
