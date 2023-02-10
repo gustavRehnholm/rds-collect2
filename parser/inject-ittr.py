@@ -82,8 +82,8 @@ def main():
     print("Setting up directories")
 
     # Create the structure for the result directory, so it match the web traffics
-    os.system("rm -f -r ", PARSED_FILES_DIR)
-    os.system("mkdir ", PARSED_FILES_DIR)
+    os.system("rm -f -r " + PARSED_FILES_DIR)
+    os.system("mkdir " + PARSED_FILES_DIR)
     for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
         for dirs in dirnames:
             try: 
