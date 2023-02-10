@@ -1,5 +1,5 @@
 # Parser
-This directory is for all scripts and data that are needed to parse the noise, and inject it with the unrealistic webb traffic
+This directory is for all scripts that are needed to clean parse the noise, parse it, and inject it with the unrealistic webb traffic
 
 ## Core function
 It sort all web traffic after if it is for validation, testing or training. It will first make sure that all 
