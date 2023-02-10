@@ -101,13 +101,13 @@ def main():
 
 
         with open(fileToParsePath, 'r') as fileToParse:
-            print("/n")
-            print(len(files2Parse), "/", currIndex, " files left")
+            print("\n")
+            print(currIndex , "/", len(files2Parse), " files left")
             print("Opening ", os.path.basename(fileToParsePath))
 
             currParsedFile = open(currParsedFiles[0], 'a') 
             print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
-            print("/n")
+            print("\n")
             currParsedFiles.pop(0)
 
             # For every line in the noise
@@ -175,12 +175,12 @@ def main():
                 currNumParsedPackets += 1
 
             # Done with the current filesToParse
-            print("/n")
+            print("\n")
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
             print("Number of packets/lines in the file:         ", currNumPacket)
             print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
             print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
-            print("/n")
+            print("\n")
             fileToParse.close()
 
     print("Total number of packets/lines:         ", NumPackets)
