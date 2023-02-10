@@ -47,3 +47,8 @@ def main():
             shutil.copy(currfile, CAPTURES_342_DIR)
         if currFileNum >= 685:
             shutil.copy(currfile, CAPTURES_685_DIR)
+
+
+# run main 
+if __name__=="__main__":
+    main()
