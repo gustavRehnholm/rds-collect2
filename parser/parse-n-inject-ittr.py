@@ -235,11 +235,13 @@ def main():
                     try:
                         packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                     except:
+                        print("In the noise file: ", os.path.basename(fileToParsePath))
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                         continue
 
                     # Do not accept an negative packet size (or empty which it should not be)
                     if int(packetSize) <= 0:
+                        print("In the noise file: ", os.path.basename(fileToParsePath))
                         print("Packet size" + packetSize + " is negative, and therefore invalid")
                         continue
                         
