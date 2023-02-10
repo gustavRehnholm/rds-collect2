@@ -162,7 +162,6 @@ def main():
                     # get each attribute for the current line
                     splitParseLine = parseLine.split("\t")
                     packetAttrList = splitParseLine[0].split(",")
-                    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", packetAttrList)
                 
 
                     #-----------------Open a new web traffic file------------------
@@ -214,7 +213,9 @@ def main():
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
                 
                     # Time
-                    finalTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME]) - deviationTime
+                    print(packetAttrList[PACKET_ATTR_INDEX_TIME])
+                    localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
+                    finalTime = localTime - deviationTime
 
                     # If the current web traffic packet is empty, add the current noise packet
                     # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
