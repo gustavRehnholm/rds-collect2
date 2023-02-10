@@ -56,7 +56,7 @@ def main():
 
     #----------------------------Parsing-------------------------------------------
     '''
-    Parse and inject all the noise, if their is more web traffic than noise, the noise will be reused
+    #Parse and inject all the noise, if their is more web traffic than noise, the noise will be reused
     '''
 
     print("Starting parse")
