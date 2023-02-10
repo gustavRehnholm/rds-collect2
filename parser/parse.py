@@ -43,6 +43,20 @@ def main():
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
 
+    # total number of packets
+    numPackets = 0
+    # successfully packets
+    numParsedPackets = 0
+    # packets that could not be parsed
+    numSkippedPackets = 0
+
+    # this files number of packets
+    currNumPacket = 0
+    # this files number of successfully packets
+    currNumParsedPackets = 0
+    # this files number of skipped packets
+    currNumSkippedPackets = 0
+
 
     #----------------Create the directory structure----------------
 
@@ -57,7 +71,8 @@ def main():
             currParsedFile.append(os.path.join(parsedDirPath, files))
         print("Files to parse: ", len(files2Parse))
         print("Parsed Files: ", len(currParsedFile))
-    '''
+
+
 
     #----------------------------Parsing-------------------------------------------
 
@@ -69,15 +84,27 @@ def main():
         for fileToParsePath in files2Parse:
             print("New file to parse: ", os.path.basename(fileToParsePath))
 
+            # total number of packets
+            numPackets += currNumPacket
+            # successfully packets
+            numParsedPackets += currNumParsedPackets
+            # packets that could not be parsed
+            numSkippedPackets += currNumSkippedPackets
+            # reset counter for this packet
+            currNumPacket = 0
+            currNumParsedPackets = 0
+            currNumSkippedPackets = 0
+
 
             with open(fileToParsePath, 'r') as fileToParse:
                 print("Opening ", os.path.basename(fileToParsePath))
 
-
-
                 # For every line in the noise
                 # Go through the current noise file, line for line, because it might be to large for readlines()
                 for parseLine in fileToParse:
+
+                    # keep track how many packets there is in this file
+                    currNumPacket += 1
 
                     # get each attribute for the current line
                     splitParseLine = parseLine.split("\t")
@@ -90,53 +117,6 @@ def main():
 
                     # Get the IP of the source [0] and destination [1]
                     directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
-                
-
-                    #-----------------Open a new web traffic file------------------
-
-                    # Check if a new web traffic file needs to be loaded
-                    if len(webTrafficLines) == 0:
-                        deviationTime = totalTimeParseLine 
-
-                        # check which type of web traffic to get, and get the file the result will be written to
-
-                        if len(webTrafficTestFiles) > 0:
-                            webTrafficFile = open(webTrafficTestFiles[0], 'r')
-                            webTrafficTestFiles.pop(0)
-                            webTrafficLines = webTrafficFile.readlines()
-                            webTrafficFile.close()
-
-                            currParsedFile = open(parsedTestFiles[0], 'a') 
-                            print("Printing to new test set file ", os.path.basename(parsedTestFiles[0]))
-                            parsedTestFiles.pop(0)
-
-                        elif len(webTrafficValidFiles) > 0:
-
-                            webTrafficFile = open(webTrafficValidFiles[0], 'r') 
-                            webTrafficValidFiles.pop(0)
-                            webTrafficLines = webTrafficFile.readlines()
-                            webTrafficFile.close()
-
-                            currParsedFile = open(parsedValidFiles[0], 'a') 
-                            print("Printing to new validation set file", os.path.basename(parsedValidFiles[0])) 
-                            parsedValidFiles.pop(0)
-
-                        elif len(webTrafficLines) == 0  and len(webTrafficTrainFiles) > 0:
-
-                            webTrafficFile = open(webTrafficTrainFiles[0], 'r') 
-                            webTrafficTrainFiles.pop(0)
-                            webTrafficLines = webTrafficFile.readlines()
-                            webTrafficFile.close()
-
-                            currParsedFile = open(parsedTrainFiles[0], 'a') 
-                            print("Printing to new training set file ", os.path.basename(parsedTrainFiles[0]))
-                            parsedTrainFiles.pop(0)
-
-                        else:
-                            # Done with the parsing
-                            print("Have injected all web traffic with noise")
-                            print("Ending the program")
-                            return
 
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
                 
@@ -146,6 +126,7 @@ def main():
                     # Direction
                     if(directionSplit[IP_INDEX_SENDER] == ''):
                         print("The noise packet has no IP address for the sender, skipping this noise packet")
+                        currNumSkippedPackets += 1
                         continue
                     if (directionSplit[IP_INDEX_SENDER] == ipHost):
                         direction = 's'
@@ -163,45 +144,27 @@ def main():
                         packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                     except:
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+                        currNumSkippedPackets += 1
                         continue
 
                     
                     # Do not accept an empty packet size
                     if int(packetSize) == 0:
                         print("Packet size" + packetSize + " is 0, and therefore invalid")
+                        currNumSkippedPackets += 1
                         continue
-                    
-
-                    # If the current web traffic packet is empty, add the current noise packet
-                    # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
-                    # TODO: make sure that this does not cause any problem
-                    # TODO: might want to rm the print 
-                    try:
-                        currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
-                    except:
-                        currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                        print("Crossline is empty, added the noise line")
+                    elif int(packetSize) < 0:
+                        print("Packet size" + packetSize + " is negative, and therefore invalid")
+                        currNumSkippedPackets += 1
                         continue
 
-                    # Sort the noise and the web traffic after time
-                    if(finalTime < int(currWebTrafficPacketAttrList[PACKET_ATTR_INDEX_TIME])):
-                        currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                    else:
-                        currParsedFile.writelines(webTrafficLines[0])
-                        webTrafficLines.pop(0)
+
+                    currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                    currNumPackets += 1
 
                 # Done with the current filesToParse
                 print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
-                deviationTime = 0
                 fileToParse.close()
-
-            # If more web traffic, go to the next file to be parsed (next noise file)
-            if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
-                print("Popping ", os.path.basename(files2Parse[0]))
-                files2Parse.pop(0)
-                print("Now first one is: ", os.path.basename(files2Parse[0]), "\n")
-            else: print("We stopped removing files")
-    '''
 
 # run main 
 if __name__=="__main__":
