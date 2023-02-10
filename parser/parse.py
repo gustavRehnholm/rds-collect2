@@ -39,7 +39,8 @@ def main():
     # is used to get the direction of each packet
     ipHost = '10.88.0.9'
     # Current opened test/valid/train/ parsed file
-    currParsedFile = []
+    currParsedFiles
+     = []
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
 
@@ -68,9 +69,11 @@ def main():
     for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
         for files in filenames:
             files2Parse.append(os.path.join(files2ParseDirPath, files))
-            currParsedFile.append(os.path.join(parsedDirPath, files))
+            currParsedFiles
+            .append(os.path.join(parsedDirPath, files))
         print("Files to parse: ", len(files2Parse))
-        print("Parsed Files: ", len(currParsedFile))
+        print("Parsed Files: ", len(currParsedFiles
+        ))
 
 
 
@@ -157,7 +160,12 @@ def main():
                     continue
 
 
+                currParsedFile = open(currParsedFiles[0], 'a') 
+                print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
+                currParsedFiles.pop(0)
+
                 currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
+
                 currNumPackets += 1
 
             # Done with the current filesToParse
