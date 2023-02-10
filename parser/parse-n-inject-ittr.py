@@ -20,11 +20,15 @@ def main():
     # Directory with the noise
     FILES_2_PARSE_DIR = "captures"
     # Directory with the result
-    PARSED_FILES_DIR = "parsedFilesTmp"
+    PARSED_FILES_DIR = "parsedFiles-ittr-1-test"
     # Directory with the web traffic
-    WEB_TRAFFIC_FILES_DIR = "dataset"
+    #   dataset: the whole dataset, can be trained on, but to large for quick testing
+    #   dataset-test: a much shorter dataset with only google as a site, only for testing the parser
+    WEB_TRAFFIC_FILES_DIR = "dataset-test"
     # the result file name
-    FOLD0_CSV = "dataset/fold-0.csv"
+    #   dataset/fold-0.csv: information about what the different packet should be used for
+    #   dataset-test/fold-0-test.csv: fold file for the dataset-test
+    FOLD0_CSV = "dataset-test/fold-0-test.csv"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
