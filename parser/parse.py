@@ -80,10 +80,14 @@ def main():
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
 
-     # For every file to parse (aka the noise)
+    currIndex = -1
+
+    # For every file to parse (aka the noise)
     for fileToParsePath in files2Parse:
         print("New file to parse: ", os.path.basename(fileToParsePath))
 
+        # increment the index (to indicate to the user how long the program must run)
+        currIndex += 1
         # total number of packets
         numPackets += currNumPacket
         # successfully packets
@@ -98,7 +102,7 @@ def main():
 
         with open(fileToParsePath, 'r') as fileToParse:
             print("/n")
-            print(numPackets, "/", len(files2Parse), " Packets left")
+            print(len(files2Parse), "/", currIndex, " files left")
             print("Opening ", os.path.basename(fileToParsePath))
 
             currParsedFile = open(currParsedFiles[0], 'a') 
