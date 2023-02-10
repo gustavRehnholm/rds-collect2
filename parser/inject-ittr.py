@@ -4,7 +4,6 @@ import os
 from os import walk
 from os import path
 from re import search
-import time
 import pandas as pd
 # For testing
 import logging
@@ -18,9 +17,9 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures-342"
+    FILES_2_PARSE_DIR = "captures-171"
     # Directory with the result
-    PARSED_FILES_DIR = "parsedFiles-ittr-342"
+    PARSED_FILES_DIR = "parsedFiles-ittr-171"
     # Directory with the web traffic
     #   dataset: the whole dataset, can be trained on, but to large for quick testing
     #   dataset-test: a much shorter dataset with only google as a site, only for testing the parser
@@ -99,9 +98,6 @@ def main():
     df       = pd.read_csv(FOLD0_CSV)
     dfFormat = ['log', 'is_train', 'is_valid', 'is_test']
     dfFiles  = df[dfFormat]
-
-
-
 
     # For every log file in the web traffic, make sure that there is an correlating log file to store the parsed result
     for x in range(0, len(dfFiles['log'])):
