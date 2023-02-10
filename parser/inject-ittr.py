@@ -35,9 +35,9 @@ def main():
     # index of the different attributes
     IP_INDEX_SENDER = 0
     IP_INDEX_RECIEVER = 1
-    PACKET_ATTR_INDEX_TIME = 0
-    PACKET_ATTR_INDEX_IP   = 1
-    PACKET_ATTR_INDEX_SIZE = 2
+    PACKET_ATTR_INDEX_TIME  = 0
+    PACKET_ATTR_INDEX_DIR   = 1
+    PACKET_ATTR_INDEX_SIZE  = 2
 
 
     #----------Variables----------#
@@ -161,24 +161,14 @@ def main():
 
                     # get each attribute for the current line
                     splitParseLine = parseLine.split("\t")
-
-                    '''
-                    # get the time for the data (convert from seconds with 9 float numbers, to nanoseconds as a integer)
-                    parseLineTime           = splitParseLine[PACKET_ATTR_INDEX_TIME].split('.')
-                    timeLeftOfDotInNanoSec  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
-                    timeRightOfDotInNanoSec = int(parseLineTime[1])
-                    totalTimeParseLine      =  timeLeftOfDotInNanoSec + timeRightOfDotInNanoSec
-
-                    # Get the IP of the source [0] and destination [1]
-                    directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
-                    '''
+                    packetAttrList = splitParseLine.split(",")
                 
 
                     #-----------------Open a new web traffic file------------------
 
                     # Check if a new web traffic file needs to be loaded
                     if len(webTrafficLines) == 0:
-                        deviationTime = splitParseLine[PACKET_ATTR_INDEX_TIME] 
+                        deviationTime = packetAttrList[PACKET_ATTR_INDEX_TIME] 
 
                         # check which type of web traffic to get, and get the file the result will be written to
 
@@ -223,37 +213,7 @@ def main():
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
                 
                     # Time
-                    finalTime = int(splitParseLine[PACKET_ATTR_INDEX_TIME]) - deviationTime
-
-                    '''
-                    # Direction
-                    if(directionSplit[IP_INDEX_SENDER] == ''):
-                        print("The noise packet has no IP address for the sender, skipping this noise packet")
-                        continue
-                    if (directionSplit[IP_INDEX_SENDER] == ipHost):
-                        direction = 's'
-                    elif(directionSplit[IP_INDEX_RECIEVER] == ipHost):
-                        direction = 'r'
-                    # If the IP_HOST is wrong, choose the one that start with an 10 as the host
-                    else:
-                        checkIfLocal = directionSplit[IP_INDEX_SENDER].split('.')
-                        if checkIfLocal[0] == '10':
-                            ipHost = directionSplit[0]
-                        else: ipHost = directionSplit[1]
-
-                    # Size
-                    try:
-                        packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
-                    except:
-                        print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
-                        continue
-
-                    
-                    # Do not accept an empty packet size
-                    if int(packetSize) == 0:
-                        print("Packet size" + packetSize + " is 0, and therefore invalid")
-                        continue
-                    '''
+                    finalTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME]) - deviationTime
 
                     # If the current web traffic packet is empty, add the current noise packet
                     # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
@@ -262,19 +222,20 @@ def main():
                     try:
                         currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
                     except:
-                        currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                        currParsedFile.writelines([str(finalTime), ",", packetAttrList[PACKET_ATTR_INDEX_DIR], ",", packetAttrList[PACKET_ATTR_INDEX_SIZE]])
                         print("Crossline is empty, added the noise line")
                         continue
 
                     # Sort the noise and the web traffic after time
                     if(finalTime < int(currWebTrafficPacketAttrList[PACKET_ATTR_INDEX_TIME])):
-                        currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                        currParsedFile.writelines([str(finalTime), ",", packetAttrList[PACKET_ATTR_INDEX_DIR], ",", packetAttrList[PACKET_ATTR_INDEX_SIZE]])
                     else:
                         currParsedFile.writelines(webTrafficLines[0])
                         webTrafficLines.pop(0)
 
                 # Done with the current filesToParse
-                print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
+                print("Out of lines in ", os.path.basename(fileToParsePath))
+                print("Closing...")
                 deviationTime = 0
                 fileToParse.close()
 
@@ -282,7 +243,8 @@ def main():
             if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
                 print("Popping ", os.path.basename(files2Parse[0]))
                 files2Parse.pop(0)
-                print("Now first one is: ", os.path.basename(files2Parse[0]), "\n")
+                print("Now first one is: ", os.path.basename(files2Parse[0]))
+                print("\n")
             else: print("We stopped removing files")
 
 
