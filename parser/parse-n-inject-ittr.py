@@ -20,7 +20,7 @@ def main():
     # Directory with the noise
     FILES_2_PARSE_DIR = "captures"
     # Directory with the result
-    PARSED_FILES_DIR = "parsedFiles-ittr-1-test"
+    PARSED_FILES_DIR = "parsedFiles-ittr-1"
     # Directory with the web traffic
     #   dataset: the whole dataset, can be trained on, but to large for quick testing
     #   dataset-test: a much shorter dataset with only google as a site, only for testing the parser
