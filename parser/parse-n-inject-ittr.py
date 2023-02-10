@@ -130,7 +130,7 @@ def main():
             print("New file to parse: ", os.path.basename(fileToParsePath))
             
             # When there is no more web traffic data left to inject into, end the program
-            if(len(trainFiles) <= 0):
+            if(len(webTrafficTrainFiles) <= 0):
                 print("\n")
                 print("Of the web traffic there is:")
                 print("testing    files   left: ", len(webTraffictestFiles))
