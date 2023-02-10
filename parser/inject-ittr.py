@@ -223,7 +223,7 @@ def main():
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
                 
                     # Time
-                    finalTime = splitParseLine[PACKET_ATTR_INDEX_TIME] - deviationTime
+                    finalTime = int(splitParseLine[PACKET_ATTR_INDEX_TIME]) - deviationTime
 
                     '''
                     # Direction
