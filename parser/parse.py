@@ -127,7 +127,7 @@ def main():
 
                 # Direction
                 if(directionSplit[IP_INDEX_SENDER] == ''):
-                    print("The noise packet has no IP address for the sender, skipping this noise packet")
+                    #print("The noise packet has no IP address for the sender, skipping this noise packet")
                     currNumSkippedPackets += 1
                     continue
                 elif (directionSplit[IP_INDEX_SENDER] == ipHost):
@@ -148,18 +148,18 @@ def main():
                 try:
                     packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                 except:
-                    print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+                    #print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                     currNumSkippedPackets += 1
                     continue
 
                 
                 # Do not accept an empty packet size
                 if int(packetSize) == 0:
-                    print("Packet size" + packetSize + " is 0, and therefore invalid")
+                    #print("Packet size" + packetSize + " is 0, and therefore invalid")
                     currNumSkippedPackets += 1
                     continue
                 elif int(packetSize) < 0:
-                    print("Packet size" + packetSize + " is negative, and therefore invalid")
+                    #print("Packet size" + packetSize + " is negative, and therefore invalid")
                     currNumSkippedPackets += 1
                     continue
 
@@ -169,7 +169,14 @@ def main():
 
             # Done with the current filesToParse
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
+            print("Number of packets/lines in the file:         ", currNumPacket)
+            print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
+            print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
             fileToParse.close()
+
+    print("Total number of packets/lines:         ", NumPacket)
+    print("Total number of parsed packets/lines:  ", NumParsedPackets)
+    print("Total number of skipped packets/lines: ", NumSkippedPackets)
 
 # run main 
 if __name__=="__main__":
