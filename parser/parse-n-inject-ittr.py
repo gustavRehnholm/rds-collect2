@@ -239,12 +239,14 @@ def main():
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                         continue
 
+                    
                     # Do not accept an negative packet size (or empty which it should not be)
-                    if int(packetSize) <= 0:
+                    if int(packetSize) == 0:
                         print("In the noise file: ", os.path.basename(fileToParsePath))
-                        print("Packet size" + packetSize + " is negative, and therefore invalid")
+                        print("Packet size" + packetSize + " is 0, and therefore invalid")
                         continue
-                        
+                    
+
                     # If the current web traffic packet is empty, add the current noise packet
                     # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
                     # TODO: make sure that this does not cause any problem
