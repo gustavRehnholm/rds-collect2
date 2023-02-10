@@ -51,11 +51,11 @@ def main():
         print("New file to move: ", currfile)
         currFileNum += 1
 
-        if currFileNum >= 171:
+        if currFileNum <= 171:
             shutil.copy(currfile, CAPTURES_171_DIR)
-        if currFileNum >= 342:
+        if currFileNum <= 342:
             shutil.copy(currfile, CAPTURES_342_DIR)
-        if currFileNum >= 685:
+        if currFileNum <= 685:
             shutil.copy(currfile, CAPTURES_685_DIR)
 
 
