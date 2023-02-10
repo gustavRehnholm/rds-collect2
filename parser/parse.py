@@ -164,9 +164,9 @@ def main():
                 print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
                 currParsedFiles.pop(0)
 
+                # parse the packet and incerment the counter
                 currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
-
-                currNumPackets += 1
+                currNumParsedPackets += 1
 
             # Done with the current filesToParse
             print("Out of lines in ", os.path.basename(fileToParsePath), "\nClosing...")
