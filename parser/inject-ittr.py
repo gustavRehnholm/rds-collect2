@@ -18,9 +18,9 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures-1370"
+    FILES_2_PARSE_DIR = "captures-342"
     # Directory with the result
-    PARSED_FILES_DIR = "parsedFiles-ittr-1370"
+    PARSED_FILES_DIR = "parsedFiles-ittr-342"
     # Directory with the web traffic
     #   dataset: the whole dataset, can be trained on, but to large for quick testing
     #   dataset-test: a much shorter dataset with only google as a site, only for testing the parser
@@ -82,8 +82,8 @@ def main():
     print("Setting up directories")
 
     # Create the structure for the result directory, so it match the web traffics
-    os.system("rm -f -r parsedFiles-ittr-1370")
-    os.system("mkdir parsedFiles-ittr-1370")
+    os.system("rm -f -r ", PARSED_FILES_DIR)
+    os.system("mkdir ", PARSED_FILES_DIR)
     for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
         for dirs in dirnames:
             try: 
@@ -247,7 +247,9 @@ def main():
                 print("Now first one is: ", os.path.basename(files2Parse[0]))
                 print("files to parse that is left: ", len(files2Parse))
                 print("\n")
-            else: print("We stopped removing files")
+            else: 
+                print("We stopped removing files")
+
 
 
 # run main 
