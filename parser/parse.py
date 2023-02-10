@@ -29,8 +29,6 @@ def main():
 
 
     #----------Variables----------#
-    # Change depeding if testing or running
-    logging.basicConfig(level=logging.INFO)
     # is used to get the direction of each packet
     ipHost = '10.88.0.9'
     # Current opened test/valid/train/ parsed file
