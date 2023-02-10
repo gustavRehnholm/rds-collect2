@@ -84,6 +84,7 @@ def main():
     # Create the structure for the result directory, so it match the web traffics
     os.system("rm -f -r " + PARSED_FILES_DIR)
     os.system("mkdir " + PARSED_FILES_DIR)
+
     for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
         for dirs in dirnames:
             try: 
@@ -193,7 +194,7 @@ def main():
                             print("Printing to new validation set file", os.path.basename(parsedValidFiles[0])) 
                             parsedValidFiles.pop(0)
 
-                        elif len(webTrafficLines) == 0  and len(webTrafficTrainFiles) > 0:
+                        elif len(webTrafficTrainFiles) > 0:
 
                             webTrafficFile = open(webTrafficTrainFiles[0], 'r') 
                             webTrafficTrainFiles.pop(0)
@@ -240,15 +241,16 @@ def main():
                 deviationTime = 0
                 fileToParse.close()
 
-            # If more web traffic, go to the next file to be parsed (next noise file)
+            # If more test and validation files left, keep removing noise files
             if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
                 print("Popping ", os.path.basename(files2Parse[0]))
                 files2Parse.pop(0)
                 print("Now first one is: ", os.path.basename(files2Parse[0]))
-                print("files to parse that is left: ", len(files2Parse))
+                print("filesToParse len  = ", len(files2Parse), "\n")
                 print("\n")
             else: 
                 print("We stopped removing files")
+                print("filesToParse len  = ", len(files2Parse), "\n")
 
 
 
