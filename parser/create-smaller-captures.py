@@ -34,7 +34,9 @@ def main():
         for files in filenames:
             files2Mv.append(os.path.join(CAPTURES_1370_DIR, files))
 
+        files2Mv.sort()
         print("Files to move: ", len(files2Mv))
+        
 
     currFileNum = 0
     for currfile in files2Mv:
