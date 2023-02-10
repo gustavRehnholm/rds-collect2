@@ -136,7 +136,8 @@ def main():
                     if checkIfLocal[0] == '10':
                         ipHost = directionSplit[0]
                         direction = 's'
-                    else: ipHost = directionSplit[1]
+                    else: 
+                        ipHost = directionSplit[1]
                         direction = 'r'
 
                 # Size
