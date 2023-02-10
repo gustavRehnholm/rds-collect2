@@ -98,7 +98,7 @@ def main():
 
         with open(fileToParsePath, 'r') as fileToParse:
             print("/n")
-            print(numPackets + "/" + len(files2Parse) + "Packets left")
+            print(numPackets, "/", len(files2Parse), " Packets left")
             print("Opening ", os.path.basename(fileToParsePath))
 
             currParsedFile = open(currParsedFiles[0], 'a') 
