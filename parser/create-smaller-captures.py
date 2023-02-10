@@ -9,7 +9,7 @@ from os import path
 import shutil
 
 def main():
-
+    print("script starts")
 
     #-----------Constants------------#
     # Directory with the noise
