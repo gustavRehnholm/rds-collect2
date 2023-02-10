@@ -219,6 +219,7 @@ def main():
 
                     # Direction
                     if(directionSplit[IP_INDEX_SENDER] == ''):
+                        print("The noise file has no IP address for the sender, skipping this noise packet")
                         continue
                     if (directionSplit[IP_INDEX_SENDER] == ipHost):
                         direction = 's'
@@ -235,14 +236,14 @@ def main():
                     try:
                         packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                     except:
-                        print("In the noise file: ", os.path.basename(fileToParsePath))
+                        #print("In the noise file: ", os.path.basename(fileToParsePath))
                         print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                         continue
 
                     
                     # Do not accept an negative packet size (or empty which it should not be)
                     if int(packetSize) == 0:
-                        print("In the noise file: ", os.path.basename(fileToParsePath))
+                        #print("In the noise file: ", os.path.basename(fileToParsePath))
                         print("Packet size" + packetSize + " is 0, and therefore invalid")
                         continue
                     
