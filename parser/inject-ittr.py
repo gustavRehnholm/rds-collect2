@@ -213,7 +213,6 @@ def main():
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
                 
                     # Time
-                    print(packetAttrList[PACKET_ATTR_INDEX_TIME])
                     localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
                     finalTime = localTime - deviationTime
 
