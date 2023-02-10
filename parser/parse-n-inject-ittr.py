@@ -54,9 +54,6 @@ def main():
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
 
-    # For logging
-    #currTotalTimeParseLine = time.time()
-
     # files with the webTraffic
     webTrafficTrainFiles = []
     webTrafficValidFiles = []
