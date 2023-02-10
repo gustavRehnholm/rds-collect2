@@ -99,6 +99,10 @@ def main():
         with open(fileToParsePath, 'r') as fileToParse:
             print("Opening ", os.path.basename(fileToParsePath))
 
+            currParsedFile = open(currParsedFiles[0], 'a') 
+            print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
+            currParsedFiles.pop(0)
+
             # For every line in the noise
             # Go through the current noise file, line for line, because it might be to large for readlines()
             for parseLine in fileToParse:
@@ -158,11 +162,6 @@ def main():
                     print("Packet size" + packetSize + " is negative, and therefore invalid")
                     currNumSkippedPackets += 1
                     continue
-
-
-                currParsedFile = open(currParsedFiles[0], 'a') 
-                print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
-                currParsedFiles.pop(0)
 
                 # parse the packet and incerment the counter
                 currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
