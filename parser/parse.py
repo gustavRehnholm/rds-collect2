@@ -120,8 +120,6 @@ def main():
 
                 # Set time, direction and packet size, if direction or size is missing, skip the packet  
             
-                # Time
-                finalTime = totalTimeParseLine - deviationTime
 
                 # Direction
                 if(directionSplit[IP_INDEX_SENDER] == ''):
@@ -159,7 +157,7 @@ def main():
                     continue
 
 
-                currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
+                currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
                 currNumPackets += 1
 
             # Done with the current filesToParse
