@@ -161,7 +161,7 @@ def main():
 
                     # get each attribute for the current line
                     splitParseLine = parseLine.split("\t")
-                    packetAttrList = splitParseLine.split(",")
+                    packetAttrList = splitParseLine[0].split(",")
                 
 
                     #-----------------Open a new web traffic file------------------
