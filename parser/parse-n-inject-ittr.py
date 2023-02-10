@@ -132,10 +132,11 @@ def main():
             # When there is no more web traffic data left to inject into, end the program
             if(len(trainFiles) <= 0):
                 print("\n")
-                print("testingFiles    left: ", len(testFiles))
-                print("validationFiles left: ", len(validFiles))
-                print("trainingFiles   left: ", len(trainFiles))
-                print("Lines left in crossfile: ", len(crossLine))
+                print("Of the web traffic there is:")
+                print("testing    files   left: ", len(webTraffictestFiles))
+                print("validation files   left: ", len(webTrafficvalidFiles))
+                print("training   files   left: ", len(webTrafficTrainFiles))
+                print("Lines              left: ", len(webTrafficLines))
                 print("\n")
                 print("No more files to train, ends the program")
                 return
