@@ -82,6 +82,8 @@ def main():
     print("Setting up directories")
 
     # Create the structure for the result directory, so it match the web traffics
+    os.system("rm -f -r parsedFiles-ittr-685")
+    os.system("mkdir parsedFiles-ittr-685")
     for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
         for dirs in dirnames:
             try: 
@@ -96,6 +98,8 @@ def main():
     df       = pd.read_csv(FOLD0_CSV)
     dfFormat = ['log', 'is_train', 'is_valid', 'is_test']
     dfFiles  = df[dfFormat]
+
+
 
 
     # For every log file in the web traffic, make sure that there is an correlating log file to store the parsed result
