@@ -210,6 +210,8 @@ def main():
 
                         else:
                             # Done with the parsing
+                            print("Have injected all web traffic with noise")
+                            print("Ending the program")
                             return
 
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
