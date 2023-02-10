@@ -214,7 +214,7 @@ def main():
                 
                     # Time
                     print(packetAttrList[PACKET_ATTR_INDEX_TIME])
-                    localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
+                    localTime = packetAttrList[PACKET_ATTR_INDEX_TIME]
                     finalTime = localTime - deviationTime
 
                     # If the current web traffic packet is empty, add the current noise packet
