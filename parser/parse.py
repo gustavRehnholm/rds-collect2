@@ -52,12 +52,9 @@ def main():
             currParsedFile.append(os.path.join(parsedDirPath, files))
         print("Files to parse: ", len(files2Parse))
         print("Parsed Files: ", len(currParsedFile))
-'''
+    '''
 
     #----------------------------Parsing-------------------------------------------
-    '''
-    #Parse and inject all the noise, if their is more web traffic than noise, the noise will be reused
-    '''
 
     print("Starting parse")
     files2Parse.sort()
@@ -199,7 +196,7 @@ def main():
                 files2Parse.pop(0)
                 print("Now first one is: ", os.path.basename(files2Parse[0]), "\n")
             else: print("We stopped removing files")
-'''
+    '''
 
 # run main 
 if __name__=="__main__":
