@@ -168,7 +168,7 @@ def main():
 
                     # Check if a new web traffic file needs to be loaded
                     if len(webTrafficLines) == 0:
-                        deviationTime = packetAttrList[PACKET_ATTR_INDEX_TIME] 
+                        deviationTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
 
                         # check which type of web traffic to get, and get the file the result will be written to
 
@@ -214,7 +214,7 @@ def main():
                 
                     # Time
                     print(packetAttrList[PACKET_ATTR_INDEX_TIME])
-                    localTime = packetAttrList[PACKET_ATTR_INDEX_TIME]
+                    localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
                     finalTime = localTime - deviationTime
 
                     # If the current web traffic packet is empty, add the current noise packet
