@@ -18,6 +18,10 @@ def main():
     CAPTURES_342  = "captures-342"
     CAPTURES_171  = "captures-171"
 
+    os.system("rm -f -r captures-685*")
+    os.system("rm -f -r captures-342*")
+    os.system("rm -f -r captures-171*")
+
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Mv = []
 
