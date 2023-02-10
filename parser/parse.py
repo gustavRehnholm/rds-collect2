@@ -68,11 +68,9 @@ def main():
     for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
         for files in filenames:
             files2Parse.append(os.path.join(files2ParseDirPath, files))
-            currParsedFiles
-            .append(os.path.join(parsedDirPath, files))
+            currParsedFiles.append(os.path.join(parsedDirPath, files))
         print("Files to parse: ", len(files2Parse))
-        print("Parsed Files: ", len(currParsedFiles
-        ))
+        print("Parsed Files: ", len(currParsedFiles))
 
 
 
