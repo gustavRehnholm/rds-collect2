@@ -174,7 +174,7 @@ def main():
 
                     # Check if a new web traffic file needs to be loaded
                     if len(webTrafficLines) == 0:
-                        deviationTime = totalTimeParseLine 
+                        deviationTime = splitParseLine[PACKET_ATTR_INDEX_TIME] 
 
                         # check which type of web traffic to get, and get the file the result will be written to
 
