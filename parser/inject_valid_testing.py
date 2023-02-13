@@ -26,16 +26,6 @@ def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Par
     # List of all the noise, which should be injected into the web traffic
     files2Parse = []
 
-    # files with the webTraffic
-    webTrafficTrainFiles = []
-    webTrafficValidFiles = []
-    webTrafficTestFiles  = []
-    # Files for the parsed noise
-    parsedTrainFiles = []
-    parsedValidFiles = []
-    parsedTestFiles  = []
-
-    
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
 
