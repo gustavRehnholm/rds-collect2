@@ -13,18 +13,18 @@ def main():
 
     #-----------Constants------------#
     # Directory with the noise
-    CAPTURES_1370 = "captures-1370"
-    CAPTURES_685  = "captures-685"
-    CAPTURES_342  = "captures-342"
-    CAPTURES_171  = "captures-171"
+    CAPTURES_1370 = "parsed-noise/captures-1370"
+    CAPTURES_685  = "parsed-noise/captures-685"
+    CAPTURES_342  = "parsed-noise/captures-342"
+    CAPTURES_171  = "parsed-noise/captures-171"
 
-    os.system("rm -f -r captures-685")
-    os.system("rm -f -r captures-342")
-    os.system("rm -f -r captures-171")
+    os.system("rm -f -r parsed-noise/captures-685")
+    os.system("rm -f -r parsed-noise/captures-342")
+    os.system("rm -f -r parsed-noise/captures-171")
 
-    os.system("mkdir captures-685")
-    os.system("mkdir captures-342")
-    os.system("mkdir captures-171")
+    os.system("mkdir parsed-noise/captures-685")
+    os.system("mkdir parsed-noise/captures-342")
+    os.system("mkdir parsed-noise/captures-171")
 
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Mv = []
@@ -58,6 +58,17 @@ def main():
         if currFileNum <= 685:
             shutil.copy(currfile, CAPTURES_685_DIR)
 
+    print("Capture-1370 contains the following number of files")
+    os.system("ls parsed-noise/twitch/captures-1370 | wc -l")
+
+    print("Capture-658 contains the following number of files")
+    os.system("ls parsed-noise/twitch/captures-658 | wc -l")
+
+    print("Capture-342 contains the following number of files")
+    os.system("ls parsed-noise/twitch/captures-342 | wc -l")
+
+    print("Capture-171 contains the following number of files")
+    os.system("ls parsed-noise/twitch/captures-171 | wc -l")
 
 # run main 
 if __name__=="__main__":
