@@ -11,10 +11,34 @@ import sys
 
 # inject noise for the validation and testing
 def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
-    webTrafficLines = 0
+        # index of the different attributes
+    PACKET_ATTR_INDEX_TIME  = 0
+    PACKET_ATTR_INDEX_DIR   = 1
+    PACKET_ATTR_INDEX_SIZE  = 2
+
+    #----------Variables----------#
+    # To standardize the time of each packet
+    deviationTime = 0
+    # Current opened test/valid/train/ parsed file
+    currParsedFile = []
+    # all lines that are left to read in the current opened web traffic file
+    webTrafficLines = []
+    # List of all the noise, which should be injected into the web traffic
+    files2Parse = []
+
+    # files with the webTraffic
+    webTrafficTrainFiles = []
+    webTrafficValidFiles = []
+    webTrafficTestFiles  = []
+    # Files for the parsed noise
+    parsedTrainFiles = []
+    parsedValidFiles = []
+    parsedTestFiles  = []
+
+    
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
-    
+
     # Itterativt add test and validation files
     while(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
 
