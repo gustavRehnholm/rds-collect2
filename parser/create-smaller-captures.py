@@ -58,6 +58,8 @@ def main():
         if currFileNum <= 685:
             shutil.copy(currfile, CAPTURES_685_DIR)
 
+    # print to show that there is the right amount of files in each directory
+
     print("Capture-1370 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-1370 | wc -l")
     print("")
