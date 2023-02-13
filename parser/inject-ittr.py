@@ -143,7 +143,7 @@ def main():
                             webTrafficFile.close()
 
                             currParsedFile = open(parsedTestFiles[0], 'a') 
-                            print("Printing to new test set file ", os.path.basename(parsedTestFiles[0]))
+                            #print("Printing to new test set file ", os.path.basename(parsedTestFiles[0]))
                             parsedTestFiles.pop(0)
 
                         elif len(webTrafficValidFiles) > 0:
@@ -154,7 +154,7 @@ def main():
                             webTrafficFile.close()
 
                             currParsedFile = open(parsedValidFiles[0], 'a') 
-                            print("Printing to new validation set file", os.path.basename(parsedValidFiles[0])) 
+                            #print("Printing to new validation set file", os.path.basename(parsedValidFiles[0])) 
                             parsedValidFiles.pop(0)
 
                         elif len(webTrafficTrainFiles) > 0:
@@ -165,7 +165,7 @@ def main():
                             webTrafficFile.close()
 
                             currParsedFile = open(parsedTrainFiles[0], 'a') 
-                            print("Printing to new training set file ", os.path.basename(parsedTrainFiles[0]))
+                            #print("Printing to new training set file ", os.path.basename(parsedTrainFiles[0]))
                             parsedTrainFiles.pop(0)
 
                         else:
