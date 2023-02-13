@@ -1,7 +1,8 @@
 # ignore the input and output from the parser, they are to large
-/parser/captures
-/parser/dataset
-/parser/parsedFiles
+parser/captures/*
+parser/injected/*
+parser/parsed/*
+
 *.log
 *.csv
 *.png
