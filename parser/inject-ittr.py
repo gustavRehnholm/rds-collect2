@@ -186,11 +186,6 @@ def main():
                         else:
                             # Done with the parsing
                             print("Have injected all web traffic with noise")
-                            print("Of the web traffic there is:")
-                            print("testing    files   left: ", len(webTrafficTestFiles))
-                            print("validation files   left: ", len(webTrafficValidFiles))
-                            print("training   files   left: ", len(webTrafficTrainFiles))
-                            print("Lines              left: ", len(webTrafficLines))
                             print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
                             print("Ending the program")
                             return
@@ -207,7 +202,7 @@ def main():
                         currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
                     except:
                         currParsedFile.writelines([str(finalTime), ",", packetAttrList[PACKET_ATTR_INDEX_DIR], ",", packetAttrList[PACKET_ATTR_INDEX_SIZE]])
-                        print("Crossline is empty, added the noise line")
+                        print("webTrafficLines is empty, added the noise line")
                         continue
 
                     # Sort the noise and the web traffic after time
