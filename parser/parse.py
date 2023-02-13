@@ -21,9 +21,9 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures/captures-twitch-raw"
+    FILES_2_PARSE_DIR = "raw-captures/raw-captures-twitch"
     # Directory with the noise parsed
-    PARSED_FILES_DIR = "parsed/twitch/captures-1370"
+    PARSED_FILES_DIR = " parsed-noise/twitch/captures-1370"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
@@ -64,6 +64,9 @@ def main():
     # Paths to the directories
     files2ParseDirPath = os.path.join(os.getcwd(), FILES_2_PARSE_DIR)
     parsedDirPath      = os.path.join(os.getcwd(), PARSED_FILES_DIR)
+
+    os.ssytem("rm -f -r " + files2ParseDirPath)
+    os.ssytem("mkdir " + files2ParseDirPath)
 
     # Get list of all noise files (which will be parsed)
     for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
