@@ -26,7 +26,6 @@ def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Par
 
                 print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
                 print("web traffic validation Files left: "      , len(webTrafficValidFiles))
-                print("web traffic training Files   left: "      , len(webTrafficTrainFiles))
                 print("Lines left in the open web traffic file: ", len(webTrafficLines))
                 print("\n")
 
