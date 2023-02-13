@@ -13,9 +13,11 @@ def main():
 
     #-----------Constants------------#
     # Directory with the noise
-    FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-" + str(length)
+    #FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-" + str(length)
+    FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-1370"
     # Directory with the result
-    PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-" + str(length)
+    #PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-" + str(length)
+    PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-1370"
     # Directory with the web traffic
     WEB_TRAFFIC_FILES_DIR = "dataset-test/client"
     # Information about what the different web traffics should be used for on the WF (training, validation, testing)
