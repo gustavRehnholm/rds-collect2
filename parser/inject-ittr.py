@@ -8,6 +8,7 @@ import pandas as pd
 import sys
 
 def main():
+    print("Script start")
     length = sys.argv[0]
 
     #-----------Constants------------#
