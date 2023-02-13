@@ -65,8 +65,8 @@ def main():
     files2ParseDirPath = os.path.join(os.getcwd(), FILES_2_PARSE_DIR)
     parsedDirPath      = os.path.join(os.getcwd(), PARSED_FILES_DIR)
 
-    os.ssytem("rm -f -r " + files2ParseDirPath)
-    os.ssytem("mkdir " + files2ParseDirPath)
+    os.sytem("rm -f -r " + files2ParseDirPath)
+    os.sytem("mkdir " + files2ParseDirPath)
 
     # Get list of all noise files (which will be parsed)
     for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
