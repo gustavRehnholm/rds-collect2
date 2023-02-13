@@ -9,7 +9,7 @@ from os import path
 import shutil
 
 def main():
-    print("script starts")
+    print("script starts\n")
 
     #-----------Constants------------#
     # Directory with the noise
@@ -69,7 +69,8 @@ def main():
 
     print("Capture-171 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-171 | wc -l")
-
+    
+    print("\n")
 # run main 
 if __name__=="__main__":
     main()
