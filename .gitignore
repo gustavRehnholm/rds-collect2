@@ -6,3 +6,4 @@ parser/parsed/*
 *.log
 *.csv
 *.png
+*.txt
