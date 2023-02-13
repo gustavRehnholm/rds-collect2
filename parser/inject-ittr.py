@@ -184,6 +184,7 @@ def main():
                         else:
                             # Done with the parsing
                             print("Have injected all web traffic with noise")
+                            print(sys.argv[1],"/", len(fileToParse), "total noise files/noise files for training")
                             print("Ending the program")
                             return
 
