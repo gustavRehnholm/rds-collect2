@@ -17,9 +17,9 @@ def main():
     # Directory with the result
     PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-" + length
     # Directory with the web traffic
-    WEB_TRAFFIC_FILES_DIR = "dataset/client"
-    # Information about what the different web traffics should be used for on the WF (traning, validation, testing)
-    FOLD0_CSV = "dataset/fold-0.csv"
+    WEB_TRAFFIC_FILES_DIR = "dataset-test/client"
+    # Information about what the different web traffics should be used for on the WF (training, validation, testing)
+    FOLD0_CSV = "dataset-test/fold-0.csv"
 
     # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
@@ -91,7 +91,7 @@ def main():
             parsedTestFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
             webTrafficTestFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         else:
-            print("ERROR")
+            print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
 
     #----------------------------Parsing-------------------------------------------
     '''

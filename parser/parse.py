@@ -11,6 +11,9 @@ from re import search
 import time
 import pandas as pd
 
+# touch stdout-dir/stdout-parse.txt
+# python3 parse.py | tee stdout-dir/stdout-parse.txt
+
 def main():
 
     #-----------Constants------------#

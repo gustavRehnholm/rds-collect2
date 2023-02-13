@@ -13,18 +13,18 @@ def main():
 
     #-----------Constants------------#
     # Directory with the noise
-    CAPTURES_1370 = "parsed-noise/captures-1370"
-    CAPTURES_685  = "parsed-noise/captures-685"
-    CAPTURES_342  = "parsed-noise/captures-342"
-    CAPTURES_171  = "parsed-noise/captures-171"
+    CAPTURES_1370 = "parsed-noise/twitch/captures-1370"
+    CAPTURES_685  = "parsed-noise/twitch/captures-685"
+    CAPTURES_342  = "parsed-noise/twitch/captures-342"
+    CAPTURES_171  = "parsed-noise/twitch/captures-171"
 
-    os.system("rm -f -r parsed-noise/captures-685")
-    os.system("rm -f -r parsed-noise/captures-342")
-    os.system("rm -f -r parsed-noise/captures-171")
+    os.system("rm -f -r parsed-noise/twitch/captures-685")
+    os.system("rm -f -r parsed-noise/twitch/captures-342")
+    os.system("rm -f -r parsed-noise/twitch/captures-171")
 
-    os.system("mkdir parsed-noise/captures-685")
-    os.system("mkdir parsed-noise/captures-342")
-    os.system("mkdir parsed-noise/captures-171")
+    os.system("mkdir parsed-noise/twitch/captures-685")
+    os.system("mkdir parsed-noise/twitch/captures-342")
+    os.system("mkdir parsed-noise/twitch/captures-171")
 
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Mv = []
