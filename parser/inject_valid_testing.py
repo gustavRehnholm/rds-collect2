@@ -10,7 +10,7 @@ import random
 import sys
 
 # inject noise for the validation and testing
-def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
+def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficValidFiles, parsedValidFiles, files2Parse):
         # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
     PACKET_ATTR_INDEX_DIR   = 1

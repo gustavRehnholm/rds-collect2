@@ -102,7 +102,7 @@ def main():
     print("Starting injecting noise")
     print("trainFiles len = ", len(webTrafficTrainFiles))
 
-    noise2train = InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
+    noise2train = InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficValidFiles, parsedValidFiles, files2Parse)
 
 
     print("Start the randomised injection of the training data")
