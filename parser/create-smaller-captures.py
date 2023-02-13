@@ -60,17 +60,21 @@ def main():
 
     print("Capture-1370 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-1370 | wc -l")
+    print("")
 
     print("Capture-685 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-685 | wc -l")
+    print("")
 
     print("Capture-342 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-342 | wc -l")
+    print("")
 
     print("Capture-171 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-171 | wc -l")
-    
-    print("\n")
+    print("")
+
+
 # run main 
 if __name__=="__main__":
     main()
