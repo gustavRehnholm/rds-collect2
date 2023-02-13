@@ -23,7 +23,7 @@ def main():
     # Directory with the noise
     FILES_2_PARSE_DIR = "raw-captures/captures"
     # Directory with the noise parsed
-    PARSED_FILES_DIR = " parsed-noise/twitch/captures-1370"
+    PARSED_FILES_DIR = "parsed-noise/twitch/captures-1370"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
