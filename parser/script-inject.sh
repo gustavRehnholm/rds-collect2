@@ -13,7 +13,7 @@ touch stdout-dir/output-inject-ittr-1370.txt
 #touch stdout-dir/output-inject-rnd-171.txt
 
 # test injection with different captures sizes
-python3 inject-ittr.py 1370 | tee stdout-dir/output-inject-ittr-1370.txt
+script -q -c "python3 inject-ittr.py 1370" /dev/null | tee stdout-dir/output-inject-ittr-1370.txt
 #python3 inject-ittr.py 658 | tee stdout-dir/output-inject-ittr-658.txt
 #python3 inject-ittr.py 342 | tee stdout-dir/output-inject-ittr-342.txt
 #python3 inject-ittr.py 171 | tee stdout-dir/output-inject-ittr-171.txt
