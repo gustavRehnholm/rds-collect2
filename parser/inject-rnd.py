@@ -10,58 +10,35 @@ from os import path
 from re import search
 import pandas as pd
 import random
-# For testing
-import logging
+import sys
 
 def main():
-    lenght = sys.argv[0]
+    lenght = sys.argv[1]
 
     #-----------Constants------------#
-    # Sec in an hour
-    SEC_PER_HOUR = 60*60
-    # Sec in a min
-    SEC_PER_MIN = 60
-    # nanoseconds in an second
-    NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures-" + lenght
+    FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-" + str(length)
     # Directory with the result
-    PARSED_FILES_DIR = "output/twitch/parsedFiles-ittr-" + lenght
+    PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-" + str(length)
     # Directory with the web traffic
-    #   dataset: the whole dataset, can be trained on, but to large for quick testing
-    #   dataset-test: a much shorter dataset with only google as a site, only for testing the parser
-    WEB_TRAFFIC_FILES_DIR = "dataset"
-    # the result file name
-    #   dataset/fold-0.csv: information about what the different packet should be used for
-    #   dataset-test/fold-0-test.csv: fold file for the dataset-test
-    FOLD0_CSV = "dataset/fold-0.csv"
-    # How much of the header to remove (to fit the noise with the web traffic)
-    HEADER = 40
+    WEB_TRAFFIC_FILES_DIR = "dataset-test/client"
+    # Information about what the different web traffics should be used for on the WF (training, validation, testing)
+    FOLD0_CSV = "dataset-test/fold-0-test.csv"
 
     # index of the different attributes
-    IP_INDEX_SENDER = 0
-    IP_INDEX_RECIEVER = 1
     PACKET_ATTR_INDEX_TIME  = 0
     PACKET_ATTR_INDEX_DIR   = 1
     PACKET_ATTR_INDEX_SIZE  = 2
 
-
     #----------Variables----------#
-    # Change depeding if testing or running
-    logging.basicConfig(level=logging.INFO)
-    # is used to get the direction of each packet
-    ipHost = '10.88.0.9'
     # To standardize the time of each packet
     deviationTime = 0
     # Current opened test/valid/train/ parsed file
     currParsedFile = []
-    # all line in the web traffic
+    # all lines that are left to read in the current opened web traffic file
     webTrafficLines = []
-    # List of all files to parse (aka all files in the filesToParseDir)
+    # List of all the noise, which should be injected into the web traffic
     files2Parse = []
-
-    # For logging
-    #currTotalTimeParseLine = time.time()
 
     # files with the webTraffic
     webTrafficTrainFiles = []
@@ -110,15 +87,15 @@ def main():
     for x in range(0, len(dfFiles['log'])):
         if(dfFiles['is_train'][x] == True): 
             parsedTrainFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-            webTrafficTrainFiles.append(os.path.join(webTrafficDirPath,"client", dfFiles['log'][x]))
+            webTrafficTrainFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         elif(dfFiles['is_valid'][x] == True): 
             parsedValidFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-            webTrafficValidFiles.append(os.path.join(webTrafficDirPath,"client", dfFiles['log'][x]))
+            webTrafficValidFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         elif(dfFiles['is_test'][x] == True): 
             parsedTestFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
-            webTrafficTestFiles.append(os.path.join(webTrafficDirPath,"client", dfFiles['log'][x]))
+            webTrafficTestFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         else:
-            print("ERROR")
+            print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
 
     #----------------------------Parsing-------------------------------------------
     #########################################################################################################################################
@@ -133,14 +110,11 @@ def main():
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
 
-
-
     # Itterativt add test and validation files
     while(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
 
         # For every file to inject (aka the noise)
         for fileToParsePath in files2Parse:
-            
             print("New file to parse: ", os.path.basename(fileToParsePath))
             
             # When there is no more web traffic data left to inject into, end the program
@@ -206,8 +180,7 @@ def main():
                         else:
                             # Done with the parsing fo the testing and validating files
                             print("Have injected all web traffic for validation and testing with noise")
-                            print("Ending the program")
-                            return
+                            continue
 
                     # Set time, direction and packet size, if direction or size is missing, skip the packet  
                 
@@ -237,16 +210,13 @@ def main():
                 deviationTime = 0
                 fileToParse.close()
 
-            # If more test and validation files left, keep removing noise files
-            if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
-                print("Popping ", os.path.basename(files2Parse[0]))
-                files2Parse.pop(0)
-                print("Now first one is: ", os.path.basename(files2Parse[0]))
-                print("filesToParse len  = ", len(files2Parse), "\n")
-                print("\n")
-            else: 
-                print("We stopped removing files")
-                print("filesToParse len  = ", len(files2Parse), "\n")
+
+            print("Popping ", os.path.basename(files2Parse[0]))
+            files2Parse.pop(0)
+            print("Now first one is: ", os.path.basename(files2Parse[0]))
+            print("filesToParse len  = ", len(files2Parse), "\n")
+            print("\n")
+
 
    
    #########################################################################################################################################
@@ -262,18 +232,6 @@ def main():
         fileToParsePath = files2Parse[rnd_index]
 
         print("New file to parse: ", os.path.basename(fileToParsePath))
-        
-        # When there is no more web traffic data left to inject into, end the program
-        if(len(webTrafficTrainFiles) <= 0):
-            print("\n")
-            print("Of the web traffic there is:")
-            print("testing    files   left: ", len(webTraffictestFiles))
-            print("validation files   left: ", len(webTrafficvalidFiles))
-            print("training   files   left: ", len(webTrafficTrainFiles))
-            print("Lines              left: ", len(webTrafficLines))
-            print("\n")
-            print("No more files to train, ends the program")
-            return
 
 
         with open(fileToParsePath, 'r') as fileToParse:
@@ -316,6 +274,7 @@ def main():
                     else:
                         # Done with the parsing
                         print("Have injected all web traffic with noise")
+                        print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
                         print("Ending the program")
                         return
 
@@ -327,8 +286,6 @@ def main():
 
                 # If the current web traffic packet is empty, add the current noise packet
                 # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
-                # TODO: make sure that this does not cause any problem
-                # TODO: might want to rm the print 
                 try:
                     currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
                 except:
@@ -349,21 +306,18 @@ def main():
             deviationTime = 0
             fileToParse.close()
 
-        # If more test and validation files left, keep removing noise files
-        if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
-            print("Popping ", os.path.basename(files2Parse[0]))
-            files2Parse.pop(0)
-            print("Now first one is: ", os.path.basename(files2Parse[0]))
-            print("filesToParse len  = ", len(files2Parse), "\n")
-            print("\n")
-        else: 
-            print("We stopped removing files")
-            print("filesToParse len  = ", len(files2Parse), "\n")
+        print("We stopped removing files")
+        print("filesToParse len  = ", len(files2Parse), "\n")
 
    #########################################################################################################################################
    #########################################################################################################################################
    #########################################################################################################################################
 
+    # Done with the parsing
+    print("Have injected all web traffic with noise")
+    print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
+    print("Ending the program")
+    return
 # run main 
 if __name__=="__main__":
     main()
