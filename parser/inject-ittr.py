@@ -9,15 +9,13 @@ import sys
 
 def main():
     print("Script start")
-    length = sys.argv[0]
+    length = sys.argv[1]
 
     #-----------Constants------------#
     # Directory with the noise
-    #FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-" + str(length)
-    FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-1370"
+    FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-" + str(length)
     # Directory with the result
-    #PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-" + str(length)
-    PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-1370"
+    PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-ittr-" + str(length)
     # Directory with the web traffic
     WEB_TRAFFIC_FILES_DIR = "dataset-test/client"
     # Information about what the different web traffics should be used for on the WF (training, validation, testing)
@@ -126,8 +124,8 @@ def main():
 
 
             with open(fileToParsePath, 'r') as fileToParse:
-                print("Opening ", os.path.basename(fileToParsePath))
 
+                print("Opening ", os.path.basename(fileToParsePath))
                 print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
                 print("web traffic validation Files left: "      , len(webTrafficValidFiles))
                 print("web traffic training Files   left: "      , len(webTrafficTrainFiles))
