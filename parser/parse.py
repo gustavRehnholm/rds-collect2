@@ -1,5 +1,6 @@
 '''
-parse adn clean all the noise packets
+parse the noise, and clean it from any unusable packets
+
 
 '''
 
@@ -12,7 +13,6 @@ import pandas as pd
 
 def main():
 
-
     #-----------Constants------------#
     # Sec in an hour
     SEC_PER_HOUR = 60*60
@@ -21,19 +21,18 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures-raw"
+    FILES_2_PARSE_DIR = "captures/captures-twitch-raw"
     # Directory with the noise parsed
-    PARSED_FILES_DIR = "captures-1370"
+    PARSED_FILES_DIR = "parsed/twitch/captures-1370"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
     # index of the different attributes
-    IP_INDEX_SENDER = 0
+    IP_INDEX_SENDER   = 0
     IP_INDEX_RECIEVER = 1
     PACKET_ATTR_INDEX_TIME = 0
     PACKET_ATTR_INDEX_IP   = 1
     PACKET_ATTR_INDEX_SIZE = 2
-
 
     #----------Variables----------#
     # is used to get the direction of each packet
@@ -42,12 +41,14 @@ def main():
     currParsedFiles= []
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
+    # List of all end times, double check that the longest and shortest log file still is around 1.9h
+    endTimeList = []
 
-    # total number of packets
+    # total number of packets that was in the unparsed noise files
     numPackets = 0
-    # successfully packets
+    # total number of successfully parsed packets
     numParsedPackets = 0
-    # packets that could not be parsed
+    # total number of packets that could not be parsed
     numSkippedPackets = 0
 
     # this files number of packets
@@ -174,19 +175,33 @@ def main():
                 currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
                 currNumParsedPackets += 1
 
+
+
             # Done with the current filesToParse
+            endTimeList.append(totalTimeParseLine)
+            if endTimeList[-1] != totalTimeParseLine:
+                print("ERROR")
+                print(endTimeList[-1])
+                print(totalTimeParseLine)
+                return
+
             print("\n")
             print("Out of lines in ", os.path.basename(fileToParsePath))
             print("Closing...")
             print("Number of packets/lines in the file:         ", currNumPacket)
             print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
             print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
+            print("This files time lenght: ", endTimeList[-1])
             print("\n")
             fileToParse.close()
+
+    endTimeList.sort()
 
     print("Total number of packets/lines:         ", numPackets)
     print("Total number of parsed packets/lines:  ", numParsedPackets)
     print("Total number of skipped packets/lines: ", numSkippedPackets)
+    print("Logfile with the longest time: ", endTimeList[-1])
+    print("Logfile with the shortest time: ", endTimeList[0])
 
 # run main 
 if __name__=="__main__":
