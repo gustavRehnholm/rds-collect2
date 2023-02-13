@@ -61,8 +61,8 @@ def main():
     print("Capture-1370 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-1370 | wc -l")
 
-    print("Capture-658 contains the following number of files")
-    os.system("ls parsed-noise/twitch/captures-658 | wc -l")
+    print("Capture-685 contains the following number of files")
+    os.system("ls parsed-noise/twitch/captures-685 | wc -l")
 
     print("Capture-342 contains the following number of files")
     os.system("ls parsed-noise/twitch/captures-342 | wc -l")
