@@ -99,6 +99,8 @@ def main():
         else:
             print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
 
+    print("Starting injecting noise")
+    print("trainFiles len = ", len(webTrafficTrainFiles))
     noise2train = InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
 
 
