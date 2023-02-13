@@ -13,7 +13,7 @@ import random
 import sys
 
 def main():
-    lenght = sys.argv[1]
+    length = sys.argv[1]
 
     #-----------Constants------------#
     # Directory with the noise
