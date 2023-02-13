@@ -1,6 +1,13 @@
 '''
 Help function to inject noise into the validation and testing data
 '''
+import os
+from os import walk
+from os import path
+from re import search
+import pandas as pd
+import random
+import sys
 
 # inject noise for the validation and testing
 def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
