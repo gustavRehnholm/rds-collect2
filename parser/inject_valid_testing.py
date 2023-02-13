@@ -23,8 +23,6 @@ def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Par
     currParsedFile = []
     # all lines that are left to read in the current opened web traffic file
     webTrafficLines = []
-    # List of all the noise, which should be injected into the web traffic
-    files2Parse = []
 
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
