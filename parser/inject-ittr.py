@@ -5,8 +5,7 @@ from os import walk
 from os import path
 from re import search
 import pandas as pd
-# For testing
-import logging
+import sys
 
 def main():
     length = sys.argv[0]
