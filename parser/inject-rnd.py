@@ -97,36 +97,16 @@ def main():
         else:
             print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
 
-    #----------------------------Parsing-------------------------------------------
-    #########################################################################################################################################
-    #########################################################################################################################################
-    #########################################################################################################################################
-    '''
-    Parse and inject all the noise, if their is more web traffic than noise, the noise will be reused
-    '''
+    noise2train = InjectValidationNTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
 
-    print("Starting parse")
-    print("trainFiles len = ", len(webTrafficTrainFiles))
-    files2Parse.sort()
-    print("filesToParse len  = ", len(files2Parse), "\n")
-
-    files2Parse = InjectValidationNTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
-
-
-
-
-   
-   #########################################################################################################################################
-   #########################################################################################################################################
-   #########################################################################################################################################
 
     print("Start the randomised injection of the training data")
     # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
     while(len(webTrafficTrainFiles) > 0):
 
         # Choose one of the remaining noise at random to inject into the web traffic for training
-        rnd_index = random.randrange(len(files2Parse) - 1)
-        fileToParsePath = files2Parse[rnd_index]
+        rnd_index = random.randrange(len(noise2train) - 1)
+        fileToParsePath = noise2train[rnd_index]
 
         print("New file to parse: ", os.path.basename(fileToParsePath))
 
@@ -171,7 +151,7 @@ def main():
                     else:
                         # Done with the parsing
                         print("Have injected all web traffic with noise")
-                        print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
+                        print(sys.argv[1],"/", len(noise2train), "(total noise files)/(noise files for training)")
                         print("Ending the program")
                         return
 
@@ -204,7 +184,7 @@ def main():
             fileToParse.close()
 
         print("We stopped removing files")
-        print("filesToParse len  = ", len(files2Parse), "\n")
+        print("filesToParse len  = ", len(noise2train), "\n")
 
    #########################################################################################################################################
    #########################################################################################################################################
@@ -212,9 +192,10 @@ def main():
 
     # Done with the parsing
     print("Have injected all web traffic with noise")
-    print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
+    print(sys.argv[1],"/", len(noise2train), "(total noise files)/(noise files for training)")
     print("Ending the program")
     return
+    
 # run main 
 if __name__=="__main__":
     main()
@@ -222,6 +203,10 @@ if __name__=="__main__":
 
 # inject noise for the validation and testing
 def InjectValidationNTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
+    print("Starting parse")
+    print("trainFiles len = ", len(webTrafficTrainFiles))
+    files2Parse.sort()
+    print("filesToParse len  = ", len(files2Parse), "\n")
     # Itterativt add test and validation files
     while(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
 
