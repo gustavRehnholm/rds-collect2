@@ -4,8 +4,6 @@ Help function to inject noise into the validation and testing data
 
 # inject noise for the validation and testing
 def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
-    print("Starting parse")
-    print("trainFiles len = ", len(webTrafficTrainFiles))
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
     # Itterativt add test and validation files
