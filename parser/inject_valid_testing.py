@@ -11,8 +11,10 @@ import sys
 
 # inject noise for the validation and testing
 def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
+    webTrafficLines = 0
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
+    
     # Itterativt add test and validation files
     while(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
 
