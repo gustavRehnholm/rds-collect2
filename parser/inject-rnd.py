@@ -97,7 +97,7 @@ def main():
         else:
             print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
 
-    noise2train = InjectValidationNTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
+    noise2train = InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
 
 
     print("Start the randomised injection of the training data")
@@ -195,14 +195,14 @@ def main():
     print(sys.argv[1],"/", len(noise2train), "(total noise files)/(noise files for training)")
     print("Ending the program")
     return
-    
+
 # run main 
 if __name__=="__main__":
     main()
 
 
 # inject noise for the validation and testing
-def InjectValidationNTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
+def InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse):
     print("Starting parse")
     print("trainFiles len = ", len(webTrafficTrainFiles))
     files2Parse.sort()
