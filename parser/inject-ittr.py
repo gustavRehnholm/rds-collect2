@@ -113,13 +113,14 @@ def main():
             # When there is no more web traffic data left to inject into, end the program
             if(len(webTrafficTrainFiles) <= 0):
                 print("\n")
+                print("Have injected all web traffic with noise")
                 print("Of the web traffic there is:")
                 print("testing    files   left: ", len(webTraffictestFiles))
                 print("validation files   left: ", len(webTrafficvalidFiles))
                 print("training   files   left: ", len(webTrafficTrainFiles))
                 print("Lines              left: ", len(webTrafficLines))
-                print("\n")
-                print("No more files to train, ends the program")
+                print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
+                print("Ending the program")
                 return
 
 
@@ -184,7 +185,12 @@ def main():
                         else:
                             # Done with the parsing
                             print("Have injected all web traffic with noise")
-                            print(sys.argv[1],"/", len(fileToParse), "total noise files/noise files for training")
+                            print("Of the web traffic there is:")
+                            print("testing    files   left: ", len(webTraffictestFiles))
+                            print("validation files   left: ", len(webTrafficvalidFiles))
+                            print("training   files   left: ", len(webTrafficTrainFiles))
+                            print("Lines              left: ", len(webTrafficLines))
+                            print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
                             print("Ending the program")
                             return
 
