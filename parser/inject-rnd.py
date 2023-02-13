@@ -101,6 +101,7 @@ def main():
 
     print("Starting injecting noise")
     print("trainFiles len = ", len(webTrafficTrainFiles))
+
     noise2train = InjectValidationTesting(webTrafficTestFiles, webTrafficValidFiles, files2Parse)
 
 
@@ -109,7 +110,7 @@ def main():
     while(len(webTrafficTrainFiles) > 0):
 
         # Choose one of the remaining noise at random to inject into the web traffic for training
-        rnd_index = random.randrange(len(noise2train) - 1)
+        rnd_index = random.randrange(0, len(noise2train) - 1)
         fileToParsePath = noise2train[rnd_index]
 
         print("New file to parse: ", os.path.basename(fileToParsePath))
