@@ -32,7 +32,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     for fileToParsePath in files2Parse:
 
         # Has injected noise to all test and validation files
-        if(len(webTrafficTestFiles) > 0 and len(webTrafficValidFiles) > 0):
+        if(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
             print("Done injecting test and valid with noise")
             return files2Parse
 
