@@ -123,7 +123,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
         print("Popping ", os.path.basename(noiseFilesForTrain[0]))
         noiseFilesForTrain.pop(0)
         print("Now first one is: ", os.path.basename(files2Parse[i]))
-        print("Now first one is: ", os.path.basename(noiseFilesForTrain[0]))
+        if(len(noiseFilesForTrain) > 0):
+            print("Now first one is: ", os.path.basename(noiseFilesForTrain[0]))
         print("Noise files left to inject = ", len(noiseFilesForTrain), "\n")
         print("\n")
 
