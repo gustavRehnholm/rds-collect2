@@ -38,9 +38,9 @@ def main():
     # Directory with the result
     PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-" + choice + "-" + str(length)
     # Directory with the web traffic
-    WEB_TRAFFIC_FILES_DIR = "dataset-test/client"
+    WEB_TRAFFIC_FILES_DIR = "dataset/client"
     # Information about what the different web traffics should be used for on the WF (training, validation, testing)
-    FOLD0_CSV = "dataset-test/fold-0-test.csv"
+    FOLD0_CSV = "dataset/fold-0.csv"
 
     # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
