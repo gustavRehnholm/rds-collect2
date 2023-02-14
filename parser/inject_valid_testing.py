@@ -76,7 +76,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
                         parsedValidFiles.pop(0)
 
                     else:
-                        Print("Done injecting, exiting loop")
+                        print("Done injecting, exiting loop")
                         continue
             
                 # Time
