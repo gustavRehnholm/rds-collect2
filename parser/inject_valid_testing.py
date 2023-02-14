@@ -44,6 +44,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
             print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
             print("web traffic validation Files left: "      , len(webTrafficValidFiles))
             print("Lines left in the open web traffic file: ", len(webTrafficLines))
+            print("Noise files: ", len(files2Parse))
             print("\n")
 
             # For every line in the noise
@@ -122,5 +123,10 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     # To little noise to inject the testing and validation
     if(len(webTrafficTestFiles) > 0 or len(webTrafficValidFiles) > 0):
         print("ERROR: There was not enough noise to inject all the testing and validation web traffic")
+        print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
+        print("web traffic validation Files left: "      , len(webTrafficValidFiles))
+        print("Lines left in the open web traffic file: ", len(webTrafficLines))
+        print("Noise files: ", len(files2Parse))
+        print("\n")
         return [-1]
 
