@@ -23,33 +23,25 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     currParsedFile = []
     # all lines that are left to read in the current opened web traffic file
     webTrafficLines = []
-    # the list of noise files to use for training
-    noiseFilesForTrain = files2Parse.copy()
+
+    noiseTotal = len(files2Parse)
 
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
 
 
-    # go through all noise until all testing and validation web traffic is injected with noise
-    for i in range(0, len(files2Parse)):
+    # Loop until both test and valid list are injected
+    while(len(webTrafficTestFiles) > 0 or len(webTrafficValidFiles) > 0):
 
-    #for fileToParsePath in files2Parse: files2Parse[i]
+        print("New file to parse: ", os.path.basename(files2Parse[0]))
 
-        # Has injected noise to all test and validation files
-        if(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
-            print("Have injected all web traffic for validation and testing with noise")
-            return noiseFilesForTrain
-
-        print("New file to parse: ", os.path.basename(files2Parse[i]))
-
-
-        with open(files2Parse[i], 'r') as fileToParse:
-            print("Opening ", os.path.basename(files2Parse[i]))
+        with open(files2Parse[0], 'r') as fileToParse:
+            print("Opening ", os.path.basename(files2Parse[0]))
             print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
             print("web traffic validation Files left: "      , len(webTrafficValidFiles))
             print("Lines left in the open web traffic file: ", len(webTrafficLines))
-            print("Noise files in total: ", len(files2Parse))
-            print("Noise files Left: "    , len(noiseFilesForTrain))
+            print("Noise files in total: ", noiseTotal)
+            print("Noise files Left: "    , len(files2Parse))
             print("\n")
 
             # For every line in the noise
@@ -84,9 +76,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
                         parsedValidFiles.pop(0)
 
                     else:
-                        # Done with the parsing fo the testing and validating files
-                        print("Have injected all web traffic for validation and testing with noise")
-                        return noiseFilesForTrain
+                        Print("Done injecting, exiting loop")
+                        continue
             
                 # Time
                 localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
@@ -119,13 +110,10 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
             fileToParse.close()
 
 
-        print("Popping ", os.path.basename(files2Parse[i]))
-        print("Popping ", os.path.basename(noiseFilesForTrain[0]))
-        noiseFilesForTrain.pop(0)
-        print("Now first one is: ", os.path.basename(files2Parse[i]))
-        if(len(noiseFilesForTrain) > 0):
-            print("Now first one is: ", os.path.basename(noiseFilesForTrain[0]))
-        print("Noise files left to inject = ", len(noiseFilesForTrain), "\n")
+        print("Popping ", os.path.basename(files2Parse[0]))
+        files2Parse.pop(0)
+        print("Now first one is: ", os.path.basename(files2Parse[0]))
+        print("Noise files left to inject = ", len(files2Parse), "\n")
         print("\n")
 
 
@@ -138,4 +126,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
         print("Noise files: ", len(files2Parse))
         print("\n")
         return [-1]
+    # Has injected noise to all test and validation files
+    elif(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
+        print("Have injected all web traffic for validation and testing with noise")
+        return noiseFilesForTrain
 
