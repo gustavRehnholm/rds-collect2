@@ -104,8 +104,13 @@ def main():
 
     noise2train = InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficValidFiles, parsedValidFiles, files2Parse)
 
+    if(noise2train[0] == -1):
+        print("Injection of the valid and testing web traffic has failed")
+        print("Aborting the program")
+        return
 
-    print("Start the randomised injection of the training data")
+
+    print("Start the randomized injection of the training data")
     # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
     while(len(webTrafficTrainFiles) > 0):
 
@@ -115,10 +120,8 @@ def main():
 
         print("New file to parse: ", os.path.basename(fileToParsePath))
 
-
         with open(fileToParsePath, 'r') as fileToParse:
             print("Opening ", os.path.basename(fileToParsePath))
-
             print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
             print("web traffic validation Files left: "      , len(webTrafficValidFiles))
             print("web traffic training Files   left: "      , len(webTrafficTrainFiles))
@@ -135,22 +138,17 @@ def main():
             
 
                 #-----------------Open a new web traffic file------------------
-
-                # Check if a new web traffic file needs to be loaded
                 if len(webTrafficLines) == 0:
                     deviationTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
 
-                    # check which type of web traffic to get, and get the file the result will be written to
 
                     if len(webTrafficTrainFiles) > 0:
-
                         webTrafficFile = open(webTrafficTrainFiles[0], 'r') 
                         webTrafficTrainFiles.pop(0)
                         webTrafficLines = webTrafficFile.readlines()
                         webTrafficFile.close()
 
                         currParsedFile = open(parsedTrainFiles[0], 'a') 
-                        #print("Printing to new training set file ", os.path.basename(parsedTrainFiles[0]))
                         parsedTrainFiles.pop(0)
 
                     else:
@@ -159,8 +157,6 @@ def main():
                         print(sys.argv[1],"/", len(noise2train), "(total noise files)/(noise files for training)")
                         print("Ending the program")
                         return
-
-                # Set time, direction and packet size, if direction or size is missing, skip the packet  
             
                 # Time
                 localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
@@ -197,7 +193,9 @@ def main():
 
     # Done with the parsing
     print("Have injected all web traffic with noise")
-    print(sys.argv[1],"/", len(noise2train), "(total noise files)/(noise files for training)")
+    print("Totlal noise files: ", sys.argv[1])
+    print("Noise files for testing and validation: ", sys.argv[1]-len(noise2train))
+    print("Noise files for training: ", len(noise2train))
     print("Ending the program")
     return
 

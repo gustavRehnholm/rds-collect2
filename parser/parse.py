@@ -181,8 +181,6 @@ def main():
                 currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
                 currNumParsedPackets += 1
 
-
-
             # Done with the current filesToParse
             endTimeList.append(totalTimeParseLine)
             if endTimeList[-1] != totalTimeParseLine:
@@ -197,7 +195,7 @@ def main():
             print("Number of packets/lines in the file:         ", currNumPacket)
             print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
             print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
-            print("This files time lenght: ", endTimeList[-1])
+            print("This files time length: ", endTimeList[-1])
             print("\n")
             fileToParse.close()
 

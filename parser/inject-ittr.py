@@ -7,6 +7,8 @@ from re import search
 import pandas as pd
 import sys
 
+from inject_valid_testing import InjectValidationTesting
+
 def main():
     print("Script start")
     length = sys.argv[1]
