@@ -9,6 +9,19 @@ import sys
 
 def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
 
+    # index of the different attributes
+    PACKET_ATTR_INDEX_TIME  = 0
+    PACKET_ATTR_INDEX_DIR   = 1
+    PACKET_ATTR_INDEX_SIZE  = 2
+
+    #----------Variables----------#
+    # To standardize the time of each packet
+    deviationTime = 0
+    # Current opened test/valid/train/ parsed file
+    currParsedFile = []
+    # all lines that are left to read in the current opened web traffic file
+    webTrafficLines = []
+
     print("Start the randomized injection of the training data")
     # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
     while(len(webTrafficTrainFiles) > 0):
