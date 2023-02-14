@@ -15,7 +15,7 @@
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-rnd-342 --train -s 5 --csv wf-result/df-size-twitch-rnd-342.csv
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-rnd-220 --train -s 5 --csv wf-result/df-size-twitch-rnd-220.csv
 
-#./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-none-1370 --train -s 100 --csv wf-result/df-size-twitch-none.csv
+./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-none-1370 --train -s 100 --csv wf-result/df-size-twitch-none.csv
 
 # DF without size
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-itr-1370 --train --constant -s 5 --csv wf-result/df-size-twitch-itr-1370.csv
@@ -28,7 +28,7 @@
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-rnd-342 --train --constant -s 5 --csv wf-result/df-size-twitch-rnd-342.csv
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-rnd-220 --train --constant -s 5 --csv wf-result/df-size-twitch-rnd-220.csv
 
-#./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-none-1370 --train --constant -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-none-1370 --train --constant -s 100 -h
 
 # DF tiktok
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-itr-1370 --train --tiktok -s 5 --csv wf-result/df-size-twitch-itr-1370.csv
@@ -41,4 +41,4 @@
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-rnd-342 --train --tiktok -s 5 --csv wf-result/df-size-twitch-rnd-342.csv
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-rnd-220 --train --tiktok -s 5 --csv wf-result/df-size-twitch-rnd-220.csv
 
-#./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-none-1370 --train --tiktok -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-none-1370 --train --tiktok -s 100 -h
