@@ -35,7 +35,7 @@ def main():
     CAPTURES_1370_DIR = os.path.join(os.getcwd(), CAPTURES_1370)
     CAPTURES_685_DIR = os.path.join(os.getcwd(), CAPTURES_685)
     CAPTURES_342_DIR = os.path.join(os.getcwd(), CAPTURES_342)
-    CAPTURES_171_DIR = os.path.join(os.getcwd(), CAPTURES_200)
+    CAPTURES_200_DIR = os.path.join(os.getcwd(), CAPTURES_200)
 
     # Get list of all noise files (which will be parsed)
     for (dirpath, dirnames, filenames) in walk(CAPTURES_1370_DIR, topdown=True):
