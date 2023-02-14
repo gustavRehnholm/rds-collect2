@@ -24,7 +24,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     # all lines that are left to read in the current opened web traffic file
     webTrafficLines = []
     # the list of noise files to use for training
-    noiseFilesForTrain = files2Parse
+    noiseFilesForTrain = files2Parse.copy()
 
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
