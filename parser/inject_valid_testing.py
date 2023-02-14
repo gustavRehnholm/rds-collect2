@@ -104,7 +104,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
                     webTrafficLines.pop(0)
 
             # Done with the current filesToParse
-            print("Out of lines in ", os.path.basename(files2Parse[i]))
+            print("Out of lines in ", os.path.basename(files2Parse[0]))
             print("Closing...")
             deviationTime = 0
             fileToParse.close()
