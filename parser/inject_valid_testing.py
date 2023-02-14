@@ -11,7 +11,7 @@ import sys
 
 # inject noise for the validation and testing
 def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficValidFiles, parsedValidFiles, files2Parse):
-        # index of the different attributes
+    # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
     PACKET_ATTR_INDEX_DIR   = 1
     PACKET_ATTR_INDEX_SIZE  = 2
@@ -119,6 +119,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
         print("Now first one is: ", os.path.basename(files2Parse[0]))
         print("filesToParse len  = ", len(files2Parse), "\n")
         print("\n")
+
 
     # To little noise to inject the testing and validation
     if(len(webTrafficTestFiles) > 0 or len(webTrafficValidFiles) > 0):

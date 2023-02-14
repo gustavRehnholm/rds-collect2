@@ -122,7 +122,7 @@ def main():
     noise2train = InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficValidFiles, parsedValidFiles, files2Parse)
 
     if(noise2train[0] == -1):
-        print("Injection of the valid and testing web traffic has failed")
+        print("ERROR: Injection of the valid and testing web traffic has failed")
         print("Aborting the program")
         return
 
