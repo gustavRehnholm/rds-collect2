@@ -77,6 +77,11 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
 
                     else:
                         print("Have injected all web traffic for validation and testing with noise")
+                        print("Popping ", os.path.basename(files2Parse[0]))
+                        files2Parse.pop(0)
+                        print("First noise for training: ", os.path.basename(files2Parse[0]))
+                        print("Noise files left for training = ", len(files2Parse), "\n")
+                        print("\n")
                         return files2Parse
             
                 # Time
@@ -129,5 +134,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     # Has injected noise to all test and validation files
     elif(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
         print("Have injected all web traffic for validation and testing with noise")
+        print("First noise for training: ", os.path.basename(files2Parse[0]))
+        print("Noise files left for training = ", len(files2Parse), "\n")
+        print("\n")
         return files2Parse
 
