@@ -1,7 +1,16 @@
 #!/bin/bash
 # Run all the wf that one needs
 
-./df-fitness.py -d parsedFiles-ittr-1370 --train -s 100 -h
-./df-fitness.py -d parsedFiles-ittr-658 --train -s 100 -h
-./df-fitness.py -d parsedFiles-ittr-342 --train -s 100 -h
-./df-fitness.py -d parsedFiles-ittr-171 --train -s 100 -h
+# For testing ./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-itr-1370 --train -s 5 -h
+
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-itr-1370 --train -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-itr-658 --train -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-itr-342 --train -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-itr-171 --train -s 100 -h
+
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-rnd-1370 --train -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-rnd-658 --train -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-rnd-342 --train -s 100 -h
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-rnd-171 --train -s 100 -h
+
+./df-fitness.py -d rds-collect2/parser/injected-dataset/twitch/parsedFiles-none-1370 --train -s 100 -h
