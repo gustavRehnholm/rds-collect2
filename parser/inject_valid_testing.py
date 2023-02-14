@@ -23,6 +23,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     currParsedFile = []
     # all lines that are left to read in the current opened web traffic file
     webTrafficLines = []
+    # the list of noise files to use for training
+    noiseFilesForTrain = files2Parse
 
     files2Parse.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
@@ -35,8 +37,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
 
         # Has injected noise to all test and validation files
         if(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
-            print("Done injecting test and valid with noise")
-            return files2Parse
+            print("Have injected all web traffic for validation and testing with noise")
+            return noiseFilesForTrain
 
         print("New file to parse: ", os.path.basename(files2Parse[i]))
 
@@ -83,7 +85,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
                     else:
                         # Done with the parsing fo the testing and validating files
                         print("Have injected all web traffic for validation and testing with noise")
-                        return files2Parse
+                        return noiseFilesForTrain
             
                 # Time
                 localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
@@ -116,10 +118,11 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
             fileToParse.close()
 
 
-        print("Popping ", os.path.basename(files2Parse[0]))
-        files2Parse.pop(0)
-        print("Now first one is: ", os.path.basename(files2Parse[0]))
-        print("filesToParse len  = ", len(files2Parse), "\n")
+        print("Popping ", os.path.basename(files2Parse[i]))
+        print("Popping ", os.path.basename(noiseFilesForTrain[0]))
+        noiseFilesForTrain.pop(0)
+        print("Now first one is: ", os.path.basename(files2Parse[i]))
+        print("Noise files left to inject = ", len(noiseFilesForTrain), "\n")
         print("\n")
 
 
