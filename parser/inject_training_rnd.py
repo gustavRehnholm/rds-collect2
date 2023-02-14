@@ -36,7 +36,7 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
             print("Opening ", os.path.basename(fileToParsePath))
             print("web traffic training Files   left: "      , len(webTrafficTrainFiles))
             print("Lines left in the open web traffic file: ", len(webTrafficLines))
-            print("Noise files to use: ", len(files2Parse))
+            print("Noise files to use: ", len(noise2train))
             print("\n")
 
             # For every line in the noise
