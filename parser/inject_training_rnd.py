@@ -65,7 +65,7 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
                     else:
                         # Done with the parsing
                         print("Have injected all web traffic with noise")
-                        return
+                        return True
             
                 # Time
                 localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
@@ -92,3 +92,7 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
             print("Closing...")
             deviationTime = 0
             fileToParse.close()
+
+    # Done with the parsing
+    print("Have injected all web traffic with noise")
+    return True
