@@ -76,8 +76,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
                         parsedValidFiles.pop(0)
 
                     else:
-                        print("Done injecting, exiting loop")
-                        continue
+                        print("Have injected all web traffic for validation and testing with noise")
+                        return files2Parse
             
                 # Time
                 localTime = int(packetAttrList[PACKET_ATTR_INDEX_TIME])
@@ -129,5 +129,5 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
     # Has injected noise to all test and validation files
     elif(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
         print("Have injected all web traffic for validation and testing with noise")
-        return noiseFilesForTrain
+        return files2Parse
 
