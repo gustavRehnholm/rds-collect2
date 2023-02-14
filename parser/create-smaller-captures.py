@@ -16,15 +16,15 @@ def main():
     CAPTURES_1370 = "parsed-noise/twitch/captures-1370"
     CAPTURES_685  = "parsed-noise/twitch/captures-685"
     CAPTURES_342  = "parsed-noise/twitch/captures-342"
-    CAPTURES_200  = "parsed-noise/twitch/captures-200"
+    CAPTURES_220  = "parsed-noise/twitch/captures-220"
 
     os.system("rm -f -r parsed-noise/twitch/captures-685")
     os.system("rm -f -r parsed-noise/twitch/captures-342")
-    os.system("rm -f -r parsed-noise/twitch/captures-200")
+    os.system("rm -f -r parsed-noise/twitch/captures-220")
 
     os.system("mkdir parsed-noise/twitch/captures-685")
     os.system("mkdir parsed-noise/twitch/captures-342")
-    os.system("mkdir parsed-noise/twitch/captures-200")
+    os.system("mkdir parsed-noise/twitch/captures-220")
 
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Mv = []
@@ -35,7 +35,7 @@ def main():
     CAPTURES_1370_DIR = os.path.join(os.getcwd(), CAPTURES_1370)
     CAPTURES_685_DIR = os.path.join(os.getcwd(), CAPTURES_685)
     CAPTURES_342_DIR = os.path.join(os.getcwd(), CAPTURES_342)
-    CAPTURES_200_DIR = os.path.join(os.getcwd(), CAPTURES_200)
+    CAPTURES_220_DIR = os.path.join(os.getcwd(), CAPTURES_220)
 
     # Get list of all noise files (which will be parsed)
     for (dirpath, dirnames, filenames) in walk(CAPTURES_1370_DIR, topdown=True):
@@ -51,8 +51,8 @@ def main():
         print("New file to move: ", currfile)
         currFileNum += 1
 
-        if currFileNum <= 200:
-            shutil.copy(currfile, CAPTURES_200_DIR)
+        if currFileNum <= 220:
+            shutil.copy(currfile, CAPTURES_220_DIR)
         if currFileNum <= 342:
             shutil.copy(currfile, CAPTURES_342_DIR)
         if currFileNum <= 685:
@@ -72,8 +72,8 @@ def main():
     os.system("ls parsed-noise/twitch/captures-342 | wc -l")
     print("")
 
-    print("Capture-200 contains the following number of files")
-    os.system("ls parsed-noise/twitch/captures-200 | wc -l")
+    print("Capture-220 contains the following number of files")
+    os.system("ls parsed-noise/twitch/captures-220 | wc -l")
     print("")
 
 
