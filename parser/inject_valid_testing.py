@@ -29,18 +29,20 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
 
 
     # go through all noise until all testing and validation web traffic is injected with noise
-    for fileToParsePath in files2Parse:
+    for i in range(0, len(files2Parse)):
+
+    #for fileToParsePath in files2Parse: files2Parse[i]
 
         # Has injected noise to all test and validation files
         if(len(webTrafficTestFiles) <= 0 and len(webTrafficValidFiles) <= 0):
             print("Done injecting test and valid with noise")
             return files2Parse
 
-        print("New file to parse: ", os.path.basename(fileToParsePath))
+        print("New file to parse: ", os.path.basename(files2Parse[i]))
 
 
-        with open(fileToParsePath, 'r') as fileToParse:
-            print("Opening ", os.path.basename(fileToParsePath))
+        with open(files2Parse[i], 'r') as fileToParse:
+            print("Opening ", os.path.basename(files2Parse[i]))
             print("web traffic testing Files    left: "      , len(webTrafficTestFiles))
             print("web traffic validation Files left: "      , len(webTrafficValidFiles))
             print("Lines left in the open web traffic file: ", len(webTrafficLines))
@@ -108,7 +110,7 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
                     webTrafficLines.pop(0)
 
             # Done with the current filesToParse
-            print("Out of lines in ", os.path.basename(fileToParsePath))
+            print("Out of lines in ", os.path.basename(files2Parse[i]))
             print("Closing...")
             deviationTime = 0
             fileToParse.close()
