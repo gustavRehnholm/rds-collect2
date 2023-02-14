@@ -16,6 +16,7 @@ import sys
 from inject_valid_testing import InjectValidationTesting
 from inject_training_itr import injectTrainingItr
 from inject_training_rnd import injectTrainingRnd
+from add_training_web_traffic import addTrain
 
 def main():
     length = sys.argv[1]
@@ -131,7 +132,7 @@ def main():
     elif(choice == "rnd"):
         successfully = injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train)
     elif(choice == "none"):
-        successfully = True
+        successfully = addTrain(webTrafficTrainFiles, parsedTrainFiles)
     else:
         print("ERROR: the value of choice has been changed: ", choice)
         print("Aborting program")
