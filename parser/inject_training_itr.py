@@ -62,8 +62,6 @@ def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
                         else:
                             # Done with the parsing
                             print("Have injected all web traffic with noise")
-                            print(sys.argv[1],"/", len(files2Parse), "(total noise files)/(noise files for training)")
-                            print("Ending the program")
                             return True
                 
                     # Time
