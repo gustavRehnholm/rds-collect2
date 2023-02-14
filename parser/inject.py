@@ -141,7 +141,10 @@ def main():
         # Done with the injection
         print("Have injected all web traffic with noise, after the choice: ", choice)
         print("Total noise files: ", sys.argv[1])
-        print("Noise files for testing and validation: ", sys.argv[1]-len(noise2train))
+        try:
+            print("Noise files for testing and validation: ", int(sys.argv[1]) - len(noise2train))
+        except:
+            print("ERROR!!!!!!!!!!!!!!!")
         print("Noise files for training: ", len(noise2train))
         print("Ending the program")
         return
