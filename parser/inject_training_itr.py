@@ -8,6 +8,9 @@ import random
 import sys
 
 def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
+
+    webTrafficLines = 0
+    
      # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
     while(len(webTrafficTrainFiles) > 0):
 
