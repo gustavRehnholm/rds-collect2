@@ -119,7 +119,8 @@ def InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficVal
         print("filesToParse len  = ", len(files2Parse), "\n")
         print("\n")
 
-
-    print("There was not enough noise to inject all the testing and validation web traffic")
-    return [-1]
+    # To little noise to inject the testing and validation
+    if(len(webTrafficTestFiles) > 0 or len(webTrafficValidFiles) > 0):
+        print("ERROR: There was not enough noise to inject all the testing and validation web traffic")
+        return [-1]
 

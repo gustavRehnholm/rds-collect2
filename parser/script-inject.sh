@@ -12,10 +12,16 @@
 #touch stdout-dir/output-inject-rnd-342.txt
 #touch stdout-dir/output-inject-rnd-171.txt
 
+rm stdout-dir/output-inject-none-1370.txt
+rm stdout-dir/output-inject-none-685.txt
+rm stdout-dir/output-inject-none-342.txt
+rm stdout-dir/output-inject-none-171.txt
+
 touch stdout-dir/output-inject-none-1370.txt
 touch stdout-dir/output-inject-none-685.txt
 touch stdout-dir/output-inject-none-342.txt
 touch stdout-dir/output-inject-none-171.txt
+
 
 # test injection with different captures sizes
 #script -q -c "python3 inject.py 1370 itr" /dev/null | tee stdout-dir/output-inject-itr-1370.txt
@@ -30,3 +36,5 @@ touch stdout-dir/output-inject-none-171.txt
 
 script -q -c "python3 inject.py 1370 none" /dev/null | tee stdout-dir/output-inject-none-1370.txt
 script -q -c "python3 inject.py 685 none" /dev/null | tee stdout-dir/output-inject-none-685.txt
+script -q -c "python3 inject.py 342 none" /dev/null | tee stdout-dir/output-inject-none-685.txt
+script -q -c "python3 inject.py 171 none" /dev/null | tee stdout-dir/output-inject-none-685.txt
