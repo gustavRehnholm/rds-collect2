@@ -1,5 +1,11 @@
 
-
+import os
+from os import walk
+from os import path
+from re import search
+import pandas as pd
+import random
+import sys
 
 def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
      # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
