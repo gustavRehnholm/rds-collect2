@@ -15,6 +15,8 @@ python3 rds-collect2/parser/plot_df.py default-rnd wf-result/df-size-twitch-rnd-
 python3 rds-collect2/parser/plot_df.py default-itr wf-result/df-size-twitch-itr-1370.csv wf-result/df-size-twitch-itr-685.csv wf-result/df-size-twitch-itr-342.csv wf-result/df-size-twitch-itr-220.csv wf-result/df-size-twitch-none.csv
 python3 rds-collect2/parser/plot_df.py default-rnd wf-result/df-size-twitch-rnd-1370.csv wf-result/df-size-twitch-rnd-685.csv wf-result/df-size-twitch-rnd-342.csv wf-result/df-size-twitch-rnd-220.csv wf-result/df-size-twitch-none.csv
 '''
+
+import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import sys
