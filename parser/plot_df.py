@@ -67,7 +67,7 @@ def main():
     plt.title(sys.argv[1])
 
     fig = plt.gcf()
-    fig.savefig("fig/" + sys.argv[1] + '.pdf')
+    fig.savefig("fig/" + sys.argv[1])
 
     plt.show()
 
