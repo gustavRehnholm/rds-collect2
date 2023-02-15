@@ -26,18 +26,14 @@ def main():
     sys.argv[2] : first file
     '''
 
-    index = 0
     datasets = []
 
     colors = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
     labels = ["1370", "685", "342", "220", "none"]
 
-    print(sys.argv)
-
     # Extract all csv files that should be plotted in a graph
-    while(sys.argv[index + 2] != ""):
-        datasets.append(pd.read_csv(sys.argv[index + 2], sep=','))
-        index += 1
+    for i in range(2, len(sys.argv)):
+        datasets.append(pd.read_csv(sys.argv[i], sep=','))
 
     # end program if data is unsuable
     if len(datasets) <= 0:
@@ -54,11 +50,11 @@ def main():
         return
 
     # plot all lines for the graph
-    for i in range(0, len(dataset)):
-        sns.pointplot(data=dataset[i], x ="th", y="accuracy", markers='|', color=colors[i], label=labels[i])
+    for j in range(0, len(dataset)):
+        sns.pointplot(data=dataset[j], x ="th", y="accuracy", markers='|', color=colors[j], label=labels[j])
 
-        plt.plot(dataset[i]['th'], label="Threshold")
-        plt.plot(dataset[i]['accuracy'], label="accuracy")
+        plt.plot(dataset[j]['th'], label="Threshold")
+        plt.plot(dataset[j]['accuracy'], label="accuracy")
 
     plt.ylim(0, 1)
     plt.legend()
