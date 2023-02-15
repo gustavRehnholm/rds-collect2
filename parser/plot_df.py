@@ -50,11 +50,11 @@ def main():
         return
 
     # plot all lines for the graph
-    for j in range(0, len(dataset)):
-        sns.pointplot(data=dataset[j], x ="th", y="accuracy", markers='|', color=colors[j], label=labels[j])
+    for j in range(0, len(datasets)):
+        sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers='|', color=colors[j], label=labels[j])
 
-        plt.plot(dataset[j]['th'], label="Threshold")
-        plt.plot(dataset[j]['accuracy'], label="accuracy")
+        plt.plot(datasets[j]['th'], label="Threshold")
+        plt.plot(datasets[j]['accuracy'], label="accuracy")
 
     plt.ylim(0, 1)
     plt.legend()
