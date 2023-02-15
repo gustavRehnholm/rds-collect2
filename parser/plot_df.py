@@ -44,7 +44,7 @@ def main():
         print("ERROR: there are more lines to plot than colors, add more colors in the colors list")
         print("Aborting program")
         return
-    elif led(datasets) > len(labels):
+    elif len(datasets) > len(labels):
         print("ERROR: there are more lines to plot than labels, add more labels in the labels list")
         print("Aborting program")
         return
