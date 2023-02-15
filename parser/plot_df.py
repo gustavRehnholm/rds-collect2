@@ -20,12 +20,19 @@ import pandas as pd
 import sys
 
 def main():
+    '''
+    sys.argv[0] : name of the program
+    sys.argv[1] : title
+    sys.argv[2] : first file
+    '''
 
     index = 0
     datasets = []
 
     colors = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
     labels = ["1370", "685", "342", "220", "none"]
+
+    print(sys.argv)
 
     # Extract all csv files that should be plotted in a graph
     while(sys.argv[index + 2] != ""):
