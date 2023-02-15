@@ -65,6 +65,10 @@ def main():
     plt.ylim(0, 1)
     plt.legend()
     plt.title(sys.argv[1])
+
+    fig = plt.gcf()
+    fig.savefig("fig/" + sys.argv[1] + '.pdf')
+
     plt.show()
 
 
