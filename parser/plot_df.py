@@ -31,6 +31,7 @@ def main():
     datasets = []
 
     colors = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
+    markers_list = ['x','o','v','^','<']
     labels = ["1370", "685", "342", "220", "none"]
 
     # Extract all csv files that should be plotted in a graph
@@ -49,11 +50,14 @@ def main():
     elif len(datasets) > len(labels):
         print("ERROR: there are more lines to plot than labels, add more labels in the labels list")
         print("Aborting program")
+    elif len(datasets) > len(markers_list):
+        print("ERROR: there are more lines to plot than markers, add more markers in markers_list")
+        print("Aborting program")
         return
 
     # plot all lines for the graph
     for j in range(0, len(datasets)):
-        sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers='|', color=colors[j], label=labels[j])
+        sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers=markers_list[j], label=labels[j])
 
         plt.plot(datasets[j]['th'], label="Threshold")
         plt.plot(datasets[j]['accuracy'], label="accuracy")
