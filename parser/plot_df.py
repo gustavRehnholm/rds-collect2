@@ -17,6 +17,7 @@ python3 rds-collect2/parser/plot_df.py default-rnd wf-result/df-size-twitch-rnd-
 '''
 import seaborn as sns
 import pandas as pd
+import sys
 
 def main():
 
