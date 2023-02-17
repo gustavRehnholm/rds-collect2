@@ -218,7 +218,7 @@ def main():
 
                     # Direction
                     if(directionSplit[IP_INDEX_SENDER] == ''):
-                        print("The noise packet has no IP address for the sender, skipping this noise packet")
+                        # print("The noise packet has no IP address for the sender, skipping this noise packet")
                         continue
                     if (directionSplit[IP_INDEX_SENDER] == ipHost):
                         direction = 's'
@@ -235,25 +235,23 @@ def main():
                     try:
                         packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                     except:
-                        print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
+                        # print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                         continue
 
                     
                     # Do not accept an empty packet size
                     if int(packetSize) == 0:
-                        print("Packet size" + packetSize + " is 0, and therefore invalid")
+                        # print("Packet size" + packetSize + " is 0, and therefore invalid")
                         continue
                     
 
                     # If the current web traffic packet is empty, add the current noise packet
                     # Indicates that one should switch to a new web traffic file, but before that, one should add the noise
-                    # TODO: make sure that this does not cause any problem
-                    # TODO: might want to rm the print 
                     try:
                         currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
                     except:
                         currParsedFile.writelines([str(finalTime), ",", direction, ",", packetSize, "\n"])
-                        print("Crossline is empty, added the noise line")
+                        # print("Crossline is empty, added the noise line")
                         continue
 
                     # Sort the noise and the web traffic after time
