@@ -18,7 +18,7 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "captures"
+    FILES_2_PARSE_DIR = "raw-captures/captures"
     # Directory with the result
     PARSED_FILES_DIR = "parsedFiles-old"
     # Directory with the web traffic
