@@ -2,6 +2,8 @@
 # Go from captures to plotted graphs
 # replicate the previous result
 
+# ./rds-collect2/scripts/script-catpture-2-plot.sh 
+
 # Parse, rm unusable data packets, and files with too much dataloss
 #python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
