@@ -46,17 +46,19 @@ def main():
         return
     elif len(datasets) > len(colors):
         print("ERROR: there are more lines to plot than colors, add more colors in the colors list")
+        print("There is ", len(datasets), " lines to show in the graphs")
         print("Aborting program")
         return
     elif len(datasets) > len(labels):
         print("ERROR: there are more lines to plot than labels, add more labels in the labels list")
+        print("There is ", len(datasets), " lines to show in the graphs")
         print("Aborting program")
     elif len(datasets) > len(markers_list):
         print("ERROR: there are more lines to plot than markers, add more markers in markers_list")
+        print("There is ", len(datasets), " lines to show in the graphs")
         print("Aborting program")
         return
-    else:
-        print("There is ", len(datasets), " lines to show in the graphs")
+        
 
     # plot all lines for the graph
     for j in range(0, len(datasets)):
