@@ -53,6 +53,9 @@ def main():
     numParsedPackets = 0
     # total number of packets that could not be parsed
     numSkippedPackets = 0
+    # list of the loss streak
+    listLossStreak = []
+    
 
     # this files number of packets
     currNumPacket = 0
@@ -60,6 +63,9 @@ def main():
     currNumParsedPackets = 0
     # this files number of skipped packets
     currNumSkippedPackets = 0
+    # longest streak of lost packets in the file
+    currLossStreak = 0
+    currLongestLossStreak = 0
 
 
     #----------------Create the directory structure----------------
@@ -93,6 +99,13 @@ def main():
     for fileToParsePath in files2Parse:
         print("New file to parse: ", os.path.basename(fileToParsePath))
 
+        # add the previous loss streak
+        listLossStreak.append(currLongestLossStreak)
+
+        # reset the loss streak
+        currLossStreak = 0
+        currLongestLossStreak = 0
+
         # increment the index (to indicate to the user how long the program must run)
         currIndex += 1
         # total number of packets
@@ -108,13 +121,11 @@ def main():
 
 
         with open(fileToParsePath, 'r') as fileToParse:
-            #print("\n")
             print(currIndex , "/", len(files2Parse), " files left")
             print("Opening ", os.path.basename(fileToParsePath))
 
             currParsedFile = open(currParsedFiles[0], 'a') 
             print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
-            #print("\n")
             currParsedFiles.pop(0)
 
             # For every line in the noise
@@ -143,6 +154,9 @@ def main():
                 if(directionSplit[IP_INDEX_SENDER] == ''):
                     #print("The noise packet has no IP address for the sender, skipping this noise packet")
                     currNumSkippedPackets += 1
+                    currLossStreak += 1
+                    if currLongestLossStreak < currLossStreak:
+                        currLongestLossStreak = currLossStreak
                     continue
                 elif (directionSplit[IP_INDEX_SENDER] == ipHost):
                     direction = 's'
@@ -164,6 +178,9 @@ def main():
                 except:
                     #print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                     currNumSkippedPackets += 1
+                    currLossStreak += 1
+                    if currLongestLossStreak < currLossStreak:
+                        currLongestLossStreak = currLossStreak
                     continue
 
                 
@@ -171,15 +188,22 @@ def main():
                 if int(packetSize) == 0:
                     #print("Packet size" + packetSize + " is 0, and therefore invalid")
                     currNumSkippedPackets += 1
+                    currLossStreak += 1
+                    if currLongestLossStreak < currLossStreak:
+                        currLongestLossStreak = currLossStreak
                     continue
                 elif int(packetSize) < 0:
                     #print("Packet size" + packetSize + " is negative, and therefore invalid")
                     currNumSkippedPackets += 1
+                    currLossStreak += 1
+                    if currLongestLossStreak < currLossStreak:
+                        currLongestLossStreak = currLossStreak
                     continue
 
                 # parse the packet and incerment the counter
                 currParsedFile.writelines([str(totalTimeParseLine), ",", direction, ",", packetSize, "\n"])
                 currNumParsedPackets += 1
+                currLossStreak = 0
 
             # Done with the current filesToParse
             endTimeList.append(totalTimeParseLine)
