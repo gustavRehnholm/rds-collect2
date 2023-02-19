@@ -13,18 +13,18 @@ def main():
 
     #-----------Constants------------#
     # Directory with the noise
-    CAPTURES_1370 = "parsed-noise/twitch/captures-1370"
-    CAPTURES_685  = "parsed-noise/twitch/captures-685"
-    CAPTURES_342  = "parsed-noise/twitch/captures-342"
-    CAPTURES_220  = "parsed-noise/twitch/captures-220"
+    CAPTURES_1370 = "rds-collect2/parser/parsed-noise/twitch/captures-1370"
+    CAPTURES_685  = "rds-collect2/parser/parsed-noise/twitch/captures-685"
+    CAPTURES_342  = "rds-collect2/parser/parsed-noise/twitch/captures-342"
+    CAPTURES_220  = "rds-collect2/parser/parsed-noise/twitch/captures-220"
 
-    os.system("rm -f -r parsed-noise/twitch/captures-685")
-    os.system("rm -f -r parsed-noise/twitch/captures-342")
-    os.system("rm -f -r parsed-noise/twitch/captures-220")
+    os.system("rm -f -r rds-collect2/parser/parsed-noise/twitch/captures-685")
+    os.system("rm -f -r rds-collect2/parser/parsed-noise/twitch/captures-342")
+    os.system("rm -f -r rds-collect2/parser/parsed-noise/twitch/captures-220")
 
-    os.system("mkdir parsed-noise/twitch/captures-685")
-    os.system("mkdir parsed-noise/twitch/captures-342")
-    os.system("mkdir parsed-noise/twitch/captures-220")
+    os.system("mkdir rds-collect2/parser/parsed-noise/twitch/captures-685")
+    os.system("mkdir rds-collect2/parser/parsed-noise/twitch/captures-342")
+    os.system("mkdir rds-collect2/parser/parsed-noise/twitch/captures-220")
 
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Mv = []
@@ -61,19 +61,19 @@ def main():
     # print to show that there is the right amount of files in each directory
 
     print("Capture-1370 contains the following number of files")
-    os.system("ls parsed-noise/twitch/captures-1370 | wc -l")
+    os.system("ls rds-collect2/parser/parsed-noise/twitch/captures-1370 | wc -l")
     print("")
 
     print("Capture-685 contains the following number of files")
-    os.system("ls parsed-noise/twitch/captures-685 | wc -l")
+    os.system("ls rds-collect2/parser/parsed-noise/twitch/captures-685 | wc -l")
     print("")
 
     print("Capture-342 contains the following number of files")
-    os.system("ls parsed-noise/twitch/captures-342 | wc -l")
+    os.system("ls rds-collect2/parser/parsed-noise/twitch/captures-342 | wc -l")
     print("")
 
     print("Capture-220 contains the following number of files")
-    os.system("ls parsed-noise/twitch/captures-220 | wc -l")
+    os.system("ls rds-collect2/parser/parsed-noise/twitch/captures-220 | wc -l")
     print("")
 
 
