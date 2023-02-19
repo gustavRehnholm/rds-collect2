@@ -56,6 +56,12 @@ def main():
     numSkippedPackets = 0
     # list of the loss streak
     listLossStreak = []
+    # number of files that was removed
+    rmFiles = 0
+    # number fo files that is still left
+    parsedFiles = 0
+    # list of how much data is lost in the file
+    listLossPercent = []
     
 
     # this files number of packets
@@ -99,9 +105,6 @@ def main():
     # For every file to parse (aka the noise)
     for fileToParsePath in files2Parse:
         print("New file to parse: ", os.path.basename(fileToParsePath))
-
-        # add the previous loss streak
-        listLossStreak.append(currLongestLossStreak)
 
         # reset the loss streak
         currLossStreak = 0
@@ -214,16 +217,32 @@ def main():
                 print(totalTimeParseLine)
                 return
 
-            print("\n")
-            print("Out of lines in ", os.path.basename(fileToParsePath))
-            print("Closing...")
-            print("Number of packets/lines in the file:         ", currNumPacket)
-            print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
-            print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
-            print("Longest streak of skipped packets: ", currLongestLossStreak)
-            print("This files time length: ", endTimeList[-1])
-            print("\n")
-            fileToParse.close()
+            currPercentLoss = currNumSkippedPackets / currNumPacket
+            listLossPercent.append(currPercentLoss)
+
+            # add the previous loss streak
+            listLossStreak.append(currLongestLossStreak)
+            if currLongestLossStreak >= 20:
+                print("This file is seen as broken and will not be part of the parsed dataset because: ")
+                print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
+                rmFiles += 1
+            elif currPercentLoss >= 1:
+                print("This file is seen as broken and will not be part of the parsed dataset because: ")
+                print("The percentage loss of packets (", currPercentLoss, "), is over 1")
+            else:
+                #listLossPercent.append(currPercentLoss)
+                #listLossStreak.append(currLongestLossStreak)
+                print("\n")
+                print("Out of lines in ", os.path.basename(fileToParsePath))
+                print("Closing...")
+                print("Number of packets/lines in the file:         ", currNumPacket)
+                print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
+                print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
+                print("Longest streak of skipped packets: ", currLongestLossStreak)
+                print("Lost packages in this file: ", currPercentLoss)
+                print("This files time length: ", endTimeList[-1])
+                print("\n")
+                fileToParse.close()
 
     endTimeList.sort()
 
