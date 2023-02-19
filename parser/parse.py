@@ -12,7 +12,7 @@ import time
 import pandas as pd
 
 # touch stdout-dir/stdout-parse.txt
-# python3 parse.py | tee stdout-dir/stdout-parse.txt
+# python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
 def main():
 
@@ -24,9 +24,9 @@ def main():
     # nanoseconds in an second
     NANO_SEC_PER_SEC = 1000000000
     # Directory with the noise
-    FILES_2_PARSE_DIR = "raw-captures/captures"
+    FILES_2_PARSE_DIR = "rds-collect2/parser/raw-captures/captures"
     # Directory with the noise parsed
-    PARSED_FILES_DIR = "parsed-noise/twitch/captures-1370"
+    PARSED_FILES_DIR = "rds-collect2/parser/parsed-noise/twitch/captures-1370"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
