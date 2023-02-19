@@ -1,5 +1,6 @@
 '''
 Inject parsed noise to the web traffic
+Is best to run from the script: script-inject
 '''
 
 #!/usr/bin/env python
