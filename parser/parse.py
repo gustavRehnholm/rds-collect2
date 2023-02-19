@@ -15,6 +15,7 @@ import pandas as pd
 # python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
 def main():
+    print("Start to parse the data")
 
     #-----------Constants------------#
     # Sec in an hour
