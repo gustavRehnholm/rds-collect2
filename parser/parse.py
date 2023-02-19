@@ -129,9 +129,10 @@ def main():
             print(currIndex , "/", len(files2Parse), " files left")
             print("Opening ", os.path.basename(fileToParsePath))
 
+            currParsedFiles.pop(0)
             currParsedFile = open(currParsedFiles[0], 'a') 
             print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
-            currParsedFiles.pop(0)
+            
 
             # For every line in the noise
             # Go through the current noise file, line for line, because it might be to large for readlines()
@@ -226,12 +227,12 @@ def main():
             if currLongestLossStreak >= 20:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
-                os.system("rm ", os.path.basename(fileToParsePath))
+                os.system("rm " + os.path.basename(currParsedFiles[0]))
                 rmFiles += 1
             elif currPercentLoss >= 0.05:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The percentage loss of packets (", currPercentLoss, "), is over 5 percent")
-                os.system("rm ", os.path.basename(fileToParsePath))
+                os.system("rm " + os.path.basename(currParsedFiles[0]))
                 rmFiles += 1
             else:
                 listLossPercent.append(currPercentLoss)
