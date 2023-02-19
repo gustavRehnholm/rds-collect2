@@ -7,9 +7,10 @@
 # Parse, rm unusable data packets, and files with too much dataloss
 #python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
+python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser/stdout-dir/stdout-smaller.txt
+
 # inject the data 
 ./rds-collect2/scripts/script-inject.sh
-#script -q -c "python3 rds-collect2/parser/inject.py 1370 itr" /dev/null | tee rds-collect2/parser/stdout-dir/output-inject-itr-1370.txt
 
 # train DF, with the smaller datasample
 ./rds-collect2/scripts/script-df.sh
