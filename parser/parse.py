@@ -129,9 +129,11 @@ def main():
             print(currIndex , "/", len(files2Parse), " files left")
             print("Opening ", os.path.basename(fileToParsePath))
 
-            currParsedFiles.pop(0)
+            
             currParsedFile = open(currParsedFiles[0], 'a') 
             print("Printing to new parsed noise file", os.path.basename(currParsedFiles[0])) 
+            path = currParsedFiles[0]
+            currParsedFiles.pop(0)
             
 
             # For every line in the noise
@@ -227,12 +229,14 @@ def main():
             if currLongestLossStreak >= 20:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
-                os.system("rm rds-collect2/parser/parsed-noise/twitch/captures-1370/" + os.path.basename(currParsedFiles[0]))
+                os.system("rm rds-collect2/parser/parsed-noise/twitch/captures-1370/" + path)
+                print("\n")
                 rmFiles += 1
             elif currPercentLoss >= 0.05:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The percentage loss of packets (", currPercentLoss, "), is over 5 percent")
-                os.system("rm rds-collect2/parser/parsed-noise/twitch/captures-1370/" + os.path.basename(currParsedFiles[0]))
+                os.system("rm rds-collect2/parser/parsed-noise/twitch/captures-1370/" + path)
+                print("\n")
                 rmFiles += 1
             else:
                 listLossPercent.append(currPercentLoss)

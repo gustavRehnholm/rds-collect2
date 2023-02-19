@@ -36,13 +36,13 @@ def main():
 
     #-----------Constants------------#
     # Directory with the noise
-    FILES_2_PARSE_DIR = "parsed-noise/twitch/captures-" + str(length)
+    FILES_2_PARSE_DIR = "rds-collect2/parser/parsed-noise/twitch/captures-" + str(length)
     # Directory with the result
-    PARSED_FILES_DIR = "injected-datasets/twitch/parsedFiles-" + choice + "-" + str(length)
+    PARSED_FILES_DIR = "rds-collect2/parser/injected-datasets/twitch/parsedFiles-" + choice + "-" + str(length)
     # Directory with the web traffic
-    WEB_TRAFFIC_FILES_DIR = "dataset/client"
+    WEB_TRAFFIC_FILES_DIR = "rds-collect2/parser/dataset/client"
     # Information about what the different web traffics should be used for on the WF (training, validation, testing)
-    FOLD0_CSV = "dataset/fold-0.csv"
+    FOLD0_CSV = "rds-collect2/parser/dataset/fold-0.csv"
 
     # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
