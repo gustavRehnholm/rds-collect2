@@ -227,9 +227,9 @@ def main():
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
                 rmFiles += 1
-            elif currPercentLoss >= 0.02:
+            elif currPercentLoss >= 0.05:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
-                print("The percentage loss of packets (", currPercentLoss, "), is over 2 percent")
+                print("The percentage loss of packets (", currPercentLoss, "), is over 5 percent")
                 rmFiles += 1
             else:
                 listLossPercent.append(currPercentLoss)
