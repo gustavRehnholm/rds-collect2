@@ -10,6 +10,7 @@ from os import path
 from re import search
 import time
 import pandas as pd
+import statistics
 
 # touch stdout-dir/stdout-parse.txt
 # python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
@@ -218,21 +219,21 @@ def main():
                 return
 
             currPercentLoss = currNumSkippedPackets / currNumPacket
-            listLossPercent.append(currPercentLoss)
+            #listLossPercent.append(currPercentLoss)
 
             # add the previous loss streak
-            listLossStreak.append(currLongestLossStreak)
+            #listLossStreak.append(currLongestLossStreak)
             if currLongestLossStreak >= 20:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
                 rmFiles += 1
-            elif currPercentLoss >= 1:
+            elif currPercentLoss >= 0.02:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
-                print("The percentage loss of packets (", currPercentLoss, "), is over 1")
+                print("The percentage loss of packets (", currPercentLoss, "), is over 2 percent")
                 rmFiles += 1
             else:
-                #listLossPercent.append(currPercentLoss)
-                #listLossStreak.append(currLongestLossStreak)
+                listLossPercent.append(currPercentLoss)
+                listLossStreak.append(currLongestLossStreak)
                 print("\n")
                 print("Out of lines in ", os.path.basename(fileToParsePath))
                 print("Closing...")
@@ -246,21 +247,26 @@ def main():
                 fileToParse.close()
 
     endTimeList.sort()
+    listLossPercent.sort()
+    listLossStreak.sort()
 
-    print("Total number of packets/lines:         ", numPackets)
-    print("Total number of parsed packets/lines:  ", numParsedPackets)
-    print("Total number of skipped packets/lines: ", numSkippedPackets)
+    #print("Total number of packets/lines:         ", numPackets)
+    #print("Total number of parsed packets/lines:  ", numParsedPackets)
+    #print("Total number of skipped packets/lines: ", numSkippedPackets)
     print("Total number of skipped files: ", rmFiles)
+    print("\n")
+    print("Of the parsed noise files:")
+    print("\n")
+    print("Mean loss ratio of packets: ", statistics.mean(listLossPercent))
+    print("Highest loss ratio: ", listLossPercent[-1])
+    print("Mean loss streak: ", statistics.mean(listLossStreak))
+    print("Highest loss streak: ", listLossStreak[-1])
+    print("\n")
     print("Logfile with the longest time(ns): ", endTimeList[-1])
     print("Logfile with the shortest time(ns): ", endTimeList[0])
     print("Logfile with the longest time(h): ", endTimeList[-1]/(NANO_SEC_PER_SEC*60*60))
     print("Logfile with the shortest time(h): ", endTimeList[0]/(NANO_SEC_PER_SEC*60*60))
 
-    print("\n")
-    print("list of all the loss streak: ", listLossStreak)
-
-    print("\n")
-    print("list of all the loss percentage: ", listLossPercent)
 
 # run main 
 if __name__=="__main__":
