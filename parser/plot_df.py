@@ -67,7 +67,8 @@ def main():
         #plt.plot(datasets[j]['th'], label="Threshold")
         #plt.plot(datasets[j]['accuracy'], label="accuracy")
 
-    plt.ylim(0, 1)
+    #plt.ylim(0, 1)
+    plt.ylim(0.70, 0.95)
     plt.legend()
     plt.title(sys.argv[1])
 
