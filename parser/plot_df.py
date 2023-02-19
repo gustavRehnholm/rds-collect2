@@ -36,7 +36,7 @@ def main():
 
     # Extract all csv files that should be plotted in a graph
     for i in range(2, len(sys.argv)):
-        datasets.append(pd.read_csv(sys.argv[i], sep=','))
+        #datasets.append(pd.read_csv(sys.argv[i], sep=','))
         datasets.append(pd.read_csv(sys.argv[i]))
 
     # end program if data is unsuable
