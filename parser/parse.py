@@ -220,6 +220,7 @@ def main():
             print("Number of packets/lines in the file:         ", currNumPacket)
             print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
             print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
+            print("Longest streak of skipped packets: ", currLongestLossStreak)
             print("This files time length: ", endTimeList[-1])
             print("\n")
             fileToParse.close()
@@ -231,6 +232,9 @@ def main():
     print("Total number of skipped packets/lines: ", numSkippedPackets)
     print("Logfile with the longest time: ", endTimeList[-1])
     print("Logfile with the shortest time: ", endTimeList[0])
+
+    print("\n")
+    print("list of all the loss streak: ", listLossStreak)
 
 # run main 
 if __name__=="__main__":
