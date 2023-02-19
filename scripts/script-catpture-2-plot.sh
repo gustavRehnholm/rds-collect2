@@ -13,4 +13,10 @@
 ./rds-collect2/scripts/script-df.sh
 
 # plot the result
+./rds-collect2/scripts/script-plotter.sh
+
+# train DF, with the smaller datasample
+./rds-collect2/scripts/script-df-rep-old.sh
+
+# plot the result of the smaller sample size
 ./rds-collect2/scripts/script-plotter-old.sh
