@@ -55,6 +55,8 @@ def main():
         print("ERROR: there are more lines to plot than markers, add more markers in markers_list")
         print("Aborting program")
         return
+    else:
+        print("There is ", len(datasets), " lines to show in the graphs")
 
     # plot all lines for the graph
     for j in range(0, len(datasets)):
