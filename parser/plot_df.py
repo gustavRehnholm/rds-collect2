@@ -37,6 +37,7 @@ def main():
     # Extract all csv files that should be plotted in a graph
     for i in range(2, len(sys.argv)):
         datasets.append(pd.read_csv(sys.argv[i], sep=','))
+        datasets.append(pd.read_csv(sys.argv[i]))
 
     # end program if data is unsuable
     if len(datasets) <= 0:
@@ -57,10 +58,10 @@ def main():
 
     # plot all lines for the graph
     for j in range(0, len(datasets)):
-        sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers=markers_list[j], label=labels[j])
+        sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers=markers_list[j], color=colors[j], label=labels[j])
 
-        plt.plot(datasets[j]['th'], label="Threshold")
-        plt.plot(datasets[j]['accuracy'], label="accuracy")
+        #plt.plot(datasets[j]['th'], label="Threshold")
+        #plt.plot(datasets[j]['accuracy'], label="accuracy")
 
     plt.ylim(0, 1)
     plt.legend()
@@ -70,6 +71,20 @@ def main():
     fig.savefig("fig/" + sys.argv[1])
 
     plt.show()
+
+    '''
+    constants = pd.read_csv("no-noise_constant.csv")
+constants2 = pd.read_csv("no-noise_tiktok.csv")
+constants3 = pd.read_csv("no_noise.csv")
+sns.pointplot(data=constants, x ="th", y="accuracy", markers='|', color="blue", label="constants")
+sns.pointplot(data=constants2, x ="th", y="accuracy", markers='|', color="green", label="tiktok")
+sns.pointplot(data=constants3, x ="th", y="accuracy", markers='|', color="red", label="default")
+plt.ylim(0.70, 0.95)
+plt.legend()
+plt.title("Web-traffic")
+plt.show()
+
+        '''
 
 
 # run main 

@@ -3,6 +3,8 @@
 
 # ./rds-collect2/parser/script-df-test.sh
 
+# ./df-fitness.py -d rds-collect2/parser/parsedFiles-old --csv df_old.csv
+
 # DF with size
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-itr-1370 --train -s 5 --csv wf-test-result/df-size-twitch-itr-1370.csv
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-itr-685 --train -s 5 --csv wf-test-result/df-size-twitch-itr-685.csv

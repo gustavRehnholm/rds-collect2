@@ -9,6 +9,10 @@ import pandas as pd
 # For testing
 import logging
 
+# python3 parse-n-inject-old.py | tee old.txt
+
+# ./df-fitness.py -d rds-collect2/parser/parsedFiles-old --train --csv df_old.csv
+
 def main():
     #-----------Constants------------#
     # Sec in an hour
