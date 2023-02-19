@@ -229,6 +229,7 @@ def main():
             elif currPercentLoss >= 1:
                 print("This file is seen as broken and will not be part of the parsed dataset because: ")
                 print("The percentage loss of packets (", currPercentLoss, "), is over 1")
+                rmFiles += 1
             else:
                 #listLossPercent.append(currPercentLoss)
                 #listLossStreak.append(currLongestLossStreak)
@@ -249,11 +250,17 @@ def main():
     print("Total number of packets/lines:         ", numPackets)
     print("Total number of parsed packets/lines:  ", numParsedPackets)
     print("Total number of skipped packets/lines: ", numSkippedPackets)
-    print("Logfile with the longest time: ", endTimeList[-1])
-    print("Logfile with the shortest time: ", endTimeList[0])
+    print("Total number of skipped files: ", rmFiles)
+    print("Logfile with the longest time(ns): ", endTimeList[-1])
+    print("Logfile with the shortest time(ns): ", endTimeList[0])
+    print("Logfile with the longest time(h): ", endTimeList[-1]/(NANO_SEC_PER_SEC*60*60))
+    print("Logfile with the shortest time(h): ", endTimeList[0]/(NANO_SEC_PER_SEC*60*60))
 
     print("\n")
     print("list of all the loss streak: ", listLossStreak)
+
+    print("\n")
+    print("list of all the loss percentage: ", listLossPercent)
 
 # run main 
 if __name__=="__main__":
