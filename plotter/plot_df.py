@@ -21,7 +21,7 @@ python3 rds-collect2/plotter/plot_df.py default-rnd wf-result/df-size-twitch-rnd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import sys
+import syscd
 
 def main():
     '''
@@ -31,11 +31,15 @@ def main():
     '''
 
     datasets = []
+    title = sys.argv[1]
 
     colors = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
     markers_list = ['x','o','v','^','<']
-    #labels = ["1370", "685", "342", "220", "none"]
-    labels = ["default", "constant", "tiktok"]
+    
+    if title == "old-result":
+        labels = ["default", "constant", "tiktok"]
+    else:
+        labels = ["1370", "685", "342", "220", "none"]
 
     # Extract all csv files that should be plotted in a graph
     for i in range(2, len(sys.argv)):
@@ -66,31 +70,14 @@ def main():
     for j in range(0, len(datasets)):
         sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers=markers_list[j], color=colors[j], label=labels[j])
 
-        #plt.plot(datasets[j]['th'], label="Threshold")
-        #plt.plot(datasets[j]['accuracy'], label="accuracy")
-
     plt.ylim(0, 1)
     plt.legend()
-    plt.title(sys.argv[1])
+    plt.title(title)
 
     fig = plt.gcf()
-    fig.savefig("fig/" + sys.argv[1])
+    fig.savefig("fig/" + title)
 
     plt.show()
-
-    '''
-    constants = pd.read_csv("no-noise_constant.csv")
-constants2 = pd.read_csv("no-noise_tiktok.csv")
-constants3 = pd.read_csv("no_noise.csv")
-sns.pointplot(data=constants, x ="th", y="accuracy", markers='|', color="blue", label="constants")
-sns.pointplot(data=constants2, x ="th", y="accuracy", markers='|', color="green", label="tiktok")
-sns.pointplot(data=constants3, x ="th", y="accuracy", markers='|', color="red", label="default")
-plt.ylim(0.70, 0.95)
-plt.legend()
-plt.title("Web-traffic")
-plt.show()
-
-        '''
 
 
 # run main 
