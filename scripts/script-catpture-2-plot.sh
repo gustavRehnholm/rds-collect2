@@ -13,13 +13,14 @@ python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser
 ./rds-collect2/scripts/script-inject.sh
 
 # train DF, with the smaller datasample
-#./rds-collect2/scripts/script-df.sh
-
-# plot the result
-#./rds-collect2/scripts/script-plotter.sh
-
-# train DF, with the smaller datasample
 ./rds-collect2/scripts/script-df-rep-old.sh
 
 # plot the result of the smaller sample size
 ./rds-collect2/scripts/script-plotter-old.sh
+
+# train DF, with the datasample
+./rds-collect2/scripts/script-df.sh
+
+# plot the result
+./rds-collect2/scripts/script-plotter.sh
+
