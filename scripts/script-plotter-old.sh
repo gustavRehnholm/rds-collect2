@@ -4,11 +4,5 @@
 # input: {title} {csv file 1} {csv file 2} ...
 # wf-old-result/df-size-twitch-itr-1370.csv
 
-# DF with size
-python3 rds-collect2/plotter/plot_df.py default-itr-size wf-old-result/df-size-twitch-itr-1370.csv wf-result/df-size-twitch-itr-685.csv wf-result/df-size-twitch-itr-342.csv wf-result/df-size-twitch-itr-220.csv wf-result/df-size-twitch-none.csv
-
-# DF without size
-python3 rds-collect2/plotter/plot_df.py default-itr-constant wf-old-result/df-size-twitch-itr-1370.csv wf-result/df-size-twitch-itr-685.csv wf-result/df-size-twitch-itr-342.csv wf-result/df-size-twitch-itr-220.csv wf-result/df-size-twitch-none.csv
-
-#DF tiktok
-python3 rds-collect2/plotter/plot_df.py default-itr-tiktok wf-old-result/df-size-twitch-itr-1370.csv wf-result/df-size-twitch-itr-685.csv wf-result/df-size-twitch-itr-342.csv wf-result/df-size-twitch-itr-220.csv wf-result/df-size-twitch-none.csv
+# DF size, constant and tiktok
+python3 rds-collect2/plotter/plot_df.py old-result wf-old-result/df-size-twitch-itr-1370.csv wf-old-result/df-constant-twitch-itr-1370.csv wf-old-result/df-tiktok-twitch-itr-1370.csv

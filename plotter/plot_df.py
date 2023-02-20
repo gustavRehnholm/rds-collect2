@@ -34,7 +34,8 @@ def main():
 
     colors = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
     markers_list = ['x','o','v','^','<']
-    labels = ["1370", "685", "342", "220", "none"]
+    #labels = ["1370", "685", "342", "220", "none"]
+    labels = ["default", "constant", "tiktok"]
 
     # Extract all csv files that should be plotted in a graph
     for i in range(2, len(sys.argv)):
