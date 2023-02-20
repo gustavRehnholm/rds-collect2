@@ -46,9 +46,10 @@ def main():
     currParsedFiles= []
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
-    # List of all end times, double check that the longest and shortest log file still is around 1.9h
-    endTimeList = []
+    warningMsg = "WARNING: This file is seen as broken and will not be part of the parsed dataset because: "
 
+
+    #---info about the noise files as a whole----#
     # total number of packets that was in the unparsed noise files
     numPackets = 0
     # total number of successfully parsed packets
@@ -63,8 +64,12 @@ def main():
     parsedFiles = 0
     # list of how much data is lost in the file
     listLossPercent = []
+    # List of all end times, double check that the longest and shortest log file still is around 1.9h
+    endTimeList = []
+    # List of the longest time between two packets for each noise file
+    holeList = []
     
-
+    #---Info about the currently opened noise file---#
     # this files number of packets
     currNumPacket = 0
     # this files number of successfully packets
@@ -74,6 +79,13 @@ def main():
     # longest streak of lost packets in the file
     currLossStreak = 0
     currLongestLossStreak = 0
+    #---to find holes of time without any packets
+    prevTime = 0
+    currTime = 0
+    currHole = 0
+    longestHole = 0
+
+
 
 
     #----------------Create the directory structure----------------
@@ -110,6 +122,11 @@ def main():
         # reset the loss streak
         currLossStreak = 0
         currLongestLossStreak = 0
+        # reset the hole finders
+        prevTime = 0
+        currTime = 0
+        currHole = 0
+        longestHole = 0
 
         # increment the index (to indicate to the user how long the program must run)
         currIndex += 1
@@ -139,6 +156,8 @@ def main():
             # For every line in the noise
             # Go through the current noise file, line for line, because it might be to large for readlines()
             for parseLine in fileToParse:
+                # Store the previous packets time
+                prevTime = currHole
 
                 # keep track how many packets there is in this file
                 currNumPacket += 1
@@ -154,6 +173,11 @@ def main():
 
                 # Get the IP of the source [0] and destination [1]
                 directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
+
+                # get the time between two packets, and the longest time which this has happened in this file
+                currHole = totalTimeParseLine - prevTime
+                if currHole > longestHole:
+                    longestHole = currHole
 
                 # Set time, direction and packet size, if direction or size is missing, skip the packet  
             
@@ -222,24 +246,23 @@ def main():
                 return
 
             currPercentLoss = currNumSkippedPackets / currNumPacket
-            #listLossPercent.append(currPercentLoss)
 
-            # add the previous loss streak
-            #listLossStreak.append(currLongestLossStreak)
+            holeList.append(longestHole)
+
             if currLongestLossStreak >= 20:
-                print("This file is seen as broken and will not be part of the parsed dataset because: ")
+                print(warningMsg)
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
                 os.system("rm " + path)
                 print("\n")
                 rmFiles += 1
             elif currPercentLoss >= 0.05:
-                print("This file is seen as broken and will not be part of the parsed dataset because: ")
+                print(warningMsg)
                 print("The percentage loss of packets (", currPercentLoss, "), is over 5 percent")
                 os.system("rm " + path)
                 print("\n")
                 rmFiles += 1
             elif currNumPacket <=  32000:
-                print("This file is seen as broken and will not be part of the parsed dataset because: ")
+                print(warningMsg)
                 print("The number of packets (", currNumPacket, "), is under 32k, meaning that it lacks to much data")
                 os.system("rm " + path)
                 print("\n")
@@ -279,6 +302,10 @@ def main():
     print("Logfile with the shortest time(ns): ", endTimeList[0])
     print("Logfile with the longest time(h): ", endTimeList[-1]/(NANO_SEC_PER_SEC*60*60))
     print("Logfile with the shortest time(h): ", endTimeList[0]/(NANO_SEC_PER_SEC*60*60))
+
+    print("\n")
+    holeList = holeList * NANO_SEC_PER_SEC
+    print("longest time hole between packets (in seconds)", holeList)
 
 
 # run main 
