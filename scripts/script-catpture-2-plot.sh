@@ -5,7 +5,7 @@
 # ./rds-collect2/scripts/script-catpture-2-plot.sh 
 
 # Parse, rm unusable data packets, and files with too much dataloss
-#python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
+python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
 python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser/stdout-dir/stdout-smaller.txt
 
@@ -13,10 +13,10 @@ python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser
 ./rds-collect2/scripts/script-inject.sh
 
 # train DF, with the smaller datasample
-./rds-collect2/scripts/script-df.sh
+#./rds-collect2/scripts/script-df.sh
 
 # plot the result
-./rds-collect2/scripts/script-plotter.sh
+#./rds-collect2/scripts/script-plotter.sh
 
 # train DF, with the smaller datasample
 ./rds-collect2/scripts/script-df-rep-old.sh

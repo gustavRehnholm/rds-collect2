@@ -238,6 +238,12 @@ def main():
                 os.system("rm rds-collect2/parser/parsed-noise/twitch/captures-1370/" + path)
                 print("\n")
                 rmFiles += 1
+            elif currNumPacket <=  32000:
+                print("This file is seen as broken and will not be part of the parsed dataset because: ")
+                print("The number of packets (", currNumPacket, "), is under 32k, meaning that it lacks to much data")
+                os.system("rm rds-collect2/parser/parsed-noise/twitch/captures-1370/" + path)
+                print("\n")
+                rmFiles += 1
             else:
                 listLossPercent.append(currPercentLoss)
                 listLossStreak.append(currLongestLossStreak)
