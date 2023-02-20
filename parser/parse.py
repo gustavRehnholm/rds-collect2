@@ -157,7 +157,7 @@ def main():
             # Go through the current noise file, line for line, because it might be to large for readlines()
             for parseLine in fileToParse:
                 # Store the previous packets time
-                prevTime = currHole
+                prevTime = currTime
 
                 # keep track how many packets there is in this file
                 currNumPacket += 1
@@ -170,12 +170,13 @@ def main():
                 timeLeftOfDotInNanoSec  = int(parseLineTime[0]) * NANO_SEC_PER_SEC
                 timeRightOfDotInNanoSec = int(parseLineTime[1])
                 totalTimeParseLine      =  timeLeftOfDotInNanoSec + timeRightOfDotInNanoSec
+                currTime = totalTimeParseLine
 
                 # Get the IP of the source [0] and destination [1]
                 directionSplit = splitParseLine[PACKET_ATTR_INDEX_IP].split(',')
 
                 # get the time between two packets, and the longest time which this has happened in this file
-                currHole = totalTimeParseLine - prevTime
+                currHole = currTime - prevTime
                 if currHole > longestHole:
                     longestHole = currHole
 
@@ -305,6 +306,7 @@ def main():
 
     print("\n")
     # convert to seconds
+    holeList.sort()
     print("longest time hole between packets (in minutes)")
     for i in range(0, len(holeList)):
         print(holeList[i] / (NANO_SEC_PER_SEC * 60))
