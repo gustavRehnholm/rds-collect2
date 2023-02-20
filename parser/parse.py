@@ -58,8 +58,12 @@ def main():
     numSkippedPackets = 0
     # list of the loss streak
     listLossStreak = []
-    # number of files that was removed
+    # number of files that was removed (and the different reasons why it has been removed)
     rmFiles = 0
+    rmHoleLen = 0
+    rmNumPacket = 0
+    rmPercentLoss = 0
+    rmLossStreak = 0
     # number fo files that is still left
     parsedFiles = 0
     # list of how much data is lost in the file
@@ -256,18 +260,28 @@ def main():
                 os.system("rm " + path)
                 print("\n")
                 rmFiles += 1
+                rmLossStreak += 1
             elif currPercentLoss >= 0.05:
                 print(warningMsg)
                 print("The percentage loss of packets (", currPercentLoss, "), is over 5 percent")
                 os.system("rm " + path)
                 print("\n")
                 rmFiles += 1
+                rmPercentLoss += 1
+            elif (longestHole / (NANO_SEC_PER_SEC * 60)) > 3:
+                print(warningMsg)
+                print("The longest hole was (", longestHole / (NANO_SEC_PER_SEC * 60), "), seconds, which is larger than 3 sec")
+                os.system("rm " + path)
+                print("\n")
+                rmFiles += 1
+                rmHoleLen += 1
             elif currNumPacket <=  32000:
                 print(warningMsg)
                 print("The number of packets (", currNumPacket, "), is under 32k, meaning that it lacks to much data")
                 os.system("rm " + path)
                 print("\n")
                 rmFiles += 1
+                rmNumPacket += 1
             else:
                 listLossPercent.append(currPercentLoss)
                 listLossStreak.append(currLongestLossStreak)
@@ -291,6 +305,10 @@ def main():
     #print("Total number of parsed packets/lines:  ", numParsedPackets)
     #print("Total number of skipped packets/lines: ", numSkippedPackets)
     print("Total number of skipped files: ", rmFiles)
+    print("Skipped because long loss of usable packets: ", rmLossStreak)
+    print("Skipped because high overall loss of usable packets: ", rmPercentLoss)
+    print("Skipped because file is to small: ", rmNumPacket)
+    print("Skipped because long hole without any packets: ", rmHoleLen)
     print("\n")
     print("Of the parsed noise files:")
     print("\n")
@@ -304,13 +322,21 @@ def main():
     print("Logfile with the longest time(h): ", endTimeList[-1]/(NANO_SEC_PER_SEC*60*60))
     print("Logfile with the shortest time(h): ", endTimeList[0]/(NANO_SEC_PER_SEC*60*60))
 
+    '''
+    rmHoleLen = 0
+    rmNumPacket = 0
+    rmPercentLoss = 0
+    rmLossStreak = 0
+
+        '''
+    '''
     print("\n")
     # convert to seconds
     holeList.sort()
     print("longest time hole between packets (in minutes)")
     for i in range(0, len(holeList)):
         print(holeList[i] / (NANO_SEC_PER_SEC * 60))
-    
+    '''
 
 
 # run main 
