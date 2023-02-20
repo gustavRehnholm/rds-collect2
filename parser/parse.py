@@ -305,9 +305,10 @@ def main():
 
     print("\n")
     # convert to seconds
+    print("longest time hole between packets (in minutes)")
     for i in range(0, len(holeList)):
-        holeList[i] = holeList[i] * NANO_SEC_PER_SEC
-    print("longest time hole between packets (in seconds)", holeList)
+        print(holeList[i] / (NANO_SEC_PER_SEC * 60))
+    
 
 
 # run main 
