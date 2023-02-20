@@ -21,7 +21,7 @@ python3 rds-collect2/plotter/plot_df.py default-rnd wf-result/df-size-twitch-rnd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import syscd
+import sys
 
 def main():
     '''
