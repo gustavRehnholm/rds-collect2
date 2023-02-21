@@ -39,7 +39,7 @@ def main():
     if title == "old-result":
         labels = ["default", "constant", "tiktok"]
     else:
-        labels = ["1370", "685", "342", "220", "none"]
+        labels = ["1355", "685", "342", "230", "none"]
 
     # Extract all csv files that should be plotted in a graph
     for i in range(2, len(sys.argv)):
