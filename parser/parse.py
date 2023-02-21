@@ -46,6 +46,8 @@ def main():
     currParsedFiles= []
     # List of all files to parse (aka all files in the filesToParseDir)
     files2Parse = []
+    # the file name to parse
+    file2ParseName = []
     warningMsg = "WARNING: This file is seen as broken and will not be part of the parsed dataset because: "
 
 
@@ -111,18 +113,25 @@ def main():
         print("Files to parse: ", len(files2Parse))
         print("Parsed Files: ", len(currParsedFiles))
 
+    '''
     for i in range(0, len(files2Parse)):
         print(os.path.basename(files2Parse[i]))
         print(os.path.basename(currParsedFiles[i]))
         print("\n")
-
+    '''
 
 
     #----------------------------Parsing-------------------------------------------
 
     print("Starting parse")
     files2Parse.sort()
+    currParsedFiles.sort()
     print("filesToParse len  = ", len(files2Parse), "\n")
+
+    for i in range(0, len(files2Parse)):
+        print(os.path.basename(files2Parse[i]))
+        print(os.path.basename(currParsedFiles[i]))
+        print("\n")
 
     currIndex = -1
 
