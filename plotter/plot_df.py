@@ -70,6 +70,8 @@ def main():
     for j in range(0, len(datasets)):
         sns.pointplot(data=datasets[j], x ="th", y="accuracy", markers=markers_list[j], color=colors[j], label=labels[j])
 
+    #x_ticks = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+    #plt.xticks(ticks = x_ticks)
     plt.ylim(0, 1)
     plt.legend()
     plt.title(title)
