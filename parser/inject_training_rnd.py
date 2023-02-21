@@ -7,7 +7,7 @@ import pandas as pd
 import random
 import sys
 
-def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
+def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train, choice, length):
 
     # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
@@ -22,7 +22,7 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
     # all lines that are left to read in the current opened web traffic file
     webTrafficLines = []
 
-    print("Start the randomized injection of the training data")
+    print("(", choice, "-", length, ") Start the randomized injection of the training data")
     # Loop until all web traffic is used, and because the training files will be used last, it is enough to check them
     while(len(webTrafficTrainFiles) > 0):
 
@@ -30,10 +30,10 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
         rnd_index = random.randrange(0, len(noise2train) - 1)
         fileToParsePath = noise2train[rnd_index]
 
-        print("New file to parse: ", os.path.basename(fileToParsePath))
+        print("(", choice, "-", length, ") New file to parse: ", os.path.basename(fileToParsePath))
 
         with open(fileToParsePath, 'r') as fileToParse:
-            print("Opening ", os.path.basename(fileToParsePath))
+            print("(", choice, "-", length, ") Opening ", os.path.basename(fileToParsePath))
             print("web traffic training Files   left: "      , len(webTrafficTrainFiles))
             print("Lines left in the open web traffic file: ", len(webTrafficLines))
             print("Noise files to use: ", len(noise2train))
@@ -64,7 +64,7 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
 
                     else:
                         # Done with the parsing
-                        print("Have injected all web traffic with noise")
+                        print("(", choice, "-", length, ") Have injected all web traffic with noise")
                         return True
             
                 # Time
@@ -77,7 +77,7 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
                     currWebTrafficPacketAttrList = webTrafficLines[0].split(",")
                 except:
                     currParsedFile.writelines([str(finalTime), ",", packetAttrList[PACKET_ATTR_INDEX_DIR], ",", packetAttrList[PACKET_ATTR_INDEX_SIZE]])
-                    print("webTrafficLines is empty, added the noise line")
+                    print("(", choice, "-", length, ") webTrafficLines is empty, added the noise line")
                     continue
 
                 # Sort the noise and the web traffic after time
@@ -88,11 +88,11 @@ def injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train):
                     webTrafficLines.pop(0)
 
             # Done with the current filesToParse
-            print("Out of lines in ", os.path.basename(fileToParsePath))
+            print("(", choice, "-", length, ") Out of lines in ", os.path.basename(fileToParsePath))
             print("Closing...")
             deviationTime = 0
             fileToParse.close()
 
     # Done with the parsing
-    print("Have injected all web traffic with noise")
+    print("(", choice, "-", length, ") Have injected all web traffic with noise")
     return True

@@ -7,7 +7,7 @@ import pandas as pd
 import random
 import sys
 
-def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
+def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse, choice, length):
 
     # index of the different attributes
     PACKET_ATTR_INDEX_TIME  = 0
@@ -27,11 +27,11 @@ def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
 
         # For every file to parse (aka the noise)
         for fileToParsePath in files2Parse:
-            print("New file to parse: ", os.path.basename(fileToParsePath))
+            print("(", choice, "-", length, ") New file to parse: ", os.path.basename(fileToParsePath))
 
             with open(fileToParsePath, 'r') as fileToParse:
 
-                print("Opening ", os.path.basename(fileToParsePath))
+                print("(", choice, "-", length, ") Opening ", os.path.basename(fileToParsePath))
                 print("web traffic training Files   left: "      , len(webTrafficTrainFiles))
                 print("Lines left in the open web traffic file: ", len(webTrafficLines))
                 print("Noise files to use: ", len(files2Parse))
@@ -62,7 +62,7 @@ def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
 
                         else:
                             # Done with the parsing
-                            print("Have injected all web traffic with noise")
+                            print("(", choice, "-", length, ") Have injected all web traffic with noise")
                             return True
                 
                     # Time
@@ -77,7 +77,7 @@ def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
                         currParsedFile.writelines([str(finalTime), ",", 
                             packetAttrList[PACKET_ATTR_INDEX_DIR], ",", 
                             packetAttrList[PACKET_ATTR_INDEX_SIZE]])
-                        print("webTrafficLines is empty, added the noise line")
+                        print("(", choice, "-", length, ") webTrafficLines is empty, added the noise line")
                         continue
 
                     # Sort the noise and the web traffic after time
@@ -90,7 +90,7 @@ def injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, files2Parse):
                         webTrafficLines.pop(0)
 
                 # Done with the current filesToParse
-                print("Out of lines in ", os.path.basename(fileToParsePath))
+                print("(", choice, "-", length, ") Out of lines in ", os.path.basename(fileToParsePath))
                 print("Closing...")
                 deviationTime = 0
                 fileToParse.close()

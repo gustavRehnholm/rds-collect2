@@ -36,9 +36,9 @@ def main():
 
     #-----------Constants------------#
     # Directory with the noise
-    FILES_2_PARSE_DIR = "rds-collect2/parser/parsed-noise/twitch/captures-" + str(length)
+    FILES_2_INJECT_DIR = "rds-collect2/parser/parsed-noise/twitch/captures-" + str(length)
     # Directory with the result
-    PARSED_FILES_DIR = "rds-collect2/parser/injected-datasets/twitch/parsedFiles-" + choice + "-" + str(length)
+    INJECTED_FILES_DIR = "rds-collect2/parser/injected-datasets/twitch/parsedFiles-" + choice + "-" + str(length)
     # Directory with the web traffic
     WEB_TRAFFIC_FILES_DIR = "rds-collect2/parser/dataset/client"
     # Information about what the different web traffics should be used for on the WF (training, validation, testing)
@@ -50,47 +50,41 @@ def main():
     PACKET_ATTR_INDEX_SIZE  = 2
 
     #----------Variables----------#
-    # To standardize the time of each packet
-    deviationTime = 0
-    # Current opened test/valid/train/ parsed file
-    currParsedFile = []
-    # all lines that are left to read in the current opened web traffic file
-    webTrafficLines = []
     # List of all the noise, which should be injected into the web traffic
-    files2Parse = []
+    files2Inject = []
 
     # files with the webTraffic
     webTrafficTrainFiles = []
     webTrafficValidFiles = []
     webTrafficTestFiles  = []
     # Files for the parsed noise
-    parsedTrainFiles = []
-    parsedValidFiles = []
-    parsedTestFiles  = []
+    injectedTrainFiles = []
+    injectedValidFiles = []
+    injectedTestFiles  = []
 
 
     #----------------Create the directory structure----------------
 
     # Paths to the directories
-    files2ParseDirPath = os.path.join(os.getcwd(), FILES_2_PARSE_DIR)
-    parsedDirPath      = os.path.join(os.getcwd(), PARSED_FILES_DIR)
+    files2InjectDirPath = os.path.join(os.getcwd(), FILES_2_INJECT_DIR)
+    injectedDirPath      = os.path.join(os.getcwd(), INJECTED_FILES_DIR)
     webTrafficDirPath  = os.path.join(os.getcwd(), WEB_TRAFFIC_FILES_DIR)
 
     # Get list of all noise files (which will be parsed)
-    for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
+    for (dirpath, dirnames, filenames) in walk(files2InjectDirPath, topdown=True):
         for files in filenames:
-            files2Parse.append(os.path.join(files2ParseDirPath, files))
-        print("Files to parse: ", len(files2Parse))
+            files2Inject.append(os.path.join(files2InjectDirPath, files))
+        print("Files to parse: ", len(files2Inject))
     print("Setting up directories")
 
     # Create the structure for the result directory, so it match the web traffics
-    os.system("rm -f -r " + PARSED_FILES_DIR)
-    os.system("mkdir " + PARSED_FILES_DIR)
+    os.system("rm -f -r " + INJECTED_FILES_DIR)
+    os.system("mkdir " + INJECTED_FILES_DIR)
 
     for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
         for dirs in dirnames:
             try: 
-                os.mkdir(os.path.join(parsedDirPath, dirs))
+                os.mkdir(os.path.join(injectedDirPath, dirs))
             except: 
                 print("File and directory exists!") 
 
@@ -105,13 +99,13 @@ def main():
     # For every log file in the web traffic, make sure that there is an correlating log file to store the parsed result
     for x in range(0, len(dfFiles['log'])):
         if(dfFiles['is_train'][x] == True): 
-            parsedTrainFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
+            injectedTrainFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
             webTrafficTrainFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         elif(dfFiles['is_valid'][x] == True): 
-            parsedValidFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
+            injectedValidFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
             webTrafficValidFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         elif(dfFiles['is_test'][x] == True): 
-            parsedTestFiles.append(os.path.join(parsedDirPath, dfFiles['log'][x]))
+            injectedValidFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
             webTrafficTestFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         else:
             print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
@@ -121,7 +115,7 @@ def main():
     print("Starting injecting noise")
     print("trainFiles len = ", len(webTrafficTrainFiles))
 
-    noise2train = InjectValidationTesting(webTrafficTestFiles, parsedTestFiles,  webTrafficValidFiles, parsedValidFiles, files2Parse)
+    noise2train = InjectValidationTesting(webTrafficTestFiles, injectedValidFiles,  webTrafficValidFiles, injectedValidFiles, files2Inject, choice, length)
 
     if(noise2train[0] == -1):
         print("ERROR: Injection of the valid and testing web traffic has failed")
@@ -129,18 +123,17 @@ def main():
         return
 
     if(choice == "itr"):
-        successfully = injectTrainingItr(webTrafficTrainFiles, parsedTrainFiles, noise2train)
+        successfully = injectTrainingItr(webTrafficTrainFiles, injectedTrainFiles, noise2train, choice, length)
     elif(choice == "rnd"):
-        successfully = injectTrainingRnd(webTrafficTrainFiles, parsedTrainFiles, noise2train)
+        successfully = injectTrainingRnd(webTrafficTrainFiles, injectedTrainFiles, noise2train, choice, length)
     elif(choice == "none"):
-        successfully = addTrain(webTrafficTrainFiles, parsedTrainFiles)
+        successfully = addTrain(webTrafficTrainFiles, injectedTrainFiles)
     else:
         print("ERROR: the value of choice has been changed: ", choice)
         print("Aborting program")
         return
 
     if(successfully):
-        # Done with the injection
         print("Have injected all web traffic with noise, after the choice: ", choice)
         print("Total noise files: ", sys.argv[1])
         print("Noise files for testing and validation: ", int(sys.argv[1]) - len(noise2train))
