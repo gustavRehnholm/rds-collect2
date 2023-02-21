@@ -76,7 +76,6 @@ def main():
     os.system("ls rds-collect2/parser/parsed-noise/twitch/captures-230 | wc -l")
     print("")
 
-
-# run main 
+# run main
 if __name__=="__main__":
     main()

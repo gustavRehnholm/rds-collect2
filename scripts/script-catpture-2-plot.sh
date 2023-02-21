@@ -17,12 +17,12 @@ touch rds-collect2/parser/stdout-dir/inject.txt
 ./rds-collect2/scripts/script-inject.sh | tee  rds-collect2/parser/stdout-dir/inject.txt
 
 # train DF, with the smaller datasample as in the previous work
-touch df-old.txt
-./rds-collect2/scripts/script-df-old.sh | tee df-old.txt
+#touch df-old.txt
+#./rds-collect2/scripts/script-df-old.sh | tee df-old.txt
 
 # plot the result of the smaller sample size
-touch plotter-old.txt
-./rds-collect2/scripts/script-plotter-old.sh | tee plotter-old.txt
+#touch plotter-old.txt
+#./rds-collect2/scripts/script-plotter-old.sh | tee plotter-old.txt
 
 # train DF, with the datasample
 touch df.txt
