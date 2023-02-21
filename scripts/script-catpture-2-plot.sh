@@ -5,12 +5,12 @@
 # ./rds-collect2/scripts/script-catpture-2-plot.sh 
 
 # Parse, rm unusable data packets, and files with too much dataloss
-touch rds-collect2/parser/stdout-dir/stdout-parse.txt
-python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
+#touch rds-collect2/parser/stdout-dir/stdout-parse.txt
+#python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
 # Create smaller datasets, to test the diffirence the size makes 
-touch rds-collect2/parser/stdout-dir/stdout-smaller.txt
-python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser/stdout-dir/stdout-smaller.txt
+#touch rds-collect2/parser/stdout-dir/stdout-smaller.txt
+#python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser/stdout-dir/stdout-smaller.txt
 
 # inject the data
 touch rds-collect2/parser/stdout-dir/inject.txt

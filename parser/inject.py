@@ -108,7 +108,7 @@ def main():
             injectedValidFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
             webTrafficTestFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
         else:
-            print("ERROR a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
+            print("ERROR: a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
             print("Aborting the program")
             return
 

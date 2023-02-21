@@ -215,7 +215,6 @@ def main():
                 try:
                     packetSize = str(int(splitParseLine[PACKET_ATTR_INDEX_SIZE])-HEADER)
                 except:
-                    #print("splitParseLine[2] = " + splitParseLine[2] + " could not be used to determine the packet Size, skipped")
                     currNumSkippedPackets += 1
                     currLossStreak += 1
                     if currLongestLossStreak < currLossStreak:
@@ -224,15 +223,7 @@ def main():
 
                 
                 # Do not accept an empty packet size
-                if int(packetSize) == 0:
-                    #print("Packet size" + packetSize + " is 0, and therefore invalid")
-                    currNumSkippedPackets += 1
-                    currLossStreak += 1
-                    if currLongestLossStreak < currLossStreak:
-                        currLongestLossStreak = currLossStreak
-                    continue
-                elif int(packetSize) < 0:
-                    #print("Packet size" + packetSize + " is negative, and therefore invalid")
+                if int(packetSize) <= 0:
                     currNumSkippedPackets += 1
                     currLossStreak += 1
                     if currLongestLossStreak < currLossStreak:
