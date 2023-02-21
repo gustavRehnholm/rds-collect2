@@ -254,8 +254,6 @@ def main():
 
             currPercentLoss = currNumSkippedPackets / currNumPacket
 
-            holeList.append(longestHole)
-
             if currLongestLossStreak >= 20:
                 print(warningMsg)
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
@@ -291,6 +289,7 @@ def main():
             else:
                 listLossPercent.append(currPercentLoss)
                 listLossStreak.append(currLongestLossStreak)
+                holeList.append(longestHole)
                 print("\n")
                 print("Out of lines in ", os.path.basename(fileToParsePath))
                 print("Closing...")
@@ -298,6 +297,7 @@ def main():
                 print("Number of parsed packets/lines in the file:  ", currNumParsedPackets)
                 print("Number of skipped packets/lines in the file: ", currNumSkippedPackets)
                 print("Longest streak of skipped packets: ", currLongestLossStreak)
+                print("Longest hole without any packets(sec): ", longestHole / (NANO_SEC_PER_SEC * 60))
                 print("Lost packages in this file: ", currPercentLoss)
                 print("This files time length: ", endTimeList[-1])
                 print("\n")
