@@ -111,6 +111,11 @@ def main():
         print("Files to parse: ", len(files2Parse))
         print("Parsed Files: ", len(currParsedFiles))
 
+    for i in range(0, len(files2Parse)):
+        print(os.path.basename(files2Parse[i]))
+        print(os.path.basename(currParsedFiles[i]))
+        ptint("\n")
+
 
 
     #----------------------------Parsing-------------------------------------------
