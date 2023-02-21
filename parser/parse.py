@@ -28,7 +28,7 @@ def main():
     # Directory with the noise
     FILES_2_PARSE_DIR = "rds-collect2/parser/raw-captures/captures"
     # Directory with the noise parsed
-    PARSED_FILES_DIR = "rds-collect2/parser/parsed-noise/twitch/captures-1370"
+    PARSED_FILES_DIR = "rds-collect2/parser/parsed-noise/twitch/captures-1355"
     # How much of the header to remove (to fit the noise with the web traffic)
     HEADER = 40
 
@@ -301,14 +301,11 @@ def main():
     listLossPercent.sort()
     listLossStreak.sort()
 
-    #print("Total number of packets/lines:         ", numPackets)
-    #print("Total number of parsed packets/lines:  ", numParsedPackets)
-    #print("Total number of skipped packets/lines: ", numSkippedPackets)
     print("Total number of skipped files: ", rmFiles)
     print("Skipped because long loss of usable packets: ", rmLossStreak)
     print("Skipped because high overall loss of usable packets: ", rmPercentLoss)
-    print("Skipped because file is to small: ", rmNumPacket)
     print("Skipped because long hole without any packets: ", rmHoleLen)
+    print("Skipped because file is to small: ", rmNumPacket)
     print("\n")
     print("Of the parsed noise files:")
     print("\n")
@@ -321,22 +318,6 @@ def main():
     print("Logfile with the shortest time(ns): ", endTimeList[0])
     print("Logfile with the longest time(h): ", endTimeList[-1]/(NANO_SEC_PER_SEC*60*60))
     print("Logfile with the shortest time(h): ", endTimeList[0]/(NANO_SEC_PER_SEC*60*60))
-
-    '''
-    rmHoleLen = 0
-    rmNumPacket = 0
-    rmPercentLoss = 0
-    rmLossStreak = 0
-
-        '''
-    '''
-    print("\n")
-    # convert to seconds
-    holeList.sort()
-    print("longest time hole between packets (in minutes)")
-    for i in range(0, len(holeList)):
-        print(holeList[i] / (NANO_SEC_PER_SEC * 60))
-    '''
 
 
 # run main 

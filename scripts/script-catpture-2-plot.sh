@@ -7,6 +7,7 @@
 # Parse, rm unusable data packets, and files with too much dataloss
 python3 rds-collect2/parser/parse.py | tee rds-collect2/parser/stdout-dir/stdout-parse.txt
 
+# Create smaller datasets, to test the diffirence the size makes 
 python3 rds-collect2/parser/create-smaller-captures.py | tee rds-collect2/parser/stdout-dir/stdout-smaller.txt
 
 # inject the data 
