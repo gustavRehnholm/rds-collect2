@@ -58,6 +58,8 @@ def main():
     numSkippedPackets = 0
     # list of the loss streak
     listLossStreak = []
+    # list of all files that where removed
+    rmFilesList = []
     # number of files that was removed (and the different reasons why it has been removed)
     rmFiles = 0
     rmHoleLen = 0
@@ -259,6 +261,7 @@ def main():
                 print("The longest time of lost packets (", currLongestLossStreak, "), is over 20")
                 os.system("rm " + path)
                 print("\n")
+                rmFilesList.append(path)
                 rmFiles += 1
                 rmLossStreak += 1
             elif currPercentLoss >= 0.05:
@@ -266,6 +269,7 @@ def main():
                 print("The percentage loss of packets (", currPercentLoss, "), is over 5 percent")
                 os.system("rm " + path)
                 print("\n")
+                rmFilesList.append(path)
                 rmFiles += 1
                 rmPercentLoss += 1
             elif (longestHole / (NANO_SEC_PER_SEC * 60)) > 2:
@@ -273,6 +277,7 @@ def main():
                 print("The longest hole was (", longestHole / (NANO_SEC_PER_SEC * 60), "), seconds, which is larger than 3 sec")
                 os.system("rm " + path)
                 print("\n")
+                rmFilesList.append(path)
                 rmFiles += 1
                 rmHoleLen += 1
             elif currNumPacket <=  32000:
@@ -280,6 +285,7 @@ def main():
                 print("The number of packets (", currNumPacket, "), is under 32k, meaning that it lacks to much data")
                 os.system("rm " + path)
                 print("\n")
+                rmFilesList.append(path)
                 rmFiles += 1
                 rmNumPacket += 1
             else:
