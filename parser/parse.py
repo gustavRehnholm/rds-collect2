@@ -268,7 +268,7 @@ def main():
                 print("\n")
                 rmFiles += 1
                 rmPercentLoss += 1
-            elif (longestHole / (NANO_SEC_PER_SEC * 60)) > 3:
+            elif (longestHole / (NANO_SEC_PER_SEC * 60)) > 2:
                 print(warningMsg)
                 print("The longest hole was (", longestHole / (NANO_SEC_PER_SEC * 60), "), seconds, which is larger than 3 sec")
                 os.system("rm " + path)
