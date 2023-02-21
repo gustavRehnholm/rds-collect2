@@ -97,17 +97,17 @@ def main():
     #----------------Create the directory structure----------------
 
     # Paths to the directories
-    files2ParseDirPath = os.path.join(os.getcwd(), FILES_2_PARSE_DIR)
-    parsedDirPath      = os.path.join(os.getcwd(), PARSED_FILES_DIR)
+    #files2ParseDirPath = os.path.join(os.getcwd(), FILES_2_PARSE_DIR)
+    #parsedDirPath      = os.path.join(os.getcwd(), PARSED_FILES_DIR)
 
     os.system("rm -f -r " + PARSED_FILES_DIR)
     os.system("mkdir " + PARSED_FILES_DIR)
 
     # Get list of all noise files (which will be parsed)
-    for (dirpath, dirnames, filenames) in walk(files2ParseDirPath, topdown=True):
+    for (dirpath, dirnames, filenames) in walk(FILES_2_PARSE_DIR, topdown=True):
         for files in filenames:
-            files2Parse.append(os.path.join(files2ParseDirPath, files))
-            currParsedFiles.append(os.path.join(parsedDirPath, files))
+            files2Parse.append(os.path.join(FILES_2_PARSE_DIR, files))
+            currParsedFiles.append(os.path.join(PARSED_FILES_DIR, files))
         print("Files to parse: ", len(files2Parse))
         print("Parsed Files: ", len(currParsedFiles))
 
@@ -150,7 +150,7 @@ def main():
 
         with open(fileToParsePath, 'r') as fileToParse:
             print(currIndex , "/", len(files2Parse), " files left")
-            print("Opening ", os.path.basename(fileToParsePath))
+            print("Opening file to parse", os.path.basename(fileToParsePath))
 
             
             currParsedFile = open(currParsedFiles[0], 'a') 
