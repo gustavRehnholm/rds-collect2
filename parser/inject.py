@@ -66,14 +66,14 @@ def main():
     #----------------Create the directory structure----------------
 
     # Paths to the directories
-    files2InjectDirPath = os.path.join(os.getcwd(), FILES_2_INJECT_DIR)
-    injectedDirPath      = os.path.join(os.getcwd(), INJECTED_FILES_DIR)
-    webTrafficDirPath  = os.path.join(os.getcwd(), WEB_TRAFFIC_FILES_DIR)
+    #files2InjectDirPath = os.path.join(os.getcwd(), FILES_2_INJECT_DIR)
+    #injectedDirPath     = os.path.join(os.getcwd(), INJECTED_FILES_DIR)
+    #webTrafficDirPath   = os.path.join(os.getcwd(), WEB_TRAFFIC_FILES_DIR)
 
     # Get list of all noise files (which will be parsed)
-    for (dirpath, dirnames, filenames) in walk(files2InjectDirPath, topdown=True):
+    for (dirpath, dirnames, filenames) in walk(FILES_2_INJECT_DIR, topdown=True):
         for files in filenames:
-            files2Inject.append(os.path.join(files2InjectDirPath, files))
+            files2Inject.append(os.path.join(FILES_2_INJECT_DIR, files))
         print("Files to parse: ", len(files2Inject))
     print("Setting up directories")
 
@@ -81,10 +81,10 @@ def main():
     os.system("rm -f -r " + INJECTED_FILES_DIR)
     os.system("mkdir " + INJECTED_FILES_DIR)
 
-    for (dirpath, dirnames, filenames) in walk(webTrafficDirPath, topdown=True):
+    for (dirpath, dirnames, filenames) in walk(WEB_TRAFFIC_FILES_DIR, topdown=True):
         for dirs in dirnames:
             try: 
-                os.mkdir(os.path.join(injectedDirPath, dirs))
+                os.mkdir(os.path.join(INJECTED_FILES_DIR, dirs))
             except: 
                 print("File and directory exists!") 
 
@@ -97,16 +97,17 @@ def main():
     dfFiles  = df[dfFormat]
 
     # For every log file in the web traffic, make sure that there is an correlating log file to store the parsed result
+    # dfFiles[attribute][index]
     for x in range(0, len(dfFiles['log'])):
         if(dfFiles['is_train'][x] == True): 
-            injectedTrainFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
-            webTrafficTrainFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
+            injectedTrainFiles.append(os.path.join(INJECTED_FILES_DIR, dfFiles['log'][x]))
+            webTrafficTrainFiles.append(os.path.join(WEB_TRAFFIC_FILES_DIR, dfFiles['log'][x]))
         elif(dfFiles['is_valid'][x] == True): 
-            injectedValidFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
-            webTrafficValidFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
+            injectedValidFiles.append(os.path.join(INJECTED_FILES_DIR, dfFiles['log'][x]))
+            webTrafficValidFiles.append(os.path.join(WEB_TRAFFIC_FILES_DIR, dfFiles['log'][x]))
         elif(dfFiles['is_test'][x] == True): 
-            injectedValidFiles.append(os.path.join(injectedDirPath, dfFiles['log'][x]))
-            webTrafficTestFiles.append(os.path.join(webTrafficDirPath, dfFiles['log'][x]))
+            injectedValidFiles.append(os.path.join(INJECTED_FILES_DIR, dfFiles['log'][x]))
+            webTrafficTestFiles.append(os.path.join(WEB_TRAFFIC_FILES_DIR, dfFiles['log'][x]))
         else:
             print("ERROR: a packet in the web traffic is neither for training, validation or testing in the fold-0 file.")
             print("Aborting the program")
