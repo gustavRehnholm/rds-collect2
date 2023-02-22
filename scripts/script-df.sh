@@ -6,6 +6,8 @@
 
 sample = 5
 
+echo run with sample $sample
+
 # DF with size
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-itr-1355 --train -s $sample --csv wf-result/df-size-twitch-itr-1355.csv
 ./df-fitness.py -d rds-collect2/parser/injected-datasets/twitch/parsedFiles-itr-685 --train -s $sample --csv wf-result/df-size-twitch-itr-685.csv
